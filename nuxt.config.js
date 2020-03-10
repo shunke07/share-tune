@@ -24,6 +24,14 @@ export default {
         content: SITE_DESC
       },
       {
+        name: 'apple-mobile-web-app-capable',
+        content: 'yes'
+      },
+      {
+        name: 'apple-mobile-web-app-status-bar-style',
+        content: 'default'
+      },
+      {
         hid: 'og:site_name',
         property: 'og:site_name',
         content: SITE_NAME
