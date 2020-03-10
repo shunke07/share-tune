@@ -72,7 +72,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: ['~/assets/styles/foundation'],
+  css: ['~/assets/styles'],
   /*
    ** Plugins to load before mounting the App
    */
