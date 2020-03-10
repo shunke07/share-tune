@@ -28,7 +28,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~/plugins/firebase/init.js'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -48,5 +48,16 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+  // environment variables
+  env: {
+    FIREBASE_API_KEY: 'AIzaSyDYFQ0ofx0raM52hSNHVKTFDwG8DK5y2EY',
+    FIREBASE_AUTH_DOMAIN: 'share-tune.firebaseapp.com',
+    FIREBASE_DATABASE_URL: 'https://share-tune.firebaseio.com',
+    FIREBASE_PROJECT_ID: 'share-tune',
+    FIREBASE_STORAGE_BUCKET: 'share-tune.appspot.com',
+    FIREBASE_MSG_SENDER_ID: '529502998438',
+    FIREBASE_APP_ID: '1:529502998438:web:5830a9018ad875a021c967',
+    FIREBASE_MEASURE_ID: 'G-BVSWTW0GZ1'
   }
 }
