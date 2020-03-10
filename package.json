@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@nuxtjs/pwa": "^3.0.0-0",
+    "@nuxtjs/svg-sprite": "^0.4.9",
     "core-js": "^2.6.7",
     "firebase": "^7.10.0",
     "nuxt": "^2.0.0"
