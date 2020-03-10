@@ -1,3 +1,8 @@
+const SITE_NAME = 'ShareTune'
+const SITE_DESC = '好きな音楽を語ろう。'
+const SITE_URL = 'https://share-tune.web.app'
+const OGIMG_URL = `${SITE_URL}/ogimage.png`
+
 export default {
   mode: 'spa',
   srcDir: 'app/',
@@ -5,15 +10,50 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: process.env.npm_package_name || '',
+    htmlAttrs: {
+      lang: 'ja'
+    },
+    title: SITE_NAME,
+    titleTemplate: '%s | ShareTune',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
-      }
+        content: SITE_DESC
+      },
+      {
+        hid: 'og:site_name',
+        property: 'og:site_name',
+        content: SITE_NAME
+      },
+      {
+        hid: 'og:type',
+        property: 'og:type',
+        content: 'website'
+      },
+      {
+        hid: 'og:url',
+        property: 'og:url',
+        content: SITE_URL
+      },
+      {
+        hid: 'og:title',
+        property: 'og:title',
+        content: SITE_NAME
+      },
+      {
+        hid: 'og:description',
+        property: 'og:description',
+        content: SITE_DESC
+      },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: OGIMG_URL
+      },
+      { name: 'twitter:card', content: 'summary_large_image' }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
