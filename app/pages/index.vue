@@ -1,68 +1,42 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        share-tune
-      </h1>
-      <h2 class="subtitle">
-        My sensational Nuxt.js project
-      </h2>
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
-  </div>
+  <section class="landing-page">
+    <h1 class="title">
+      ShareTune
+    </h1>
+    <h2 class="copy">
+      好きな音楽を語ろう。
+    </h2>
+  </section>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-
 export default {
-  components: {
-    Logo
+  head() {
+    return {
+      titleTemplate: '',
+      title: 'ShareTune'
+    }
   }
 }
 </script>
 
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
+<style lang="scss" scoped>
+.landing-page {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  text-align: center;
-}
+  justify-content: center;
+  width: calc(100% - 32px);
+  min-height: 100vh;
+  margin: 0 auto;
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
+  > .title {
+    @include title-1;
+    margin-bottom: 8px;
+  }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+  > .copy {
+    @include subhead;
+  }
 }
 </style>
