@@ -1,3 +1,6 @@
+const SITE_NAME = 'ShareTune'
+const SITE_DESC = '好きな音楽を語ろう。'
+
 export default {
   mode: 'spa',
   srcDir: 'app/',
@@ -5,14 +8,18 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: process.env.npm_package_name || '',
+    htmlAttrs: {
+      lang: 'ja'
+    },
+    title: SITE_NAME,
+    titleTemplate: '%s | ShareTune',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
+        content: SITE_DESC
       }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
