@@ -1,8 +1,10 @@
-# share-tune
+# ShareTune
 
-> My sensational Nuxt.js project
+> お気に入りの音楽を見つけ、思いを共有するSNS
 
-## Build Setup
+このプロジェクトは Nuxt.js と Firebase を利用したアプリケーションのサンプルです。
+
+## 開発
 
 ``` bash
 # install dependencies
@@ -14,9 +16,7 @@ $ yarn dev
 # build for production and launch server
 $ yarn build
 $ yarn start
-
-# generate static project
-$ yarn generate
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+### デプロイ
+master ブランチに対しての push をトリガーにして CI (GitHub Actions) によって、Firebase Hosting にデプロイが行われます。そして、サイト https://share-tune.web.app が更新されます。
