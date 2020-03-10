@@ -1,0 +1,30 @@
+name: Deploy to Firebase Hosting
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: yarn add firebase-tools
+    - run: yarn install
+    - run: yarn build
+    - name: Deploy to Firebase Hosting
+      run: |
+        ./node_modules/.bin/firebase deploy --only hosting --token=${{ secrets.FIREBASE_TOKEN }}
+      env:
+        CI: true
