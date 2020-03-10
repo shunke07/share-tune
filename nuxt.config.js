@@ -1,5 +1,7 @@
 const SITE_NAME = 'ShareTune'
 const SITE_DESC = '好きな音楽を語ろう。'
+const SITE_URL = 'https://share-tune.web.app'
+const OGIMG_URL = `${SITE_URL}/ogimage.png`
 
 export default {
   mode: 'spa',
@@ -20,7 +22,38 @@ export default {
         hid: 'description',
         name: 'description',
         content: SITE_DESC
-      }
+      },
+      {
+        hid: 'og:site_name',
+        property: 'og:site_name',
+        content: SITE_NAME
+      },
+      {
+        hid: 'og:type',
+        property: 'og:type',
+        content: 'website'
+      },
+      {
+        hid: 'og:url',
+        property: 'og:url',
+        content: SITE_URL
+      },
+      {
+        hid: 'og:title',
+        property: 'og:title',
+        content: SITE_NAME
+      },
+      {
+        hid: 'og:description',
+        property: 'og:description',
+        content: SITE_DESC
+      },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: OGIMG_URL
+      },
+      { name: 'twitter:card', content: 'summary_large_image' }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
