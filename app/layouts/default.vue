@@ -1,15 +1,10 @@
 <template>
-  <div class="only-sp-view site-wrapper">
+  <div class="only-sp-view">
     <nuxt />
   </div>
 </template>
 
 <style lang="scss" scoped>
-.site-wrapper {
-  padding-bottom: calc(60px + env(safe-area-inset-bottom));
-  position: relative;
-}
-
 .only-sp-view {
   width: 100%;
   max-width: 414px;
