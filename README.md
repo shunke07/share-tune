@@ -12,11 +12,19 @@ $ yarn install
 
 # serve with hot reload at localhost:3000
 $ yarn dev
+```
 
-# build for production and launch server
-$ yarn build
-$ yarn start
+### 環境変数の設定
+``` bash
+export FIREBASE_API_KEY=
+export FIREBASE_AUTH_DOMAIN=
+export FIREBASE_DATABASE_URL=
+export FIREBASE_PROJECT_ID=
+export FIREBASE_STORAGE_BUCKET=
+export FIREBASE_MSG_SENDER_ID=
+export FIREBASE_APP_ID=
+export FIREBASE_MEASURE_ID=
 ```
 
 ### デプロイ
-master ブランチに対しての push をトリガーにして CI (GitHub Actions) によって、Firebase Hosting にデプロイが行われます。そして、サイト https://share-tune.web.app が更新されます。
+master ブランチに対しての push をトリガーにして CI (GitHub Actions) によって、Firebase Hosting にデプロイが行われます。
