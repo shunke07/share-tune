@@ -1,4 +1,6 @@
-const funcs = {}
+const funcs = {
+  spotifyGetNewReleases: './spotify/get-new-releases'
+}
 
 const loadFunctions = (funcsObj: { [s: string]: string }) => {
   for (const name in funcsObj) {
