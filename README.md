@@ -24,7 +24,16 @@ export FIREBASE_STORAGE_BUCKET=
 export FIREBASE_MSG_SENDER_ID=
 export FIREBASE_APP_ID=
 export FIREBASE_MEASURE_ID=
+
+firebase functions:config:set spotify.client_id={CLIENT_ID} 
+firebase functions:config:set spotify.client_secret={CLIENT_SECRET}
 ```
 
 ### デプロイ
+**Firebase Hosting**
+
 master ブランチに対しての push をトリガーにして CI (GitHub Actions) によって、Firebase Hosting にデプロイが行われます。
+
+**Cloud Functions**
+
+`firebase deploy --only functions`
