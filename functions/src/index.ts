@@ -1,8 +1,11 @@
-import * as functions from 'firebase-functions';
+const funcs = {}
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+const loadFunctions = (funcsObj: { [s: string]: string }) => {
+  for (const name in funcsObj) {
+    if (!process.env.K_SERVICE || process.env.K_SERVICE === name) {
+      exports[name] = require(funcsObj[name])
+    }
+  }
+}
+
+loadFunctions(funcs)
