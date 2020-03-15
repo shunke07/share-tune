@@ -3,6 +3,7 @@
     <textarea
       v-model="value"
       class="textarea"
+      :class="{ '-valid': isValueValid }"
       placeholder=" "
       :maxlength="maxLength"
     />
@@ -23,6 +24,10 @@ export default {
     },
     maxLength: {
       type: Number,
+      required: true
+    },
+    isValueValid: {
+      type: Boolean,
       required: true
     }
   },
@@ -60,6 +65,10 @@ export default {
     caret-color: $primary;
     border-bottom: 1px solid $lightGray;
     margin-top: 16px;
+
+    &.-valid {
+      color: $primary;
+    }
 
     &:hover {
       border-bottom: 2px solid $black;

@@ -3,6 +3,7 @@
     <input
       v-model="value"
       class="input"
+      :class="{ '-valid': isValueValid }"
       :type="type"
       placeholder=" "
       :maxlength="maxLength"
@@ -32,6 +33,10 @@ export default {
       validator(val) {
         return ['text', 'email', 'password'].includes(val)
       }
+    },
+    isValueValid: {
+      type: Boolean,
+      required: true
     }
   },
 
@@ -66,6 +71,10 @@ export default {
     caret-color: $primary;
     border-bottom: 1px solid $lightGray;
     padding-top: 12px;
+
+    &.-valid {
+      color: $primary;
+    }
 
     &:hover {
       border-bottom: 2px solid $black;
