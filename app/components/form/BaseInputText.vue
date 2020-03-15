@@ -86,12 +86,12 @@ export default {
 
       + .label {
         color: $primary;
-        transform: translateY(-16px) scale(0.75);
+        transform: translateY(-20px) scale(0.75);
       }
     }
 
     &:not(:placeholder-shown) + .label {
-      transform: translateY(-16px) scale(0.75);
+      transform: translateY(-20px) scale(0.75);
     }
   }
 
