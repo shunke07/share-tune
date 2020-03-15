@@ -6,6 +6,14 @@
     <h2 class="copy">
       好きな音楽を語ろう。
     </h2>
+
+    <footer class="footer-links">
+      <p class="support">
+        <nuxt-link to="/terms/">利用規約</nuxt-link>
+        <span>/</span>
+        <nuxt-link to="/policy/">プライバシーポリシー</nuxt-link>
+      </p>
+    </footer>
   </section>
 </template>
 
@@ -37,6 +45,31 @@ export default {
 
   > .copy {
     @include subhead;
+  }
+}
+
+.footer-links {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  bottom: calc(56px + env(safe-area-inset-bottom));
+  padding: 0 16px;
+  width: 100%;
+  max-width: $maxViewWidth;
+
+  > .support {
+    @include caption;
+    margin-top: 32px;
+
+    > a {
+      color: $gray;
+    }
+
+    > span {
+      margin: 0 4px;
+    }
   }
 }
 </style>
