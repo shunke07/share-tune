@@ -8,6 +8,12 @@
     </h2>
 
     <footer class="footer-links">
+      <BaseButton
+        label="はじめる"
+        :disabled="false"
+        class="signup"
+        @onClick="$router.push('/signup/')"
+      />
       <p class="support">
         <nuxt-link to="/terms/">利用規約</nuxt-link>
         <span>/</span>
@@ -18,7 +24,13 @@
 </template>
 
 <script>
+import BaseButton from '~/components/form/BaseButton'
+
 export default {
+  components: {
+    BaseButton
+  },
+
   head() {
     return {
       titleTemplate: '',
@@ -58,6 +70,10 @@ export default {
   padding: 0 16px;
   width: 100%;
   max-width: $maxViewWidth;
+
+  > .signup {
+    margin-bottom: 16px;
+  }
 
   > .support {
     @include caption;
