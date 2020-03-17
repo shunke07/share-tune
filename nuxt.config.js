@@ -80,7 +80,8 @@ export default {
   plugins: [
     '~/plugins/firebase/init.js',
     '~/plugins/firebase/analytics.js',
-    '~/plugins/firebase/auth.js'
+    '~/plugins/firebase/auth.js',
+    '~/plugins/firebase/inject.js'
   ],
   /*
    ** Nuxt.js dev-modules
