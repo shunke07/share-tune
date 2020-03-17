@@ -27,7 +27,11 @@
     <p class="caption">
       6文字以上の半角英数字または記号
     </p>
-    <BaseButton label="登録する" :disabled="!isFormValid" />
+    <BaseButton
+      label="登録する"
+      :disabled="!isFormValid"
+      @onClick="createAccount()"
+    />
   </form>
 </template>
 
@@ -69,6 +73,45 @@ export default {
     isFormValid() {
       const { isNameValid, isEmailValid, isPassValid } = this
       return isNameValid && isEmailValid && isPassValid
+    }
+  },
+
+  methods: {
+    handleError(error) {
+      alert(
+        'アカウント作成に失敗しました。しばらくしてから再度お試しいただくか、お問い合わせください。'
+      )
+      if (error) throw new Error(error)
+    },
+
+    async createAccount() {
+      if (!this.isFormValid) return
+
+      const { email, password } = this
+
+      this.$store.commit('setIsLoading', true)
+
+      await this.$auth
+        .createUserWithEmailAndPassword(email, password)
+        .then(() => this.sendEmailVerification())
+        .catch((error) => {
+          switch (error.code) {
+            case 'auth/email-already-in-use':
+              alert(`${email}はすでに使用されています。`)
+              break
+            case 'auth/invalid-email':
+              alert(`${email}は無効なメールアドレスです。`)
+              break
+            default:
+              this.handleError()
+              break
+          }
+          this.$store.commit('setIsLoading', false)
+        })
+    },
+
+    async sendEmailVerification() {
+      // will be added logic
     }
   }
 }
