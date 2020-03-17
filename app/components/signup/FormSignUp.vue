@@ -81,7 +81,7 @@ export default {
       alert(
         'アカウント作成に失敗しました。しばらくしてから再度お試しいただくか、お問い合わせください。'
       )
-      if (error) throw new Error(error)
+      this.$nuxt.error(error)
     },
 
     async createAccount() {
@@ -103,7 +103,7 @@ export default {
               alert(`${email}は無効なメールアドレスです。`)
               break
             default:
-              this.handleError()
+              this.handleError(error)
               break
           }
           this.$store.commit('setIsLoading', false)
@@ -111,7 +111,25 @@ export default {
     },
 
     async sendEmailVerification() {
-      // will be added logic
+      const user = this.$auth.currentUser
+      if (!user) return
+
+      // To be included in the body of the email
+      await user
+        .updateProfile({ displayName: this.displayName })
+        .catch((error) => this.handleError(error))
+
+      // Send email & create firestore user document
+      Promise.all([
+        user.sendEmailVerification()
+        // will be added firestore query
+      ])
+        .then(async () => {
+          // Sign out to wait for email confirmation
+          await this.$auth.signOut()
+        })
+        .catch((error) => this.handleError(error))
+        .finally(() => this.$store.commit('setIsLoading', false))
     }
   }
 }
