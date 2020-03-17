@@ -20,6 +20,18 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Set Enviroment Variables
+      run: |
+        echo "FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }}" > .env
+        echo "FIREBASE_AUTH_DOMAIN=${{ secrets.FIREBASE_AUTH_DOMAIN }}" >> .env
+        echo "FIREBASE_DATABASE_URL=${{ secrets.FIREBASE_DATABASE_URL }}" >> .env
+        echo "FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}" >> .env
+        echo "FIREBASE_STORAGE_BUCKET=${{ secrets.FIREBASE_STORAGE_BUCKET }}" >> .env
+        echo "FIREBASE_MSG_SENDER_ID=${{ secrets.FIREBASE_MSG_SENDER_ID }}" >> .env
+        echo "FIREBASE_APP_ID=${{ secrets.FIREBASE_APP_ID }}" >> .env
+        echo "FIREBASE_MEASURE_ID=${{ secrets.FIREBASE_MEASURE_ID }}" >> .env
+      env:
+        CI: true
     - run: yarn add firebase-tools
     - run: yarn install
     - run: yarn build
