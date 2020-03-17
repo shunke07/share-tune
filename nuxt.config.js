@@ -91,7 +91,12 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ['@nuxtjs/pwa', '@nuxtjs/style-resources', '@nuxtjs/svg-sprite'],
+  modules: [
+    '@nuxtjs/pwa',
+    '@nuxtjs/style-resources',
+    '@nuxtjs/svg-sprite',
+    '@nuxtjs/dotenv'
+  ],
   //
   styleResources: {
     scss: ['~/assets/styles/_variables.scss']
