@@ -2,6 +2,7 @@ const SITE_NAME = 'ShareTune'
 const SITE_DESC = '好きな音楽を語ろう。'
 const SITE_URL = 'https://share-tune.web.app'
 const OGIMG_URL = `${SITE_URL}/ogimage.png`
+require('dotenv').config()
 
 export default {
   mode: 'spa',
