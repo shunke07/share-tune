@@ -52,6 +52,10 @@ master ブランチに対しての push をトリガーにして CI (GitHub Acti
 
 `firebase deploy --only functions`
 
+**Cloud Firestore**
+
+`firebase deploy --only firestore:rules firestore:indexes`
+
 
 
 ### コーディング
