@@ -23,6 +23,7 @@
           </g>
         </g>
       </svg>
+      <p class="text">Loading...</p>
     </div>
   </transition>
 </template>
@@ -31,6 +32,7 @@
 .loader {
   pointer-events: none;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   position: fixed;
@@ -45,6 +47,13 @@
     color: $primary;
     width: 56px;
     height: 56px;
+  }
+
+  > .text {
+    @include caption;
+    color: $primary;
+    display: inline-block;
+    margin-top: 8px;
   }
 }
 

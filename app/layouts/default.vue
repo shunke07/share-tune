@@ -1,6 +1,6 @@
 <template>
   <div class="only-sp-view">
-    <nuxt />
+    <nuxt v-show="!isLoading" />
     <TheLoading v-show="isLoading" />
   </div>
 </template>
