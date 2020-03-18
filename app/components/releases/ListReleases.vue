@@ -34,9 +34,9 @@ export default {
     const storeReleases = this.$store.state.spotify.releases
     if (storeReleases.length) {
       this.releases = storeReleases
+    } else {
+      this.$store.commit('setIsLoading', true)
     }
-
-    this.$store.commit('setIsLoading', true)
 
     const api = this.$functions.httpsCallable('spotifyGetNewReleases')
     const result = await api().catch((error) => this.$nuxt.error(error))
