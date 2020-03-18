@@ -89,18 +89,29 @@ export default {
 
       this.$store.commit('setIsLoading', true)
 
+      // firebase authentication sign in
       const result = await this.$auth
         .signInWithEmailAndPassword(email, password)
         .catch((error) => handleError(error))
 
       this.$store.commit('setIsLoading', false)
 
-      if (!result.user.emailVerified) {
+      if (!result) return
+
+      const { emailVerified, uid } = result.user
+
+      // verify email
+      if (!emailVerified) {
         alert(
           `メールアドレスの確認が完了していません。\n${email} 宛に送信された確認メールより、登録を完了してください。`
         )
+        return
       }
-      // Should be added login logic
+
+      // qurry firestore user and set state
+      await this.$store
+        .dispatch('login', { uid })
+        .catch((error) => handleError(error))
     }
   }
 }

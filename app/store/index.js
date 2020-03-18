@@ -15,7 +15,7 @@ export const mutations = {
 }
 
 export const actions = {
-  async login({ commit }, uid) {
+  async login({ commit }, { uid }) {
     const user = await getUser({ uid })
     if (!user) return
 
