@@ -77,14 +77,19 @@ export default {
   async mounted() {
     if (!this.albumId) return
 
+    const storeAlbum = this.$store.getters['spotify/getAlbumById'](this.albumId)
+    if (storeAlbum) return (this.album = storeAlbum)
+
     this.$store.commit('setIsLoading', true)
 
     const api = this.$functions.httpsCallable('spotifyGetAlbum')
     const result = await api({ albumId: this.albumId }).catch((error) =>
       this.nuxt.error(error)
     )
-    this.album = result.data
+    const album = result.data
 
+    this.album = album
+    this.$store.commit('spotify/setAlbum', album)
     this.$store.commit('setIsLoading', false)
   },
 
