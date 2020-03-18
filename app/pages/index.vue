@@ -14,6 +14,12 @@
         class="signup"
         @onClick="$router.push('/signup/')"
       />
+      <p class="login">
+        すでにアカウントをお持ちですか？
+        <nuxt-link to="/login/">
+          ログイン
+        </nuxt-link>
+      </p>
       <p class="support">
         <nuxt-link to="/terms/">利用規約</nuxt-link>
         <span>/</span>
@@ -70,6 +76,11 @@ export default {
   padding: 0 16px;
   width: 100%;
   max-width: $maxViewWidth;
+
+  > .login > a {
+    @include strong;
+    color: $primary;
+  }
 
   > .signup {
     margin-bottom: 16px;
