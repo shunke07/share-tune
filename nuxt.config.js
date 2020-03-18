@@ -82,7 +82,8 @@ export default {
     '~/plugins/firebase/analytics.js',
     '~/plugins/firebase/auth.js',
     '~/plugins/firebase/inject.js',
-    '~/plugins/client-init.js'
+    '~/plugins/client-init.js',
+    '~/plugins/dayjs.js'
   ],
   /*
    ** Nuxt.js dev-modules
