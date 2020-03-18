@@ -1,6 +1,6 @@
 <template>
   <section class="app-bar">
-    <nav class="nav leading">
+    <nav v-if="backIconVisible" class="nav leading">
       <button class="icon" @click="$router.back()">
         <svg-icon name="navigation/arrow_back" title="back" />
       </button>
@@ -16,6 +16,10 @@ export default {
   props: {
     title: {
       type: String,
+      required: true
+    },
+    backIconVisible: {
+      type: Boolean,
       required: true
     }
   }
