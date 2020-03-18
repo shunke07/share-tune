@@ -1,7 +1,11 @@
 <template>
   <div class="only-sp-view">
     <header>
-      <TheAppBar v-show="isAppBarVisible" :title="pageTitle" />
+      <TheAppBar
+        v-show="isAppBarVisible"
+        :title="pageTitle"
+        :back-icon-visible="backIconVisible"
+      />
     </header>
     <nuxt v-show="!isLoading" />
     <TheLoading v-show="isLoading" />
@@ -28,6 +32,11 @@ export default {
       return !excludedPaths.includes(this.$route.path)
     },
 
+    backIconVisible() {
+      const excludedPaths = ['/releases/']
+      return !excludedPaths.includes(this.$route.path)
+    },
+
     pageTitle() {
       const { path } = this.$route
 
@@ -36,6 +45,8 @@ export default {
           return 'ユーザー登録'
         case '/login/':
           return 'ログイン'
+        case '/releases/':
+          return '最新リリース'
         case '/terms/':
           return '利用規約'
         case '/policy/':
