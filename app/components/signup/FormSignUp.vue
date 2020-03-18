@@ -125,8 +125,8 @@ export default {
         // will be added firestore query
       ])
         .then(async () => {
-          // Sign out to wait for email confirmation
-          await this.$auth.signOut()
+          this.$emit('onCompleteSignUp', this.email)
+          await this.$auth.signOut() // Sign out to wait for email confirmation
         })
         .catch((error) => this.handleError(error))
         .finally(() => this.$store.commit('setIsLoading', false))

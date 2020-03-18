@@ -5,7 +5,7 @@
       <p>{{ email }} 宛に確認メールを送信しました。</p>
       <p>メールの内容を確認して、登録を完了してください。</p>
     </section>
-    <FormSignUp v-if="!signUpCompleted" />
+    <FormSignUp v-if="!signUpCompleted" @onCompleteSignUp="email = $event" />
     <p v-if="!signUpCompleted" class="caption">
       <nuxt-link to="/terms/">利用規約</nuxt-link>
       と
