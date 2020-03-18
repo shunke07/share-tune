@@ -8,7 +8,7 @@ export default (context, inject) =>
       currentUser: firebase.auth().currentUser
     })
 
-    inject('currentUser', observable.currentUser)
+    inject('firebase', observable)
 
     firebase.auth().onAuthStateChanged(() => {
       observable.currentUser = firebase.auth().currentUser
