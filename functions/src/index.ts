@@ -1,4 +1,5 @@
 const funcs = {
+  spotifyGetAlbum: './spotify/get-album',
   spotifyGetNewReleases: './spotify/get-new-releases'
 }
 
