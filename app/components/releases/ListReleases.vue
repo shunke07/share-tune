@@ -29,6 +29,11 @@ export default {
   },
 
   async mounted() {
+    const storeReleases = this.$store.state.spotify.releases
+    if (storeReleases.length) {
+      this.releases = storeReleases
+    }
+
     this.$store.commit('setIsLoading', true)
 
     const api = this.$functions.httpsCallable('spotifyGetNewReleases')
@@ -37,7 +42,10 @@ export default {
     this.$store.commit('setIsLoading', false)
 
     if (!result) return
-    this.releases = result.data
+
+    const releases = result.data
+    this.releases = releases
+    this.$store.commit('spotify/setReleases', releases)
   }
 }
 </script>
