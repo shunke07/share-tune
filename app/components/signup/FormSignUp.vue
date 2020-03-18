@@ -38,7 +38,6 @@
 <script>
 import BaseInputText from '~/components/form/BaseInputText'
 import BaseButton from '~/components/form/BaseButton'
-import { createUser } from '~/repositories/firestore/users'
 
 export default {
   components: {
@@ -113,27 +112,21 @@ export default {
 
     async sendEmailVerification() {
       const user = this.$auth.currentUser
-      if (!user) {
-        this.handleError()
-        this.$store.commit('setIsLoading', false)
-        return
-      }
-
-      const displayName = this.displayName
+      if (!user) return
 
       // To be included in the body of the email
       await user
-        .updateProfile({ displayName })
+        .updateProfile({ displayName: this.displayName })
         .catch((error) => this.handleError(error))
 
       // Send email & create firestore user document
       Promise.all([
-        user.sendEmailVerification(),
-        createUser({ uid: user.uid, displayName })
+        user.sendEmailVerification()
+        // will be added firestore query
       ])
         .then(async () => {
-          this.$emit('onCompleteSignUp', this.email)
-          await this.$auth.signOut() // Sign out to wait for email confirmation
+          // Sign out to wait for email confirmation
+          await this.$auth.signOut()
         })
         .catch((error) => this.handleError(error))
         .finally(() => this.$store.commit('setIsLoading', false))
