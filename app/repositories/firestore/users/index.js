@@ -15,3 +15,17 @@ export const createUser = async (payload) => {
     updatedAt: timestamp
   })
 }
+
+export const getUser = async ({ uid }) => {
+  const doc = await usersRef.doc(uid).get()
+  if (!doc.exists) return
+
+  const { displayName, profileText, siteUrl, image } = doc.data()
+  return {
+    uid,
+    displayName,
+    profileText,
+    siteUrl,
+    image
+  }
+}
