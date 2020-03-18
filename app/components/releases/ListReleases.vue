@@ -5,17 +5,19 @@
       :key="`release-${index}`"
       class="release-item"
     >
-      <img
-        class="img"
-        :src="release.images[1].url"
-        :alt="`${release.name}の画像`"
-      />
-      <p class="title">
-        {{ release.name }}
-      </p>
-      <p class="artist">
-        {{ release.artists[0].name }}
-      </p>
+      <nuxt-link :to="`/albums/${release.id}/`">
+        <img
+          class="img"
+          :src="release.images[1].url"
+          :alt="`${release.name}の画像`"
+        />
+        <p class="title">
+          {{ release.name }}
+        </p>
+        <p class="artist">
+          {{ release.artists[0].name }}
+        </p>
+      </nuxt-link>
     </li>
   </ul>
 </template>
@@ -54,11 +56,13 @@ export default {
 .list-releases {
   display: flex;
   flex-wrap: wrap;
+}
 
-  > .release-item {
-    margin: 0 0 16px 16px;
-    width: calc(50% - 24px);
+.release-item {
+  margin: 0 0 16px 16px;
+  width: calc(50% - 24px);
 
+  a {
     > .img {
       width: 100%;
       border: 1px solid $boundaryBlack;
