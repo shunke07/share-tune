@@ -13,6 +13,9 @@
       に同意の上、ボタンをタップしてください。
       アカウントを登録すると、ご入力いただいたメールアドレスに登録確認メールをお送りいたします。
     </p>
+    <nuxt-link class="login" to="/login/">
+      ログインはこちら
+    </nuxt-link>
   </div>
 </template>
 
@@ -72,6 +75,11 @@ export default {
       color: $primary;
       text-decoration: underline;
     }
+  }
+
+  > .login {
+    margin-top: 56px;
+    color: $primary;
   }
 }
 </style>
