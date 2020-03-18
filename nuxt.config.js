@@ -66,6 +66,12 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
+  //
+  // router
+  //
+  router: {
+    middleware: ['valid-login']
+  },
   /*
    ** Customize the progress-bar color
    */
