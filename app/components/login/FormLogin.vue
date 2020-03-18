@@ -16,7 +16,12 @@
       :is-value-valid="isPassValid"
       @onChangeValue="password = $event"
     />
-    <BaseButton class="login" label="ログイン" :disabled="!isFormValid" />
+    <BaseButton
+      class="login"
+      label="ログイン"
+      :disabled="!isFormValid"
+      @onClick="login()"
+    />
   </form>
 </template>
 
@@ -53,6 +58,49 @@ export default {
     isFormValid() {
       const { isEmailValid, isPassValid } = this
       return isEmailValid && isPassValid
+    }
+  },
+
+  methods: {
+    async login() {
+      if (!this.isFormValid) return
+
+      const { email, password } = this
+
+      const handleError = (error) => {
+        switch (error.code) {
+          case 'auth/invalid-email':
+            alert(`${email}は無効なメールアドレスです。`)
+            break
+          case 'auth/user-not-found':
+            alert(`${email}は登録されていません。`)
+            break
+          case 'auth/wrong-password':
+            alert('パスワードが違います。')
+            break
+          default:
+            alert(
+              'ログインに失敗しました。しばらくしてから再度お試しいただくか、お問い合わせください。'
+            )
+            this.$nuxt.error(error)
+            break
+        }
+      }
+
+      this.$store.commit('setIsLoading', true)
+
+      const result = await this.$auth
+        .signInWithEmailAndPassword(email, password)
+        .catch((error) => handleError(error))
+
+      this.$store.commit('setIsLoading', false)
+
+      if (!result.user.emailVerified) {
+        alert(
+          `メールアドレスの確認が完了していません。\n${email} 宛に送信された確認メールより、登録を完了してください。`
+        )
+      }
+      // Should be added login logic
     }
   }
 }
