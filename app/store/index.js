@@ -20,5 +20,6 @@ export const actions = {
     if (!user) return
 
     commit('setLoginUser', user)
+    this.$router.push('/releases/')
   }
 }
