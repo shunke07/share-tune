@@ -3,6 +3,9 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     match /users/{userID} {
+      allow get: if isAuthenticated()
+                 && isUserAuthenticated(userID);
+
       allow create: if isAuthenticated()
                     && isUserAuthenticated(userID)
                     && isUserValid(incomingData())
@@ -16,6 +19,7 @@ service cloud.firestore {
         && data.createdAt is timestamp
         && data.updatedAt is timestamp;
       }
+
       function isCreateUserValid(data) {
         return data.profileText == null
         && data.siteUrl == null
