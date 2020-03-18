@@ -1,8 +1,13 @@
 <template>
   <div class="container">
-    <FormSignUp />
-    <p class="caption">
-      <nuxt-link to="/terms/"> 利用規約 </nuxt-link>
+    <section v-if="signUpCompleted" class="complete">
+      <h1>確認メールを送信しました</h1>
+      <p>{{ email }} 宛に確認メールを送信しました。</p>
+      <p>メールの内容を確認して、登録を完了してください。</p>
+    </section>
+    <FormSignUp v-if="!signUpCompleted" @onCompleteSignUp="email = $event" />
+    <p v-if="!signUpCompleted" class="caption">
+      <nuxt-link to="/terms/">利用規約</nuxt-link>
       と
       <nuxt-link to="/policy/">プライバシーポリシー</nuxt-link>
       に同意の上、ボタンをタップしてください。
@@ -17,6 +22,18 @@ import FormSignUp from '~/components/signup/FormSignUp'
 export default {
   components: {
     FormSignUp
+  },
+
+  data() {
+    return {
+      email: ''
+    }
+  },
+
+  computed: {
+    signUpCompleted() {
+      return !!this.email
+    }
   },
 
   head() {
@@ -35,6 +52,17 @@ export default {
   align-items: center;
   width: calc(100% - 64px);
   margin: 96px auto 0;
+
+  > .complete {
+    > h1 {
+      @include title-3;
+      margin-bottom: 12px;
+    }
+
+    > p {
+      color: $gray;
+    }
+  }
 
   > .caption {
     margin-top: 32px;
