@@ -4,6 +4,9 @@ import axios, { AxiosRequestConfig } from 'axios'
 const CLIENT_ID = functions.config().spotify.client_id
 const CLIENT_SECRET = functions.config().spotify.client_secret
 
+interface RequestData {
+  offset: number
+}
 interface AuthResult {
   data: AccessToken
 }
@@ -39,12 +42,12 @@ const getToken = async (): Promise<AuthResult> => {
   return await axios.request(config)
 }
 
-const getNewReleases = async (): Promise<Releases> => {
+const getNewReleases = async (offset: number): Promise<Releases> => {
   const token = await getToken()
   const auth = token.data.access_token
   const config: AxiosRequestConfig = {
     method: 'get',
-    url: 'https://api.spotify.com/v1/browse/new-releases?country=JP',
+    url: `https://api.spotify.com/v1/browse/new-releases?country=JP&limit=20&offset=${offset}`,
     headers: {
       'Authorization': `Bearer ${auth}`,
       'Accept-Language': 'ja;q=1'
@@ -55,8 +58,8 @@ const getNewReleases = async (): Promise<Releases> => {
 
 module.exports = functions
   .region('asia-northeast1')
-  .https.onCall(async () => {
-    const result = await getNewReleases()
+  .https.onCall(async (data: RequestData) => {
+    const result = await getNewReleases(data.offset)
     const items = result.data.albums.items.map((item: Item) => {
       // process return value
       const  {
