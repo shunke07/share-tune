@@ -27,7 +27,7 @@
     "core-js": "^2.6.7",
     "dayjs": "^1.8.23",
     "firebase": "^7.10.0",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.12.1"
   },
   "devDependencies": {
     "@nuxtjs/dotenv": "^1.4.1",
