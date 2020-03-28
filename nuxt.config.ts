@@ -1,10 +1,11 @@
+import { Configuration } from '@nuxt/types'
 const SITE_NAME = 'ShareTune'
 const SITE_DESC = '好きな音楽を語ろう。'
 const SITE_URL = 'https://share-tune.web.app'
 const OGIMG_URL = `${SITE_URL}/ogimage.png`
 require('dotenv').config()
 
-export default {
+const config: Configuration = {
   mode: 'spa',
   srcDir: 'app/',
   /*
@@ -96,7 +97,8 @@ export default {
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
+    '@nuxt/typescript-build'
   ],
   /*
    ** Nuxt.js modules
@@ -143,6 +145,7 @@ export default {
       }
     ]
   },
+
   /*
    ** Build configuration
    */
@@ -150,19 +153,20 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
   },
   //
   // environment variables
   //
   env: {
-    FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
-    FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
-    FIREBASE_DATABASE_URL: process.env.FIREBASE_DATABASE_URL,
-    FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
-    FIREBASE_STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET,
-    FIREBASE_MSG_SENDER_ID: process.env.FIREBASE_MSG_SENDER_ID,
-    FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
-    FIREBASE_MEASURE_ID: process.env.FIREBASE_MEASURE_ID
+    FIREBASE_API_KEY: process.env.FIREBASE_API_KEY!,
+    FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN!,
+    FIREBASE_DATABASE_URL: process.env.FIREBASE_DATABASE_URL!,
+    FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID!,
+    FIREBASE_STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET!,
+    FIREBASE_MSG_SENDER_ID: process.env.FIREBASE_MSG_SENDER_ID!,
+    FIREBASE_APP_ID: process.env.FIREBASE_APP_ID!,
+    FIREBASE_MEASURE_ID: process.env.FIREBASE_MEASURE_ID!
   }
 }
+
+export default config
