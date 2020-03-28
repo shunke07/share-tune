@@ -223,14 +223,17 @@
   </article>
 </template>
 
-<script>
-export default {
-  head() {
+<script lang="ts">
+import Vue from 'vue'
+import { MetaInfo } from 'vue-meta'
+
+export default Vue.extend({
+  head(): MetaInfo {
     return {
       title: 'プライバシーポリシー'
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

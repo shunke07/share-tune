@@ -4,20 +4,23 @@
   </div>
 </template>
 
-<script>
-import ListReleases from '~/components/releases/ListReleases'
+<script lang="ts">
+import Vue from 'vue'
+import { MetaInfo } from 'vue-meta'
 
-export default {
+import ListReleases from '~/components/releases/ListReleases.vue'
+
+export default Vue.extend({
   components: {
     ListReleases
   },
 
-  head() {
+  head(): MetaInfo {
     return {
       title: 'リリース'
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

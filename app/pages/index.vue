@@ -29,21 +29,24 @@
   </section>
 </template>
 
-<script>
-import BaseButton from '~/components/form/BaseButton'
+<script lang="ts">
+import { MetaInfo } from 'vue-meta'
+import Vue from 'vue'
 
-export default {
+import BaseButton from '~/components/form/BaseButton.vue'
+
+export default Vue.extend({
   components: {
     BaseButton
   },
 
-  head() {
+  head(): MetaInfo {
     return {
       titleTemplate: '',
       title: 'ShareTune'
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
