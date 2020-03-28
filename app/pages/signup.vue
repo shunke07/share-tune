@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <section v-if="signUpCompleted" class="complete">
+    <section v-if="doneSignUp" class="complete">
       <h1>確認メールを送信しました</h1>
       <p>{{ email }} 宛に確認メールを送信しました。</p>
       <p>メールの内容を確認して、登録を完了してください。</p>
     </section>
-    <FormSignUp v-if="!signUpCompleted" @onCompleteSignUp="email = $event" />
-    <p v-if="!signUpCompleted" class="caption">
+    <FormSignUp v-if="!doneSignUp" @onCompleteSignUp="email = $event" />
+    <p v-if="!doneSignUp" class="caption">
       <nuxt-link to="/terms/">利用規約</nuxt-link>
       と
       <nuxt-link to="/policy/">プライバシーポリシー</nuxt-link>
@@ -19,32 +19,34 @@
   </div>
 </template>
 
-<script>
-import FormSignUp from '~/components/signup/FormSignUp'
+<script lang="ts">
+import Vue from 'vue'
+import { MetaInfo } from 'vue-meta'
 
-export default {
+import FormSignUp from '~/components/signup/FormSignUp.vue'
+
+export default Vue.extend({
   components: {
     FormSignUp
   },
 
   data() {
     return {
-      email: ''
+      email: '' as string
     }
   },
-
   computed: {
-    signUpCompleted() {
+    doneSignUp(): boolean {
       return !!this.email
     }
   },
 
-  head() {
+  head(): MetaInfo {
     return {
       title: 'ユーザー登録'
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
