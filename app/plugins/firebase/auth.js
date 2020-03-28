@@ -2,6 +2,7 @@ import Vue from 'vue'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
+// eslint-disable-next-line
 export default (context, inject) =>
   new Promise((resolve) => {
     const observable = Vue.observable({

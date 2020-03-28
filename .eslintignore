@@ -1,0 +1,6 @@
+.nuxt/
+dist/
+node_modules/
+static/
+assets/
+functions/lib/

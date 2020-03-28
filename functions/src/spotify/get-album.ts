@@ -18,8 +18,8 @@ interface Releases {
 }
 interface Album {
   album_type: string
-  artists: Array<{key: string}>
-  external_urls: {key: string}
+  artists: Array<{ key: string }>
+  external_urls: { key: string }
   id: string
   images: string[]
   name: string
@@ -27,8 +27,8 @@ interface Album {
   tracks: { items: Track[] }
 }
 interface Track {
-  artists: Array<{key: string}>
-  external_urls: {key: string}
+  artists: Array<{ key: string }>
+  external_urls: { key: string }
   id: string
   name: string
   preview_url: string
@@ -42,10 +42,11 @@ const getToken = async (): Promise<AuthResult> => {
     url: 'https://accounts.spotify.com/api/token?grant_type=client_credentials',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': `Basic ${auth}`
-    },
+      Authorization: `Basic ${auth}`
+    }
   }
-  return await axios.request(config)
+  const response = await axios.request(config)
+  return response
 }
 
 const getAlbum = async (id: string): Promise<Releases> => {
@@ -55,11 +56,12 @@ const getAlbum = async (id: string): Promise<Releases> => {
     method: 'get',
     url: `https://api.spotify.com/v1/albums/${id}?market=JP`,
     headers: {
-      'Authorization': `Bearer ${auth}`,
+      Authorization: `Bearer ${auth}`,
       'Accept-Language': 'ja;q=1'
     }
   }
-  return await axios.request(config)
+  const response = await axios.request(config)
+  return response
 }
 
 module.exports = functions
@@ -78,7 +80,7 @@ module.exports = functions
 
     const tracks = result.data.tracks.items.map((track: Track) => {
       // process return value
-      return{
+      return {
         artists: track.artists,
         external_urls: track.external_urls,
         id: track.id,
