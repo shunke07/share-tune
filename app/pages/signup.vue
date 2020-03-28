@@ -35,6 +35,7 @@ export default Vue.extend({
       email: '' as string
     }
   },
+
   computed: {
     doneSignUp(): boolean {
       return !!this.email
