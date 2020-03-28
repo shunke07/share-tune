@@ -7,20 +7,23 @@
   </div>
 </template>
 
-<script>
-import FormLogin from '~/components/login/FormLogin'
+<script lang="ts">
+import { MetaInfo } from 'vue-meta'
+import Vue from 'vue'
 
-export default {
+import FormLogin from '~/components/login/FormLogin.vue'
+
+export default Vue.extend({
   components: {
     FormLogin
   },
 
-  head() {
+  head(): MetaInfo {
     return {
       title: 'ログイン'
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
