@@ -47,25 +47,51 @@
   </article>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
+import { MetaInfo } from 'vue-meta'
 import dayjs from '~/plugins/dayjs'
 
-export default {
+interface Album {
+  album_type: string
+  artists: Artists[]
+  external_urls: { key: string }
+  id: string
+  images: string[]
+  name: string
+  release_date: string
+  tracks: { items: Track[] }
+}
+
+interface Track {
+  artists: Array<{ key: string }>
+  external_urls: { key: string }
+  id: string
+  name: string
+  preview_url: string
+  track_number: number
+}
+
+interface Artists {
+  name: string
+}
+
+export default Vue.extend({
   data() {
     return {
-      album: null,
-      albumId: this.$route.params.albumId
+      album: null as Album | null,
+      albumId: this.$route.params.albumId as string
     }
   },
 
   computed: {
     formatDate() {
-      return (date) => {
+      return (date: string) => {
         return dayjs(date).format('YYYY年MM月DD日')
       }
     },
 
-    title() {
+    title(): string {
       if (!this.album) return ''
 
       const albumName = this.album ? this.album.name : ''
@@ -74,7 +100,7 @@ export default {
     }
   },
 
-  async mounted() {
+  async mounted(): Promise<void> {
     if (!this.albumId) return
 
     const storeAlbum = this.$store.getters['spotify/getAlbumById'](this.albumId)
@@ -83,8 +109,8 @@ export default {
     this.$store.commit('setIsLoading', true)
 
     const api = this.$functions.httpsCallable('spotifyGetAlbum')
-    const result = await api({ albumId: this.albumId }).catch((error) =>
-      this.nuxt.error(error)
+    const result = await api({ albumId: this.albumId }).catch((error: Error) =>
+      this.$nuxt.error(error)
     )
     const album = result.data
 
@@ -93,12 +119,12 @@ export default {
     this.$store.commit('setIsLoading', false)
   },
 
-  head() {
+  head(): MetaInfo {
     return {
       title: this.title
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
