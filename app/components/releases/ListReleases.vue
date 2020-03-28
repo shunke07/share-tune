@@ -73,7 +73,7 @@ export default {
         rootMargin: '50%',
         threshold: 1.0
       }
-      const callback = (entries, observer) => {
+      const callback = (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return
           // pagenation

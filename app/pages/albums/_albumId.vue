@@ -59,7 +59,7 @@ export default {
   },
 
   computed: {
-    formatDate(date) {
+    formatDate() {
       return (date) => {
         return dayjs(date).format('YYYY年MM月DD日')
       }
