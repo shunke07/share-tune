@@ -3,6 +3,7 @@ const SITE_NAME = 'ShareTune'
 const SITE_DESC = '好きな音楽を語ろう。'
 const SITE_URL = 'https://share-tune.web.app'
 const OGIMG_URL = `${SITE_URL}/ogimage.png`
+const path = require('path')
 require('dotenv').config()
 
 const config: Configuration = {
@@ -153,6 +154,12 @@ const config: Configuration = {
     /*
      ** You can extend webpack config here
      */
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname),
+      '~': path.resolve(__dirname)
+    }
   },
   //
   // environment variables
