@@ -1,32 +1,36 @@
 <template>
-  <ul class="list-releases">
-    <li
-      v-for="(release, index) in releases"
-      :key="`release-${index}`"
-      class="release-item"
-    >
-      <nuxt-link :to="`/albums/${release.id}/`">
-        <img
-          class="img"
-          :src="release.images[1].url"
-          :alt="`${release.name}の画像`"
-        />
-        <p class="title">
-          {{ release.name }}
-        </p>
-        <p class="artist">
-          {{ release.artists[0].name }}
-        </p>
-      </nuxt-link>
-    </li>
-  </ul>
+  <div>
+    <ul class="list-releases">
+      <li
+        v-for="(release, index) in releases"
+        :key="`release-${index}`"
+        class="release-item"
+      >
+        <nuxt-link :to="`/albums/${release.id}/`">
+          <img
+            class="img"
+            :src="release.images[1].url"
+            :alt="`${release.name}の画像`"
+          />
+          <p class="title">
+            {{ release.name }}
+          </p>
+          <p class="artist">
+            {{ release.artists[0].name }}
+          </p>
+        </nuxt-link>
+      </li>
+    </ul>
+    <div ref="observer" />
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      releases: []
+      releases: [],
+      observer: null
     }
   },
 
@@ -34,20 +38,53 @@ export default {
     const storeReleases = this.$store.state.spotify.releases
     if (storeReleases.length) {
       this.releases = storeReleases
-    } else {
-      this.$store.commit('setIsLoading', true)
+      this.observeScroll()
+      return
     }
 
-    const api = this.$functions.httpsCallable('spotifyGetNewReleases')
-    const result = await api().catch((error) => this.$nuxt.error(error))
-
+    this.$store.commit('setIsLoading', true)
+    await this.fetchReleases({ offset: 0 })
     this.$store.commit('setIsLoading', false)
 
-    if (!result) return
+    this.observeScroll()
+  },
 
-    const releases = result.data
-    this.releases = releases
-    this.$store.commit('spotify/setReleases', releases)
+  beforeDestroy() {
+    if (this.observer) this.observer.unobserve(this.$refs.observer)
+  },
+
+  methods: {
+    async fetchReleases({ offset }) {
+      const api = this.$functions.httpsCallable('spotifyGetNewReleases')
+      const result = await api({ offset }).catch((error) =>
+        this.$nuxt.error(error)
+      )
+
+      const releases = [...this.releases, ...result.data]
+      this.releases = releases
+      this.$store.commit('spotify/setReleases', releases)
+    },
+
+    observeScroll() {
+      const observerElement = this.$refs.observer
+      if (!observerElement) return
+
+      const options = {
+        rootMargin: '50%',
+        threshold: 1.0
+      }
+      const callback = (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+          // pagenation
+          this.fetchReleases({ offset: this.releases.length })
+        })
+      }
+      const observer = new IntersectionObserver(callback, options)
+      this.observer = observer
+
+      observer.observe(observerElement)
+    }
   }
 }
 </script>
