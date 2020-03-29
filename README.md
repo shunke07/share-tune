@@ -60,11 +60,15 @@ master ブランチに対しての push をトリガーにして CI (GitHub Acti
 
 ### コーディング
 
+
 - SFC の記述に関しては、[Vue.js スタイルガイド](https://jp.vuejs.org/v2/style-guide/index.html) に従う
+
+- SFC 内の script は `lang="ts"` として Typescript を使用する
+  - Vue.extend() のシンタックスで記述する
 
 - SFC 内の CSS の記述に関しては、Scoped SCSS を使用した上で、[RSCSS](https://github.com/rstacruz/rscss/tree/master/docs) の記法に従う
 
-
+- SFC 以外のロジックに関しては Typescript (.ts) を使用する
 
 ## 依存ライブラリ
 
