@@ -42,7 +42,7 @@
       </ul>
     </section>
     <p class="date">
-      <time>リリース: {{ formatDate(album.release_date) }}</time>
+      <time>リリース: {{ releaseDate }}</time>
     </p>
   </article>
 </template>
@@ -76,6 +76,10 @@ interface Artists {
   name: string
 }
 
+interface Response {
+  data: Album
+}
+
 export default Vue.extend({
   data() {
     return {
@@ -85,34 +89,40 @@ export default Vue.extend({
   },
 
   computed: {
-    formatDate() {
-      return (date: string) => {
-        return dayjs(date).format('YYYY年MM月DD日')
-      }
+    releaseDate(): string {
+      if (this.album === null) return ''
+
+      return dayjs(this.album.release_date).format('YYYY年MM月DD日')
     },
 
     title(): string {
-      if (!this.album) return ''
+      if (this.album === null) return ''
 
-      const albumName = this.album ? this.album.name : ''
-      const albumArtist = this.album ? this.album.artists[0].name : ''
+      const albumName = this.album.name ?? ''
+      const albumArtist = this.album.artists[0].name ?? ''
       return `${albumArtist}の${albumName}`
     }
   },
 
   async mounted(): Promise<void> {
-    if (!this.albumId) return
+    const albumId = this.albumId
+    if (!albumId) return
 
-    const storeAlbum = this.$store.getters['spotify/getAlbumById'](this.albumId)
-    if (storeAlbum) return (this.album = storeAlbum)
+    const storeAlbum: Album | undefined = this.$store.getters[
+      'spotify/getAlbumById'
+    ](albumId)
+    if (storeAlbum) {
+      this.album = storeAlbum
+      return
+    }
 
     this.$store.commit('setIsLoading', true)
 
     const api = this.$functions.httpsCallable('spotifyGetAlbum')
-    const result = await api({ albumId: this.albumId }).catch((error: Error) =>
+    const response: Response = await api({ albumId }).catch((error: Error) =>
       this.$nuxt.error(error)
     )
-    const album = result.data
+    const album = response.data
 
     this.album = album
     this.$store.commit('spotify/setAlbum', album)
