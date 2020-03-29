@@ -12,32 +12,41 @@
   </div>
 </template>
 
-<script>
-import TheAppBar from '~/components/TheAppBar'
-import TheLoading from '~/components/TheLoading'
+<script lang="ts">
+import Vue from 'vue'
+import TheAppBar from '~/components/TheAppBar.vue'
+import TheLoading from '~/components/TheLoading.vue'
 
-export default {
+type pageTitle =
+  | ''
+  | 'ユーザー登録'
+  | 'ログイン'
+  | '最新リリース'
+  | '利用規約'
+  | 'プライバシーポリシー'
+
+export default Vue.extend({
   components: {
     TheAppBar,
     TheLoading
   },
 
   computed: {
-    isLoading() {
+    isLoading(): boolean {
       return this.$store.state.isLoading
     },
 
-    isAppBarVisible() {
+    isAppBarVisible(): boolean {
       const excludedPaths = ['/']
       return !excludedPaths.includes(this.$route.path)
     },
 
-    backIconVisible() {
+    backIconVisible(): boolean {
       const excludedPaths = ['/releases/']
       return !excludedPaths.includes(this.$route.path)
     },
 
-    pageTitle() {
+    pageTitle(): pageTitle {
       const { path } = this.$route
 
       switch (path) {
@@ -56,7 +65,7 @@ export default {
       }
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
