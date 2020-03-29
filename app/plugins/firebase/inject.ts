@@ -1,4 +1,4 @@
-import firebase from 'firebase/app'
+import * as firebase from 'firebase/app'
 import { Plugin } from '@nuxt/types'
 import 'firebase/auth'
 import 'firebase/firestore'

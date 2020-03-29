@@ -1,6 +1,6 @@
 import { Plugin } from '@nuxt/types'
 import Vue from 'vue'
-import firebase from 'firebase/app'
+import * as firebase from 'firebase/app'
 import 'firebase/auth'
 
 // eslint-disable-next-line

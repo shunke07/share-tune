@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import firebase from 'firebase/app'
+import * as firebase from 'firebase/app'
 
 declare module 'vue/types/vue' {
   interface Vue {
