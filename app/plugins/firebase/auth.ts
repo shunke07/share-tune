@@ -1,9 +1,10 @@
+import { Plugin } from '@nuxt/types'
 import Vue from 'vue'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
 // eslint-disable-next-line
-export default (context, inject) =>
+const firebasePlugin: Plugin = (context, inject) =>
   new Promise((resolve) => {
     const observable = Vue.observable({
       currentUser: firebase.auth().currentUser
@@ -16,3 +17,4 @@ export default (context, inject) =>
       resolve()
     })
   })
+export default firebasePlugin
