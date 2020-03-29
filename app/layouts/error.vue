@@ -12,33 +12,40 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { MetaInfo } from 'vue-meta'
+import Vue, { PropType } from 'vue'
+
+interface Error {
+  statusCode: number
+}
+
+export default Vue.extend({
   props: {
     error: {
-      type: Object,
+      type: Object as PropType<Error>,
       required: true
     }
   },
 
   computed: {
-    statusCode() {
-      return (this.error && this.error.statusCode) || 500
+    statusCode(): number {
+      return this.error?.statusCode ?? 500
     },
 
-    message() {
+    message(): string {
       return this.statusCode === 404
         ? 'ページが見つかりません'
         : 'エラーが発生しました'
     }
   },
 
-  head() {
+  head(): MetaInfo {
     return {
       title: this.message
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
