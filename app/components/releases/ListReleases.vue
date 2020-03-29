@@ -27,11 +27,16 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { Albums } from '~/types/spotify-api.d.ts'
+
+interface Response {
+  data: Albums
+}
 
 export default Vue.extend({
   data() {
     return {
-      releases: [] as any,
+      releases: [] as Albums,
       observer: null as null | IntersectionObserver
     }
   },
@@ -43,7 +48,7 @@ export default Vue.extend({
   },
 
   async mounted() {
-    const storeReleases = this.$store.state.spotify.releases
+    const storeReleases: Albums | [] = this.$store.state.spotify.releases
     if (storeReleases.length) {
       this.releases = storeReleases
       this.observeScroll()
@@ -64,7 +69,7 @@ export default Vue.extend({
   methods: {
     async fetchReleases({ offset }: { offset: number }) {
       const api = this.$functions.httpsCallable('spotifyGetNewReleases')
-      const result = await api({ offset }).catch((error: Error) =>
+      const result: Response = await api({ offset }).catch((error: Error) =>
         this.$nuxt.error(error)
       )
 
