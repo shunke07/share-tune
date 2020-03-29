@@ -25,11 +25,24 @@
   </form>
 </template>
 
-<script>
-import BaseInputText from '~/components/form/BaseInputText'
-import BaseButton from '~/components/form/BaseButton'
+<script lang="ts">
+import Vue from 'vue'
 
-export default {
+import BaseInputText from '~/components/form/BaseInputText.vue'
+import BaseButton from '~/components/form/BaseButton.vue'
+
+interface LoginError extends Error {
+  code: string
+}
+
+interface Result {
+  user: {
+    uid: string
+    emailVerified: boolean
+  }
+}
+
+export default Vue.extend({
   components: {
     BaseInputText,
     BaseButton
@@ -37,25 +50,25 @@ export default {
 
   data() {
     return {
-      email: '',
-      password: ''
+      email: '' as string,
+      password: '' as string
     }
   },
 
   computed: {
-    isEmailValid() {
+    isEmailValid(): boolean {
       const email = this.email
       const regexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       return !!email && regexp.test(email)
     },
 
-    isPassValid() {
+    isPassValid(): boolean {
       const pass = this.password
       const regexp = /^([a-z0-9!-/:-@¥[-`{-~]){6,32}$/i
       return !!pass && regexp.test(pass)
     },
 
-    isFormValid() {
+    isFormValid(): boolean {
       const { isEmailValid, isPassValid } = this
       return isEmailValid && isPassValid
     }
@@ -67,7 +80,7 @@ export default {
 
       const { email, password } = this
 
-      const handleError = (error) => {
+      const handleError = (error: LoginError) => {
         switch (error.code) {
           case 'auth/invalid-email':
             alert(`${email}は無効なメールアドレスです。`)
@@ -90,13 +103,13 @@ export default {
       this.$store.commit('setIsLoading', true)
 
       // firebase authentication sign in
-      const result = await this.$auth
+      const result: Result = await this.$auth
         .signInWithEmailAndPassword(email, password)
-        .catch((error) => handleError(error))
+        .catch((error: LoginError) => handleError(error))
 
       this.$store.commit('setIsLoading', false)
 
-      if (!result) return
+      if (!result?.user) return
 
       const { emailVerified, uid } = result.user
 
@@ -111,10 +124,10 @@ export default {
       // qurry firestore user and set state
       await this.$store
         .dispatch('login', { uid })
-        .catch((error) => handleError(error))
+        .catch((error: LoginError) => handleError(error))
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

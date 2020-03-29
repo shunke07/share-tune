@@ -35,12 +35,18 @@
   </form>
 </template>
 
-<script>
-import BaseInputText from '~/components/form/BaseInputText'
-import BaseButton from '~/components/form/BaseButton'
+<script lang="ts">
+import Vue from 'vue'
+
+import BaseInputText from '~/components/form/BaseInputText.vue'
+import BaseButton from '~/components/form/BaseButton.vue'
 import { createUser } from '~/repositories/firestore/users'
 
-export default {
+interface AuthError extends Error {
+  code: string
+}
+
+export default Vue.extend({
   components: {
     BaseInputText,
     BaseButton
@@ -48,41 +54,41 @@ export default {
 
   data() {
     return {
-      displayName: '',
-      email: '',
-      password: ''
+      displayName: '' as string,
+      email: '' as string,
+      password: '' as string
     }
   },
 
   computed: {
-    isNameValid() {
+    isNameValid(): boolean {
       return !!this.displayName
     },
 
-    isEmailValid() {
+    isEmailValid(): boolean {
       const email = this.email
       const regexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       return !!email && regexp.test(email)
     },
 
-    isPassValid() {
+    isPassValid(): boolean {
       const pass = this.password
       const regexp = /^([a-z0-9!-/:-@¥[-`{-~]){6,32}$/i
       return !!pass && regexp.test(pass)
     },
 
-    isFormValid() {
+    isFormValid(): boolean {
       const { isNameValid, isEmailValid, isPassValid } = this
       return isNameValid && isEmailValid && isPassValid
     }
   },
 
   methods: {
-    handleError(error) {
+    handleError(error?: Error) {
       alert(
         'アカウント作成に失敗しました。しばらくしてから再度お試しいただくか、お問い合わせください。'
       )
-      this.$nuxt.error(error)
+      if (error) this.$nuxt.error(error)
     },
 
     async createAccount() {
@@ -95,7 +101,7 @@ export default {
       await this.$auth
         .createUserWithEmailAndPassword(email, password)
         .then(() => this.sendEmailVerification())
-        .catch((error) => {
+        .catch((error: AuthError) => {
           switch (error.code) {
             case 'auth/email-already-in-use':
               alert(`${email}はすでに使用されています。`)
@@ -124,7 +130,7 @@ export default {
       // To be included in the body of the email
       await user
         .updateProfile({ displayName })
-        .catch((error) => this.handleError(error))
+        .catch((error: Error) => this.handleError(error))
 
       // Send email & create firestore user document
       Promise.all([
@@ -135,11 +141,11 @@ export default {
           this.$emit('onCompleteSignUp', this.email)
           await this.$auth.signOut() // Sign out to wait for email confirmation
         })
-        .catch((error) => this.handleError(error))
+        .catch((error: Error) => this.handleError(error))
         .finally(() => this.$store.commit('setIsLoading', false))
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

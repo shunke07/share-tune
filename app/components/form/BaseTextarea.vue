@@ -11,8 +11,10 @@
   </label>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
   props: {
     label: {
       type: String,
@@ -34,12 +36,12 @@ export default {
 
   data() {
     return {
-      value: ''
+      value: '' as string
     }
   },
 
   watch: {
-    value(newVal) {
+    value(newVal: string) {
       this.$emit('onChangeValue', newVal)
     }
   },
@@ -47,7 +49,7 @@ export default {
   mounted() {
     if (this.currentValue) this.value = this.currentValue
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -13,7 +13,14 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue'
-import { PageTitle } from '~/layouts/default.vue'
+
+export type PageTitle =
+  | ''
+  | 'ユーザー登録'
+  | 'ログイン'
+  | '最新リリース'
+  | '利用規約'
+  | 'プライバシーポリシー'
 
 export default Vue.extend({
   props: {

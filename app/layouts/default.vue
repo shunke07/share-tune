@@ -14,16 +14,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import TheAppBar from '~/components/TheAppBar.vue'
+import TheAppBar, { PageTitle } from '~/components/TheAppBar.vue'
 import TheLoading from '~/components/TheLoading.vue'
-
-export type PageTitle =
-  | ''
-  | 'ユーザー登録'
-  | 'ログイン'
-  | '最新リリース'
-  | '利用規約'
-  | 'プライバシーポリシー'
 
 export default Vue.extend({
   components: {
