@@ -91,7 +91,7 @@ const config: Configuration = {
     '~/plugins/firebase/auth.js',
     '~/plugins/firebase/inject.js',
     '~/plugins/client-init.js',
-    '~/plugins/dayjs.js'
+    '~/plugins/dayjs.ts'
   ],
   /*
    ** Nuxt.js dev-modules
