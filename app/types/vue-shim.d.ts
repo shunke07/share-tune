@@ -1,10 +1,24 @@
 import Vue from 'vue'
+import firebase from 'firebase/app'
 
 declare module 'vue/types/vue' {
   interface Vue {
-    $firebase: any
+    $firebase: {
+      currentUser: firebase.User | null
+    }
     $firestore: any
-    $functions: any
-    $auth: any
+    $functions: firebase.functions.Functions
+    $auth: firebase.auth.Auth
+  }
+}
+
+declare module '@nuxt/types' {
+  interface NuxtAppOptions {
+    $firebase: {
+      currentUser: firebase.User | null
+    }
+    $firestore: any
+    $functions: firebase.functions.Functions
+    $auth: firebase.auth.Auth
   }
 }
