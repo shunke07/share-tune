@@ -19,7 +19,7 @@ export interface Album {
   external_urls: { key: string }
   id: string
   images: string[]
-  readonly name: string
+  name: string
   release_date: string
   tracks: { items: Track[] }
 }

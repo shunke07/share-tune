@@ -54,13 +54,13 @@ import dayjs from '~/plugins/dayjs'
 import { Album } from '~/types/spotify-api.d.ts'
 
 interface Response {
-  readonly data: Album
+  data: Album
 }
 
 export default Vue.extend({
   data() {
     return {
-      album: null as Album | null,
+      album: null as Readonly<Album> | null,
       albumId: this.$route.params.albumId as string
     }
   },
