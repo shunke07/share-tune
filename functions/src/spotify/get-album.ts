@@ -18,7 +18,7 @@ interface Releases {
 }
 interface Album {
   album_type: string
-  artists: Array<{ key: string }>
+  artists: { key: string }[]
   external_urls: { key: string }
   id: string
   images: string[]
@@ -27,7 +27,7 @@ interface Album {
   tracks: { items: Track[] }
 }
 interface Track {
-  artists: Array<{ key: string }>
+  artists: { key: string }[]
   external_urls: { key: string }
   id: string
   name: string

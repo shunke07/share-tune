@@ -25,17 +25,30 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+import { Albums } from '~/types/spotify-api.d.ts'
+
+interface Response {
+  data: Albums
+}
+
+export default Vue.extend({
   data() {
     return {
-      releases: [],
-      observer: null
+      releases: [] as Albums,
+      observer: null as null | IntersectionObserver
+    }
+  },
+
+  computed: {
+    observerElement(): Element {
+      return this.$refs.observer as Element
     }
   },
 
   async mounted() {
-    const storeReleases = this.$store.state.spotify.releases
+    const storeReleases: Albums | [] = this.$store.state.spotify.releases
     if (storeReleases.length) {
       this.releases = storeReleases
       this.observeScroll()
@@ -50,13 +63,13 @@ export default {
   },
 
   beforeDestroy() {
-    if (this.observer) this.observer.unobserve(this.$refs.observer)
+    if (this.observer) this.observer.unobserve(this.observerElement)
   },
 
   methods: {
-    async fetchReleases({ offset }) {
+    async fetchReleases({ offset }: { offset: number }) {
       const api = this.$functions.httpsCallable('spotifyGetNewReleases')
-      const result = await api({ offset }).catch((error) =>
+      const result: Response = await api({ offset }).catch((error: Error) =>
         this.$nuxt.error(error)
       )
 
@@ -66,14 +79,13 @@ export default {
     },
 
     observeScroll() {
-      const observerElement = this.$refs.observer
-      if (!observerElement) return
+      if (!this.observerElement) return
 
       const options = {
         rootMargin: '50%',
         threshold: 1.0
       }
-      const callback = (entries) => {
+      const callback = (entries: IntersectionObserverEntry[]) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return
           // pagenation
@@ -83,10 +95,10 @@ export default {
       const observer = new IntersectionObserver(callback, options)
       this.observer = observer
 
-      observer.observe(observerElement)
+      observer.observe(this.observerElement)
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

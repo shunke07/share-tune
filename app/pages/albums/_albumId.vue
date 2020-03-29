@@ -51,30 +51,7 @@
 import Vue from 'vue'
 import { MetaInfo } from 'vue-meta'
 import dayjs from '~/plugins/dayjs'
-
-interface Album {
-  album_type: string
-  artists: Artists[]
-  external_urls: { key: string }
-  id: string
-  images: string[]
-  name: string
-  release_date: string
-  tracks: { items: Track[] }
-}
-
-interface Track {
-  artists: Array<{ key: string }>
-  external_urls: { key: string }
-  id: string
-  name: string
-  preview_url: string
-  track_number: number
-}
-
-interface Artists {
-  name: string
-}
+import { Album } from '~/types/spotify-api.d.ts'
 
 interface Response {
   data: Album
@@ -83,7 +60,7 @@ interface Response {
 export default Vue.extend({
   data() {
     return {
-      album: null as Album | null,
+      album: null as Readonly<Album> | null,
       albumId: this.$route.params.albumId as string
     }
   },
