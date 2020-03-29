@@ -90,13 +90,13 @@ export default Vue.extend({
 
   computed: {
     releaseDate(): string {
-      if (!this.album) return ''
+      if (this.album === null) return ''
 
       return dayjs(this.album.release_date).format('YYYY年MM月DD日')
     },
 
     title(): string {
-      if (!this.album) return ''
+      if (this.album === null) return ''
 
       const albumName = this.album.name ?? ''
       const albumArtist = this.album.artists[0].name ?? ''
@@ -108,9 +108,9 @@ export default Vue.extend({
     const albumId = this.albumId
     if (!albumId) return
 
-    const storeAlbum: Album = this.$store.getters['spotify/getAlbumById'](
-      albumId
-    )
+    const storeAlbum: Album | undefined = this.$store.getters[
+      'spotify/getAlbumById'
+    ](albumId)
     if (storeAlbum) {
       this.album = storeAlbum
       return
