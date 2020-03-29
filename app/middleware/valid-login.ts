@@ -1,9 +1,11 @@
-export default ({ store, route, redirect }) => {
+import { Middleware } from '@nuxt/types'
+
+const validateLgoin: Middleware = ({ store, route, redirect }) => {
   const loginUser = store.state.loginUser
   const isLoggedIn = !!loginUser
 
-  const validPath = (paths) => {
-    const validate = (path) => route.path === path
+  const validPath = (paths: string[]) => {
+    const validate = (path: string) => route.path === path
     return !!paths.find((path) => validate(path))
   }
 
@@ -16,3 +18,5 @@ export default ({ store, route, redirect }) => {
     return redirect('/releases/')
   }
 }
+
+export default validateLgoin
