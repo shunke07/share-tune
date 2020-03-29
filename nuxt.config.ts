@@ -86,7 +86,7 @@ const config: Configuration = {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '~/plugins/firebase/init.js',
+    '~/plugins/firebase/init.ts',
     '~/plugins/firebase/analytics.js',
     '~/plugins/firebase/auth.js',
     '~/plugins/firebase/inject.js',

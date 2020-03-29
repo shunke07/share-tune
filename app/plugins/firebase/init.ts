@@ -1,4 +1,4 @@
-import firebase from 'firebase/app'
+import * as firebase from 'firebase/app'
 
 const config = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -9,7 +9,7 @@ const config = {
   messagingSenderId: process.env.FIREBASE_MSG_SENDER_ID,
   appId: process.env.FIREBASE_APP_ID,
   measurementId: process.env.FIREBASE_MEASURE_ID
-}
+} as const
 
 if (!firebase.apps.length) firebase.initializeApp(config)
 
