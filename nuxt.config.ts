@@ -87,7 +87,7 @@ const config: Configuration = {
    */
   plugins: [
     '~/plugins/firebase/init.ts',
-    '~/plugins/firebase/analytics.js',
+    '~/plugins/firebase/analytics.ts',
     '~/plugins/firebase/auth.js',
     '~/plugins/firebase/inject.js',
     '~/plugins/client-init.ts',
