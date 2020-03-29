@@ -17,7 +17,7 @@ import Vue from 'vue'
 import TheAppBar from '~/components/TheAppBar.vue'
 import TheLoading from '~/components/TheLoading.vue'
 
-type pageTitle =
+export type PageTitle =
   | ''
   | 'ユーザー登録'
   | 'ログイン'
@@ -46,7 +46,7 @@ export default Vue.extend({
       return !excludedPaths.includes(this.$route.path)
     },
 
-    pageTitle(): pageTitle {
+    pageTitle(): PageTitle {
       const { path } = this.$route
 
       switch (path) {

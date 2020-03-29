@@ -11,11 +11,14 @@
   </section>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue, { PropType } from 'vue'
+import { PageTitle } from '~/layouts/default.vue'
+
+export default Vue.extend({
   props: {
     title: {
-      type: String,
+      type: String as PropType<PageTitle>,
       required: true
     },
     backIconVisible: {
@@ -23,7 +26,7 @@ export default {
       required: true
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

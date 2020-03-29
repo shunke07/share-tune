@@ -33,7 +33,7 @@ export default Vue.extend({
       return this.error?.statusCode ?? 500
     },
 
-    message(): string {
+    message(): 'ページが見つかりません' | 'エラーが発生しました' {
       return this.statusCode === 404
         ? 'ページが見つかりません'
         : 'エラーが発生しました'
