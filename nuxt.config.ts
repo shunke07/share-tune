@@ -86,12 +86,12 @@ const config: Configuration = {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '~/plugins/firebase/init.js',
-    '~/plugins/firebase/analytics.js',
-    '~/plugins/firebase/auth.js',
-    '~/plugins/firebase/inject.js',
-    '~/plugins/client-init.js',
-    '~/plugins/dayjs.js'
+    '~/plugins/firebase/init.ts',
+    '~/plugins/firebase/analytics.ts',
+    '~/plugins/firebase/auth.ts',
+    '~/plugins/firebase/inject.ts',
+    '~/plugins/client-init.ts',
+    '~/plugins/dayjs.ts'
   ],
   /*
    ** Nuxt.js dev-modules
