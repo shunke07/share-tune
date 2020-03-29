@@ -21,7 +21,7 @@ interface Albums {
 }
 interface Item {
   album_type: string
-  artists: Array<{ key: string }>
+  artists: { key: string }[]
   external_urls: { key: string }
   id: string
   images: string[]

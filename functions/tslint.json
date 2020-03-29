@@ -38,7 +38,8 @@
     "unified-signatures": {"severity": "warning"},
     "prefer-const": {"severity": "warning"},
     "trailing-comma": {"severity": "warning"},
-    "interface-name": [true, "never-prefix"]
+    "interface-name": [true, "never-prefix"],
+    "array-type": false
   },
   "defaultSeverity": "error"
 }
