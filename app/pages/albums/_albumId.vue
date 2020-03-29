@@ -54,7 +54,7 @@ import dayjs from '~/plugins/dayjs'
 import { Album } from '~/types/spotify-api.d.ts'
 
 interface Response {
-  data: Album
+  readonly data: Album
 }
 
 export default Vue.extend({
