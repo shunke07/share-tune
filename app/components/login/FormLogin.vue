@@ -28,6 +28,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
+import { UserCredential } from '@firebase/auth-types'
 import BaseInputText from '~/components/form/BaseInputText.vue'
 import BaseButton from '~/components/form/BaseButton.vue'
 
@@ -35,12 +36,7 @@ interface LoginError extends Error {
   code: string
 }
 
-interface Result {
-  user: {
-    uid: string
-    emailVerified: boolean
-  }
-}
+type Result = void | UserCredential
 
 export default Vue.extend({
   components: {
@@ -109,7 +105,7 @@ export default Vue.extend({
 
       this.$store.commit('setIsLoading', false)
 
-      if (!result?.user) return
+      if (!result || !result.user) return
 
       const { emailVerified, uid } = result.user
 
