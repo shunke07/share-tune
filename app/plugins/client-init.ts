@@ -1,6 +1,6 @@
-import { NuxtContext } from '~/types/nuxt.d.ts'
+import { Context } from '@nuxt/types'
 
-export default async ({ app, store }: NuxtContext) => {
+export default async ({ app, store }: Context) => {
   const user = app.$auth.currentUser
   if (!user?.emailVerified) return
 
