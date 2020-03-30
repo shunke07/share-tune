@@ -26,6 +26,10 @@ declare module '@nuxt/types' {
     $firestore: any
     $functions: firebase.functions.Functions
     $auth: firebase.auth.Auth
-    $dayjs: dayjs.Dayjs
+    $dayjs(
+      date?: dayjs.ConfigType,
+      option?: dayjs.OptionType,
+      locale?: string
+    ): dayjs.Dayjs
   }
 }
