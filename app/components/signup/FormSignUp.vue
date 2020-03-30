@@ -42,9 +42,7 @@ import BaseInputText from '~/components/form/BaseInputText.vue'
 import BaseButton from '~/components/form/BaseButton.vue'
 import { createUser } from '~/repositories/firestore/users'
 
-interface AuthError extends Error {
-  code: string
-}
+type AuthError = Error & { code: string }
 
 export default Vue.extend({
   components: {

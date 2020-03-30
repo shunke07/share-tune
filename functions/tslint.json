@@ -39,7 +39,8 @@
     "prefer-const": {"severity": "warning"},
     "trailing-comma": {"severity": "warning"},
     "interface-name": [true, "never-prefix"],
-    "array-type": false
+    "array-type": false,
+    "interface-over-type-literal": false
   },
   "defaultSeverity": "error"
 }
