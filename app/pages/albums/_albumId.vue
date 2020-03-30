@@ -50,12 +50,9 @@
 <script lang="ts">
 import Vue from 'vue'
 import { MetaInfo } from 'vue-meta'
-import dayjs from '~/plugins/dayjs'
 import { Album } from '~/types/spotify-api.d.ts'
 
-interface Response {
-  data: Album
-}
+type Response = void | { data: Album }
 
 export default Vue.extend({
   data() {
@@ -69,7 +66,7 @@ export default Vue.extend({
     releaseDate(): string {
       if (this.album === null) return ''
 
-      return dayjs(this.album.release_date).format('YYYY年MM月DD日')
+      return this.$dayjs(this.album.release_date).format('YYYY年MM月DD日')
     },
 
     title(): string {
@@ -99,8 +96,9 @@ export default Vue.extend({
     const response: Response = await api({ albumId }).catch((error: Error) =>
       this.$nuxt.error(error)
     )
-    const album = response.data
+    if (!response) return
 
+    const album = response.data
     this.album = album
     this.$store.commit('spotify/setAlbum', album)
     this.$store.commit('setIsLoading', false)

@@ -29,9 +29,7 @@
 import Vue from 'vue'
 import { Albums } from '~/types/spotify-api.d.ts'
 
-interface Response {
-  data: Albums
-}
+type Response = void | { data: Albums }
 
 export default Vue.extend({
   data() {
@@ -69,11 +67,12 @@ export default Vue.extend({
   methods: {
     async fetchReleases({ offset }: { offset: number }) {
       const api = this.$functions.httpsCallable('spotifyGetNewReleases')
-      const result: Response = await api({ offset }).catch((error: Error) =>
+      const response: Response = await api({ offset }).catch((error: Error) =>
         this.$nuxt.error(error)
       )
+      if (!response) return
 
-      const releases = [...this.releases, ...result.data]
+      const releases = [...this.releases, ...response.data]
       this.releases = releases
       this.$store.commit('spotify/setReleases', releases)
     },
