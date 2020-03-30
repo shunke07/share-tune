@@ -50,7 +50,6 @@
 <script lang="ts">
 import Vue from 'vue'
 import { MetaInfo } from 'vue-meta'
-import dayjs from '~/plugins/dayjs'
 import { Album } from '~/types/spotify-api.d.ts'
 
 type Response = void | { data: Album }
@@ -67,7 +66,7 @@ export default Vue.extend({
     releaseDate(): string {
       if (this.album === null) return ''
 
-      return dayjs(this.album.release_date).format('YYYY年MM月DD日')
+      return this.$dayjs(this.album.release_date).format('YYYY年MM月DD日')
     },
 
     title(): string {
