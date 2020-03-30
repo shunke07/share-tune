@@ -1,11 +1,11 @@
-import { Middleware } from '@nuxt/types'
+import { Middleware, Context } from '@nuxt/types'
 
-const validateLgoin: Middleware = ({ store, route, redirect }) => {
+const validateLgoin: Middleware = ({ store, route, redirect }: Context) => {
   const loginUser: any = store.state.loginUser
   const isLoggedIn: boolean = !!loginUser
 
   const validPath = (paths: readonly string[]): boolean => {
-    const validate = (path: string) => route.path === path
+    const validate = (path: string): boolean => route.path === path
     return !!paths.find((path) => validate(path))
   }
 

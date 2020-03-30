@@ -15,15 +15,12 @@
 <script lang="ts">
 import { MetaInfo } from 'vue-meta'
 import Vue, { PropType } from 'vue'
-
-interface Error {
-  statusCode: number
-}
+import { NuxtError } from '@nuxt/types'
 
 export default Vue.extend({
   props: {
     error: {
-      type: Object as PropType<Error>,
+      type: Object as PropType<NuxtError>,
       required: true
     }
   },
