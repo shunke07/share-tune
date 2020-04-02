@@ -65,6 +65,7 @@
 import Vue from 'vue'
 import { MetaInfo } from 'vue-meta'
 import { Album } from '~/types/spotify-api.d.ts'
+import { createBookmark } from '~/repositories/firestore/bookmarks'
 
 type Response = void | { data: Album }
 
@@ -126,6 +127,18 @@ export default Vue.extend({
   methods: {
     bookmark() {
       this.isFavorite = !this.isFavorite
+
+      const album = this.album as Album
+      const data = {
+        uid: this.$firebase.currentUser?.uid as string,
+        album: {
+          id: this.albumId,
+          imageUrl: album.images[1].url,
+          name: album.name,
+          artist: album.artists[0].name
+        }
+      }
+      createBookmark(data)
     }
   },
 
