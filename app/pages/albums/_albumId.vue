@@ -44,6 +44,16 @@
     <p class="date">
       <time>リリース: {{ releaseDate }}</time>
     </p>
+    <!-- FAB -->
+    <div class="fab-container">
+      <div class="fabs">
+        <div>
+          <button class="fab favorite">
+            <svg-icon :name="`actions/${bookmarkIcon}`" title="favorite" />
+          </button>
+        </div>
+      </div>
+    </div>
   </article>
 </template>
 
@@ -58,7 +68,8 @@ export default Vue.extend({
   data() {
     return {
       album: null as Readonly<Album> | null,
-      albumId: this.$route.params.albumId as string
+      albumId: this.$route.params.albumId as string,
+      isFavorite: false as boolean
     }
   },
 
@@ -75,6 +86,10 @@ export default Vue.extend({
       const albumName = this.album.name ?? ''
       const albumArtist = this.album.artists[0].name ?? ''
       return `${albumArtist}の${albumName}`
+    },
+
+    bookmarkIcon(): string {
+      return this.isFavorite ? 'bookmark' : 'bookmark_border'
     }
   },
 
@@ -168,6 +183,41 @@ export default Vue.extend({
     display: inline-block;
     text-align: right;
     margin-right: 8px;
+  }
+}
+
+.fab-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+
+  > .fabs {
+    position: fixed;
+    bottom: calc(32px + 16px);
+    display: flex;
+    justify-content: flex-end;
+    max-width: $maxViewWidth;
+    z-index: 2;
+
+    .fab {
+      display: flex;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      box-shadow: $shadowHigh;
+
+      > svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      &.favorite {
+        background: $white;
+        color: $gray;
+        margin-bottom: 16px;
+      }
+    }
   }
 }
 </style>
