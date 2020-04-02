@@ -1,6 +1,6 @@
 import { ActionTree, MutationTree } from 'vuex'
 import { getUser } from '~/repositories/firestore/users'
-import { User } from '~/types/firestore/users'
+import { User } from '~/types/firestore'
 
 export const state = () => ({
   isLoading: false as boolean,
