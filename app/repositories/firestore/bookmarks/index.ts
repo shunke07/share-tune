@@ -6,6 +6,11 @@ type Payload = {
   album: Bookmark['album']
 }
 
+type Query = {
+  uid: string
+  albumId: string
+}
+
 export const createBookmark = async (payload: Payload) => {
   const { uid, album } = payload
   const { id, imageUrl, name, artist } = album
@@ -19,4 +24,13 @@ export const createBookmark = async (payload: Payload) => {
     },
     createdAt: timestamp
   })
+}
+
+export const getIsBookmarked = async (data: Query): Promise<boolean> => {
+  const { uid, albumId } = data
+
+  const query = await bookmarksRef(uid)
+    .where('album.id', '==', albumId)
+    .get()
+  return !query.empty
 }
