@@ -48,8 +48,12 @@
     <div class="fab-container">
       <div class="fabs">
         <div>
-          <button class="fab favorite">
-            <svg-icon :name="`actions/${bookmarkIcon}`" title="favorite" />
+          <button class="fab favorite" @click="bookmark()">
+            <svg-icon
+              :name="`actions/${bookmarkIcon}`"
+              title="favorite"
+              :class="{ '-active': isFavorite }"
+            />
           </button>
         </div>
       </div>
@@ -117,6 +121,12 @@ export default Vue.extend({
     this.album = album
     this.$store.commit('spotify/setAlbum', album)
     this.$store.commit('setIsLoading', false)
+  },
+
+  methods: {
+    bookmark() {
+      this.isFavorite = !this.isFavorite
+    }
   },
 
   head(): MetaInfo {
@@ -210,6 +220,10 @@ export default Vue.extend({
       > svg {
         width: 24px;
         height: 24px;
+
+        &.-active {
+          color: $primary;
+        }
       }
 
       &.favorite {
