@@ -20,7 +20,7 @@ export const mutations: MutationTree<RootState> = {
 
 export const actions: ActionTree<RootState, RootState> = {
   async login({ commit }, { uid }: { uid: string }) {
-    const user = await getUser({ uid })
+    const user = await getUser(uid)
     if (!user) return
 
     commit('setLoginUser', user)

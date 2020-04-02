@@ -6,7 +6,15 @@ type Payload = {
   displayName: string
 }
 
-export const createUser = async (payload: Payload) => {
+type UserData = {
+  uid: string
+  displayName: User['displayName']
+  profileText: User['profileText']
+  siteUrl: User['siteUrl']
+  image: User['image']
+}
+
+export const createUser = async (payload: Payload): Promise<void> => {
   const { uid, displayName } = payload
 
   await usersRef.doc(uid).set({
@@ -22,17 +30,18 @@ export const createUser = async (payload: Payload) => {
   })
 }
 
-export const getUser = async ({ uid }: { uid: string }) => {
+export const getUser = async (uid: string): Promise<UserData | undefined> => {
   const doc = await usersRef.doc(uid).get()
   if (!doc.exists) return
 
   const { displayName, profileText, siteUrl, image } = doc.data() as User
-
-  return {
+  const response: UserData = {
     uid,
     displayName,
     profileText,
     siteUrl,
     image
   }
+
+  return response
 }
