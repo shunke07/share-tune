@@ -29,8 +29,8 @@ service cloud.firestore {
       }
 
       match /bookmarks/{bookmarkID} {
-        allow list: if isAuthenticated()
-                    && isUserAuthenticated(userID);
+        allow list, delete: if isAuthenticated()
+                            && isUserAuthenticated(userID);
 
         allow create: if isAuthenticated()
                       && isUserAuthenticated(userID)
