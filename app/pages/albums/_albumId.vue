@@ -104,11 +104,13 @@ export default Vue.extend({
   async mounted(): Promise<void> {
     const albumId = this.albumId
     const uid = this.$firebase.currentUser?.uid
+
     // query this album is bookmarked
     if (uid) {
       const isBookmarked = await getIsBookmarked({ uid, albumId })
       this.isBookmarked = isBookmarked
     }
+
     // if store state exists merge state
     const storeAlbum: Album | undefined = this.$store.getters[
       'spotify/getAlbumById'
@@ -117,6 +119,7 @@ export default Vue.extend({
       this.album = storeAlbum
       return
     }
+
     // fetch from Spotify API
     this.$store.commit('setIsLoading', true)
 
