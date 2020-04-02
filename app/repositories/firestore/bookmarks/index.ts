@@ -26,11 +26,26 @@ export const createBookmark = async (payload: Payload): Promise<void> => {
   })
 }
 
+export const deleteBookmark = async (data: Query): Promise<void> => {
+  const { uid, albumId } = data
+  // get target document
+  const query = await bookmarksRef(uid)
+    .where('album.id', '==', albumId)
+    .get()
+  if (query.empty) return
+
+  const bookmarkId = query.docs[0].id
+  await bookmarksRef(uid)
+    .doc(bookmarkId)
+    .delete()
+}
+
 export const getIsBookmarked = async (data: Query): Promise<boolean> => {
   const { uid, albumId } = data
 
   const query = await bookmarksRef(uid)
     .where('album.id', '==', albumId)
     .get()
+
   return !query.empty
 }
