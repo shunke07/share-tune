@@ -11,7 +11,7 @@ type Query = {
   albumId: string
 }
 
-export const createBookmark = async (payload: Payload) => {
+export const createBookmark = async (payload: Payload): Promise<void> => {
   const { uid, album } = payload
   const { id, imageUrl, name, artist } = album
 

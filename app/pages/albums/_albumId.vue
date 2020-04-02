@@ -133,7 +133,7 @@ export default Vue.extend({
   },
 
   methods: {
-    bookmark() {
+    bookmark(): void {
       // switch flag
       this.isBookmarked = !this.isBookmarked
 
