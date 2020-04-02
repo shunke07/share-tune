@@ -1,9 +1,10 @@
 import { ActionTree, MutationTree } from 'vuex'
 import { getUser } from '~/repositories/firestore/users'
+import { User } from '~/types/firestore/users'
 
 export const state = () => ({
   isLoading: false as boolean,
-  loginUser: null as any
+  loginUser: null as null | Readonly<User>
 })
 
 export type RootState = ReturnType<typeof state>
