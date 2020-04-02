@@ -128,6 +128,8 @@ export default Vue.extend({
     bookmark() {
       this.isFavorite = !this.isFavorite
 
+      if (!this.isFavorite) return
+
       const album = this.album as Album
       const data = {
         uid: this.$firebase.currentUser?.uid as string,
