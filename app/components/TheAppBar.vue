@@ -21,6 +21,7 @@ export type PageTitle =
   | '最新リリース'
   | '利用規約'
   | 'プライバシーポリシー'
+  | 'マイページ'
 
 export default Vue.extend({
   props: {
@@ -48,7 +49,7 @@ export default Vue.extend({
   height: 44px;
   padding: 4px 16px;
   background: $white;
-  border: 1px solid $boundaryBlack;
+  border-bottom: 1px solid $boundaryBlack;
   z-index: 2;
 
   > .title {

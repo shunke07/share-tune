@@ -39,7 +39,7 @@ export default Vue.extend({
     },
 
     pageTitle(): PageTitle {
-      const { path } = this.$route
+      const { path, params } = this.$route
 
       switch (path) {
         case '/signup/':
@@ -52,6 +52,12 @@ export default Vue.extend({
           return '利用規約'
         case '/policy/':
           return 'プライバシーポリシー'
+        //
+        case `/users/${params.uid}/`: {
+          const uid = this.$firebase.currentUser?.uid
+          const isMyPage = uid === params.uid
+          return isMyPage ? 'マイページ' : ''
+        }
         default:
           return ''
       }
