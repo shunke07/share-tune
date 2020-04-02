@@ -9,7 +9,7 @@ type Item = {
   artists: readonly Artists[]
   external_urls: { key: string }
   id: string
-  images: string[]
+  images: { url: string }[]
   name: string
   release_date: string
 }
@@ -32,7 +32,7 @@ type Album = {
   artists: readonly Artists[]
   external_urls: { key: string }
   id: string
-  images: string[]
+  images: { url: string }[]
   name: string
   release_date: string
   tracks: { items: readonly Track[] }

@@ -44,6 +44,20 @@
     <p class="date">
       <time>リリース: {{ releaseDate }}</time>
     </p>
+    <!-- FAB -->
+    <div class="fab-container">
+      <div class="fabs">
+        <div>
+          <button class="fab favorite" @click="bookmark()">
+            <svg-icon
+              :name="`actions/${bookmarkIcon}`"
+              title="favorite"
+              :class="{ '-active': isFavorite }"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
   </article>
 </template>
 
@@ -51,6 +65,7 @@
 import Vue from 'vue'
 import { MetaInfo } from 'vue-meta'
 import { Album } from '~/types/spotify-api.d.ts'
+import { createBookmark } from '~/repositories/firestore/bookmarks'
 
 type Response = void | { data: Album }
 
@@ -58,7 +73,8 @@ export default Vue.extend({
   data() {
     return {
       album: null as Readonly<Album> | null,
-      albumId: this.$route.params.albumId as string
+      albumId: this.$route.params.albumId as string,
+      isFavorite: false as boolean
     }
   },
 
@@ -75,6 +91,10 @@ export default Vue.extend({
       const albumName = this.album.name ?? ''
       const albumArtist = this.album.artists[0].name ?? ''
       return `${albumArtist}の${albumName}`
+    },
+
+    bookmarkIcon(): string {
+      return this.isFavorite ? 'bookmark' : 'bookmark_border'
     }
   },
 
@@ -102,6 +122,24 @@ export default Vue.extend({
     this.album = album
     this.$store.commit('spotify/setAlbum', album)
     this.$store.commit('setIsLoading', false)
+  },
+
+  methods: {
+    bookmark() {
+      this.isFavorite = !this.isFavorite
+
+      const album = this.album as Album
+      const data = {
+        uid: this.$firebase.currentUser?.uid as string,
+        album: {
+          id: this.albumId,
+          imageUrl: album.images[1].url,
+          name: album.name,
+          artist: album.artists[0].name
+        }
+      }
+      createBookmark(data)
+    }
   },
 
   head(): MetaInfo {
@@ -168,6 +206,45 @@ export default Vue.extend({
     display: inline-block;
     text-align: right;
     margin-right: 8px;
+  }
+}
+
+.fab-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+
+  > .fabs {
+    position: fixed;
+    bottom: calc(32px + 16px);
+    display: flex;
+    justify-content: flex-end;
+    max-width: $maxViewWidth;
+    z-index: 2;
+
+    .fab {
+      display: flex;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      box-shadow: $shadowHigh;
+
+      > svg {
+        width: 24px;
+        height: 24px;
+
+        &.-active {
+          color: $primary;
+        }
+      }
+
+      &.favorite {
+        background: $white;
+        color: $gray;
+        margin-bottom: 16px;
+      }
+    }
   }
 }
 </style>

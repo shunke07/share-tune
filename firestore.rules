@@ -27,6 +27,24 @@ service cloud.firestore {
         && data.image.url == null
         && data.createdAt == data.updatedAt;
       }
+
+      match /bookmarks/{bookmarkID} {
+        allow create: if isAuthenticated()
+                      && isUserAuthenticated(userID)
+                      && isBookmarkValid(incomingData());
+
+        function isBookmarkValid(data) {
+          return data.size() == 2
+          && data.keys().hasAll(['album', 'createdAt'])
+          && data.album is map
+          && data.album.keys().hasAll(['id', 'imageUrl', 'artist', 'name'])
+          && validUrl(data.album.imageUrl)
+          && validString(data.album.id, 0, 30)
+          && validString(data.album.artist, 0, 200)
+          && validString(data.album.name, 0, 200)
+          && data.createdAt is timestamp;
+        }
+      }
     }
 
     function isAuthenticated() {
@@ -43,6 +61,10 @@ service cloud.firestore {
 
     function validString(text, min, max) {
       return text is string && min <= text.size() && text.size() <= max;
+    }
+
+    function validUrl(Url) {
+      return validString(Url, 10, 2048) && Url.matches('^https?://.+$');
     }
   }
 }

@@ -9,3 +9,13 @@ export type User = {
   createdAt: firebase.firestore.FieldValue
   updatedAt: firebase.firestore.FieldValue
 }
+
+export type Bookmark = {
+  album: {
+    id: string
+    imageUrl: string
+    name: string
+    artist: string
+  }
+  createdAt: firebase.firestore.FieldValue
+}
