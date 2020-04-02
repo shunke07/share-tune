@@ -4,19 +4,19 @@ import axios, { AxiosRequestConfig } from 'axios'
 const CLIENT_ID = functions.config().spotify.client_id
 const CLIENT_SECRET = functions.config().spotify.client_secret
 
-interface RequestData {
+type RequestData = {
   albumId: string
 }
-interface AuthResult {
+type AuthResult = {
   data: AccessToken
 }
-interface AccessToken {
+type AccessToken = {
   access_token: string
 }
-interface Releases {
+type Releases = {
   data: Album
 }
-interface Album {
+type Album = {
   album_type: string
   artists: { key: string }[]
   external_urls: { key: string }
@@ -26,7 +26,7 @@ interface Album {
   release_date: string
   tracks: { items: Track[] }
 }
-interface Track {
+type Track = {
   artists: { key: string }[]
   external_urls: { key: string }
   id: string

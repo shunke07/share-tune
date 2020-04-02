@@ -1,4 +1,4 @@
-interface Item {
+type Item = {
   album_type: string
   artists: { key: string }[]
   external_urls: { key: string }
@@ -10,11 +10,11 @@ interface Item {
 
 export type Albums = readonly Item[]
 
-interface Artists {
+type Artists = {
   name: string
 }
 
-interface Track {
+type Track = {
   artists: { key: string }[]
   external_urls: { key: string }
   id: string
@@ -23,7 +23,7 @@ interface Track {
   track_number: number
 }
 
-export interface Album {
+export type Album = {
   album_type: string
   artists: Artists[]
   external_urls: { key: string }

@@ -32,9 +32,7 @@ import { UserCredential } from '@firebase/auth-types'
 import BaseInputText from '~/components/form/BaseInputText.vue'
 import BaseButton from '~/components/form/BaseButton.vue'
 
-interface LoginError extends Error {
-  code: string
-}
+type LoginError = Error & { code: string }
 
 type Result = void | UserCredential
 

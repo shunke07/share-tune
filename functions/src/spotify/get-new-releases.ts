@@ -4,22 +4,22 @@ import axios, { AxiosRequestConfig } from 'axios'
 const CLIENT_ID = functions.config().spotify.client_id
 const CLIENT_SECRET = functions.config().spotify.client_secret
 
-interface RequestData {
+type RequestData = {
   offset: number
 }
-interface AuthResult {
+type AuthResult = {
   data: AccessToken
 }
-interface AccessToken {
+type AccessToken = {
   access_token: string
 }
-interface Releases {
+type Releases = {
   data: Albums
 }
-interface Albums {
+type Albums = {
   albums: { items: Item[] }
 }
-interface Item {
+type Item = {
   album_type: string
   artists: { key: string }[]
   external_urls: { key: string }
