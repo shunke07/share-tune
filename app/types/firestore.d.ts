@@ -1,4 +1,5 @@
 export type User = {
+  uid: string
   displayName: string
   profileText: null | string
   siteUrl: null | string

@@ -1,16 +1,21 @@
 import { Middleware, Context } from '@nuxt/types'
+import { User } from '~/types/firestore'
 
 const validateLgoin: Middleware = ({ store, route, redirect }: Context) => {
-  const loginUser: any = store.state.loginUser
+  const loginUser: User = store.state.loginUser
   const isLoggedIn: boolean = !!loginUser
+  const albumId: string = route.params.albumId
+  const uid: string = route.params.uid
 
   const validPath = (paths: readonly string[]): boolean => {
     const validate = (path: string): boolean => route.path === path
     return !!paths.find((path) => validate(path))
   }
-
-  const albumId: string = route.params.albumId
-  const pathsShouldLoggedIn = ['/releases/', `/albums/${albumId}/`] as const
+  const pathsShouldLoggedIn = [
+    '/releases/',
+    `/albums/${albumId}/`,
+    `/users/${uid}/`
+  ] as const
   const pathsShouldNotLoggedIn = ['/', '/signup/', '/login/'] as const
 
   if (validPath(pathsShouldLoggedIn) && !isLoggedIn) return redirect('/')
