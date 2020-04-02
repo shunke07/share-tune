@@ -1,38 +1,15 @@
 import * as functions from 'firebase-functions'
 import axios, { AxiosRequestConfig } from 'axios'
+import { AuthResult, Album, Track } from '../types/spotify-api'
 
 const CLIENT_ID = functions.config().spotify.client_id
 const CLIENT_SECRET = functions.config().spotify.client_secret
 
 type RequestData = {
-  albumId: string
+  readonly albumId: string
 }
-type AuthResult = {
-  data: AccessToken
-}
-type AccessToken = {
-  access_token: string
-}
-type Releases = {
+type SpotifyAlbum = {
   data: Album
-}
-type Album = {
-  album_type: string
-  artists: { key: string }[]
-  external_urls: { key: string }
-  id: string
-  images: string[]
-  name: string
-  release_date: string
-  tracks: { items: Track[] }
-}
-type Track = {
-  artists: { key: string }[]
-  external_urls: { key: string }
-  id: string
-  name: string
-  preview_url: string
-  track_number: number
 }
 
 const getToken = async (): Promise<AuthResult> => {
@@ -49,7 +26,7 @@ const getToken = async (): Promise<AuthResult> => {
   return response
 }
 
-const getAlbum = async (id: string): Promise<Releases> => {
+const getAlbum = async (id: string): Promise<SpotifyAlbum> => {
   const token = await getToken()
   const auth = token.data.access_token
   const config: AxiosRequestConfig = {
