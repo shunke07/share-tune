@@ -52,7 +52,7 @@
             <svg-icon
               :name="`actions/${bookmarkIcon}`"
               title="favorite"
-              :class="{ '-active': isFavorite }"
+              :class="{ '-active': isBookmarked }"
             />
           </button>
         </div>
@@ -65,7 +65,10 @@
 import Vue from 'vue'
 import { MetaInfo } from 'vue-meta'
 import { Album } from '~/types/spotify-api.d.ts'
-import { createBookmark } from '~/repositories/firestore/bookmarks'
+import {
+  createBookmark,
+  getIsBookmarked
+} from '~/repositories/firestore/bookmarks'
 
 type Response = void | { data: Album }
 
@@ -74,7 +77,7 @@ export default Vue.extend({
     return {
       album: null as Readonly<Album> | null,
       albumId: this.$route.params.albumId as string,
-      isFavorite: false as boolean
+      isBookmarked: false as boolean
     }
   },
 
@@ -94,14 +97,19 @@ export default Vue.extend({
     },
 
     bookmarkIcon(): string {
-      return this.isFavorite ? 'bookmark' : 'bookmark_border'
+      return this.isBookmarked ? 'bookmark' : 'bookmark_border'
     }
   },
 
   async mounted(): Promise<void> {
     const albumId = this.albumId
-    if (!albumId) return
-
+    const uid = this.$firebase.currentUser?.uid
+    // query this album is bookmarked
+    if (uid) {
+      const isBookmarked = await getIsBookmarked({ uid, albumId })
+      this.isBookmarked = isBookmarked
+    }
+    // if store state exists merge state
     const storeAlbum: Album | undefined = this.$store.getters[
       'spotify/getAlbumById'
     ](albumId)
@@ -109,7 +117,7 @@ export default Vue.extend({
       this.album = storeAlbum
       return
     }
-
+    // fetch from Spotify API
     this.$store.commit('setIsLoading', true)
 
     const api = this.$functions.httpsCallable('spotifyGetAlbum')
@@ -126,13 +134,18 @@ export default Vue.extend({
 
   methods: {
     bookmark() {
-      this.isFavorite = !this.isFavorite
+      // switch flag
+      this.isBookmarked = !this.isBookmarked
 
-      if (!this.isFavorite) return
+      if (!this.isBookmarked) return
 
+      const uid = this.$firebase.currentUser?.uid
+      if (!uid) return
+
+      // create firestore bookmark document
       const album = this.album as Album
       const data = {
-        uid: this.$firebase.currentUser?.uid as string,
+        uid,
         album: {
           id: this.albumId,
           imageUrl: album.images[1].url,
