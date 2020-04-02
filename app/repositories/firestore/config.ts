@@ -6,5 +6,5 @@ const fieldVal = firebase.firestore.FieldValue
 export const timestamp = fieldVal.serverTimestamp()
 
 // reference of collection
-const ref = (ref) => db.collection(ref)
+const ref = (ref: 'users') => db.collection(ref)
 export const usersRef = ref('users')

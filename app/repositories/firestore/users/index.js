@@ -1,4 +1,4 @@
-import { usersRef, timestamp } from '~/repositories/firestore/config'
+import { usersRef, timestamp } from '~/repositories/firestore/config.ts'
 
 export const createUser = async (payload) => {
   const { uid, displayName } = payload
