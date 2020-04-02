@@ -67,6 +67,7 @@ import { MetaInfo } from 'vue-meta'
 import { Album } from '~/types/spotify-api.d.ts'
 import {
   createBookmark,
+  deleteBookmark,
   getIsBookmarked
 } from '~/repositories/firestore/bookmarks'
 
@@ -140,17 +141,23 @@ export default Vue.extend({
       // switch flag
       this.isBookmarked = !this.isBookmarked
 
-      if (!this.isBookmarked) return
-
       const uid = this.$firebase.currentUser?.uid
+      const albumId = this.albumId
+      const album = this.album as Album
+
       if (!uid) return
 
+      // delete firestore bookmark document
+      if (!this.isBookmarked) {
+        deleteBookmark({ uid, albumId })
+        return
+      }
+
       // create firestore bookmark document
-      const album = this.album as Album
       const data = {
         uid,
         album: {
-          id: this.albumId,
+          id: albumId,
           imageUrl: album.images[1].url,
           name: album.name,
           artist: album.artists[0].name
