@@ -53,7 +53,9 @@ export const getIsBookmarked = async (data: Query): Promise<boolean> => {
 export const getBookmarks = async (
   uid: string
 ): Promise<Bookmark[] | undefined> => {
-  const query = await bookmarksRef(uid).get()
+  const query = await bookmarksRef(uid)
+    .orderBy('createdAt', 'desc')
+    .get()
 
   if (query.empty) return
 
