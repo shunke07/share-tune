@@ -2,7 +2,8 @@
   <div class="container">
     <nav class="leading">
       <button class="icon" @click="pushToMyPage()">
-        <svg-icon name="person" title="my-page" />
+        <img v-if="!!userImageUrl" :src="userImageUrl" alt="マイページへ" />
+        <img v-else src="~/assets/images/default-icon.png" alt="マイページへ" />
       </button>
     </nav>
     <ListReleases />
@@ -18,6 +19,13 @@ import ListReleases from '~/components/releases/ListReleases.vue'
 export default Vue.extend({
   components: {
     ListReleases
+  },
+
+  computed: {
+    userImageUrl(): string {
+      const imageUrl: string = this.$store.state.loginUser?.image.url
+      return imageUrl
+    }
   },
 
   methods: {
@@ -44,9 +52,9 @@ export default Vue.extend({
   > .leading {
     display: flex;
     align-items: center;
-    position: absolute;
+    position: fixed;
     top: 0;
-    left: 16px;
+    margin-left: 16px;
     height: 44px;
     z-index: 3;
 
@@ -54,10 +62,12 @@ export default Vue.extend({
       width: 24px;
       height: 24px;
 
-      > svg {
+      > img {
         width: 100%;
         height: 100%;
-        color: $gray;
+        object-fit: cover;
+        border: 1px solid $boundaryBlack;
+        border-radius: 50%;
       }
     }
   }

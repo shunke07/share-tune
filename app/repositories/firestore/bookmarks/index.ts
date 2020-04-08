@@ -49,3 +49,20 @@ export const getIsBookmarked = async (data: Query): Promise<boolean> => {
 
   return !query.empty
 }
+
+export const getBookmarks = async (
+  uid: string
+): Promise<Bookmark[] | undefined> => {
+  const query = await bookmarksRef(uid)
+    .orderBy('createdAt', 'desc')
+    .get()
+
+  if (query.empty) return
+
+  const response = query.docs.map((doc) => {
+    const { album, createdAt } = doc.data() as Bookmark
+    return { album, createdAt }
+  })
+
+  return response
+}
