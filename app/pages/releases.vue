@@ -29,7 +29,7 @@ export default Vue.extend({
   },
 
   methods: {
-    pushToMyPage() {
+    pushToMyPage(): void {
       const uid = this.$firebase.currentUser?.uid
       if (!uid) return
 
