@@ -1,17 +1,21 @@
 <template>
   <div v-if="user" class="container">
-    <SectionProfile :user="user" />
+    <SectionProfile :user="user" class="profile" />
+    <ListBookmarks />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import SectionProfile from '~/components/users/SectionProfile.vue'
 import { User } from '~/types/firestore'
+
+import SectionProfile from '~/components/users/SectionProfile.vue'
+import ListBookmarks from '~/components/users/ListBookmarks.vue'
 
 export default Vue.extend({
   components: {
-    SectionProfile
+    SectionProfile,
+    ListBookmarks
   },
 
   computed: {
@@ -25,5 +29,10 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .container {
   margin-top: 56px;
+
+  > .profile {
+    border-bottom: 1px solid $boundaryBlack;
+    margin-bottom: 16px;
+  }
 }
 </style>
