@@ -33,7 +33,6 @@ import BaseInputText from '~/components/form/BaseInputText.vue'
 import BaseButton from '~/components/form/BaseButton.vue'
 
 type LoginError = Error & { code: string }
-
 type Result = void | UserCredential
 
 export default Vue.extend({
@@ -69,7 +68,7 @@ export default Vue.extend({
   },
 
   methods: {
-    async login() {
+    async login(): Promise<void> {
       if (!this.isFormValid) return
 
       const { email, password } = this

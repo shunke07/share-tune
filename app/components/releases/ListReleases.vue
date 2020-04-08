@@ -65,7 +65,7 @@ export default Vue.extend({
   },
 
   methods: {
-    async fetchReleases({ offset }: { offset: number }) {
+    async fetchReleases({ offset }: { offset: number }): Promise<void> {
       const api = this.$functions.httpsCallable('spotifyGetNewReleases')
       const response: Response = await api({ offset }).catch((error: Error) =>
         this.$nuxt.error(error)
@@ -77,7 +77,7 @@ export default Vue.extend({
       this.$store.commit('spotify/setReleases', releases)
     },
 
-    observeScroll() {
+    observeScroll(): void {
       if (!this.observerElement) return
 
       const options = {

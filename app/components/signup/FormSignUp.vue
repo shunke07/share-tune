@@ -82,14 +82,14 @@ export default Vue.extend({
   },
 
   methods: {
-    handleError(error?: Error) {
+    handleError(error?: Error): void {
       alert(
         'アカウント作成に失敗しました。しばらくしてから再度お試しいただくか、お問い合わせください。'
       )
       if (error) this.$nuxt.error(error)
     },
 
-    async createAccount() {
+    async createAccount(): Promise<void> {
       if (!this.isFormValid) return
 
       const { email, password } = this
@@ -115,7 +115,7 @@ export default Vue.extend({
         })
     },
 
-    async sendEmailVerification() {
+    async sendEmailVerification(): Promise<void> {
       const user = this.$auth.currentUser
       if (!user) {
         this.handleError()
