@@ -41,40 +41,55 @@ const getAlbum = async (id: string): Promise<SpotifyAlbum> => {
   return response
 }
 
+const processResult = (data: Album): Album => {
+  const {
+    album_type,
+    artists,
+    external_urls,
+    id,
+    images,
+    name,
+    release_date
+  } = data
+
+  const tracks = data.tracks.items.map((track: Track) => {
+    const {
+      artists,
+      external_urls,
+      id,
+      name,
+      preview_url,
+      track_number
+    } = track
+
+    return {
+      artists,
+      external_urls,
+      id,
+      name,
+      preview_url,
+      track_number
+    }
+  })
+
+  return {
+    album_type,
+    artists,
+    external_urls,
+    id,
+    images,
+    name,
+    release_date,
+    tracks: {
+      items: tracks
+    }
+  }
+}
+
 module.exports = functions
   .region('asia-northeast1')
   .https.onCall(async (data: RequestData) => {
     const result = await getAlbum(data.albumId)
-    const {
-      album_type,
-      artists,
-      external_urls,
-      id,
-      images,
-      name,
-      release_date
-    } = result.data
-
-    const tracks = result.data.tracks.items.map((track: Track) => {
-      // process return value
-      return {
-        artists: track.artists,
-        external_urls: track.external_urls,
-        id: track.id,
-        name: track.name,
-        preview_url: track.preview_url,
-        track_number: track.track_number
-      }
-    })
-
-    return {
-      album_type,
-      artists,
-      external_urls,
-      id,
-      images,
-      name,
-      release_date,
-      tracks
-    }
+    const response = processResult(result.data)
+    return response
   })

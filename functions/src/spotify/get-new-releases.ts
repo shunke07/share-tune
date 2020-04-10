@@ -41,30 +41,35 @@ const getNewReleases = async (offset: number): Promise<Releases> => {
   return response
 }
 
+const processResult = (data: Albums) => {
+  const items = data.albums.items.map((item: Item) => {
+    const {
+      album_type,
+      artists,
+      external_urls,
+      id,
+      images,
+      name,
+      release_date
+    } = item
+
+    return {
+      album_type,
+      artists,
+      external_urls,
+      id,
+      images,
+      name,
+      release_date
+    }
+  })
+  return items
+}
+
 module.exports = functions
   .region('asia-northeast1')
   .https.onCall(async (data: RequestData) => {
     const result = await getNewReleases(data.offset)
-    const items = result.data.albums.items.map((item: Item) => {
-      // process return value
-      const {
-        album_type,
-        artists,
-        external_urls,
-        id,
-        images,
-        name,
-        release_date
-      } = item
-      return {
-        album_type,
-        artists,
-        external_urls,
-        id,
-        images,
-        name,
-        release_date
-      }
-    })
-    return items
+    const response = processResult(result.data)
+    return response
   })
