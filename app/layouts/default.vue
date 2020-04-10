@@ -7,7 +7,7 @@
         :back-icon-visible="backIconVisible"
       />
     </header>
-    <nuxt v-if="!isLoading" />
+    <nuxt v-show="!isLoading" />
     <TheLoading v-show="isLoading" />
   </div>
 </template>
