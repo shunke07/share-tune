@@ -33,7 +33,7 @@
         トラックリスト
       </h1>
       <ul>
-        <li v-for="track in album.tracks" :key="track.track_number">
+        <li v-for="track in album.tracks.items" :key="track.track_number">
           <p>
             <span class="number">{{ track.track_number }}</span>
             {{ track.name }}
@@ -44,7 +44,7 @@
     <p class="date">
       <time>リリース: {{ releaseDate }}</time>
     </p>
-    <!-- FAB -->
+    <!-- Floating Action Button -->
     <div class="fab-container">
       <div class="fabs">
         <div>

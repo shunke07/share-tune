@@ -85,11 +85,15 @@ export default Vue.extend({
         threshold: 1.0
       }
       const callback = (entries: IntersectionObserverEntry[]) => {
-        entries.forEach((entry) => {
+        for (const entry of entries) {
           if (!entry.isIntersecting) return
-          // pagenation
-          this.fetchReleases({ offset: this.releases.length })
-        })
+          // query pagenation by scroll
+          const offset = this.releases.length
+          // max releases object is 100
+          if (offset < 100) this.fetchReleases({ offset })
+          // if all data has been getted
+          else if (this.observer) this.observer.unobserve(this.observerElement)
+        }
       }
       const observer = new IntersectionObserver(callback, options)
       this.observer = observer

@@ -41,40 +41,72 @@ const getAlbum = async (id: string): Promise<SpotifyAlbum> => {
   return response
 }
 
-module.exports = functions
-  .region('asia-northeast1')
-  .https.onCall(async (data: RequestData) => {
-    const result = await getAlbum(data.albumId)
+const processResult = (data: Album): Album => {
+  const {
+    album_type,
+    artists,
+    external_urls,
+    id,
+    images,
+    name,
+    release_date
+  } = data
+
+  const tracks = data.tracks.items.map((track: Track) => {
     const {
-      album_type,
       artists,
       external_urls,
       id,
-      images,
       name,
-      release_date
-    } = result.data
-
-    const tracks = result.data.tracks.items.map((track: Track) => {
-      // process return value
-      return {
-        artists: track.artists,
-        external_urls: track.external_urls,
-        id: track.id,
-        name: track.name,
-        preview_url: track.preview_url,
-        track_number: track.track_number
-      }
-    })
+      preview_url,
+      track_number
+    } = track
 
     return {
-      album_type,
       artists,
       external_urls,
       id,
-      images,
       name,
-      release_date,
-      tracks
+      preview_url,
+      track_number
     }
+  })
+
+  return {
+    album_type,
+    artists,
+    external_urls,
+    id,
+    images,
+    name,
+    release_date,
+    tracks: {
+      items: tracks
+    }
+  }
+}
+
+module.exports = functions
+  .region('asia-northeast1')
+  .https.onCall(async (data: RequestData, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError(
+        'failed-precondition',
+        'The function must be called ' + 'while authenticated.'
+      )
+    }
+
+    const { albumId } = data
+
+    if (!albumId) {
+      throw new functions.https.HttpsError(
+        'invalid-argument',
+        'albumId is undefined.',
+        { albumId }
+      )
+    }
+
+    const result = await getAlbum(albumId)
+    const response = processResult(result.data)
+    return response
   })
