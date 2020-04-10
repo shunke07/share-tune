@@ -127,24 +127,7 @@ const config: Configuration = {
     'og:description': SITE_DESC,
     theme_color: '#007c91', // primary color
     background_color: '#ffffff',
-    display: 'fullscreen',
-    icons: [
-      {
-        src: 'app/icons/icon@180px.png',
-        sizes: '180x180',
-        type: 'image/png'
-      },
-      {
-        src: 'app/icons/icon@192px.png',
-        sizes: '192x192',
-        type: 'image/png'
-      },
-      {
-        src: 'app/icons/icon@512px.png',
-        sizes: '512x512',
-        type: 'image/png'
-      }
-    ]
+    display: 'fullscreen'
   },
 
   /*
