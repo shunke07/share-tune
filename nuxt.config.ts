@@ -26,6 +26,7 @@ const config: Configuration = {
         name: 'description',
         content: SITE_DESC
       },
+      // for iOS Web App
       {
         name: 'apple-mobile-web-app-capable',
         content: 'yes'
@@ -34,6 +35,7 @@ const config: Configuration = {
         name: 'apple-mobile-web-app-status-bar-style',
         content: 'default'
       },
+      // for OGP
       {
         hid: 'og:site_name',
         property: 'og:site_name',
@@ -118,33 +120,15 @@ const config: Configuration = {
   // Web App manifest
   //
   manifest: {
+    lang: 'ja',
     name: SITE_NAME,
     short_name: SITE_NAME,
-    lang: 'ja',
     title: SITE_NAME,
-    'og:title': SITE_NAME,
     description: SITE_DESC,
-    'og:description': SITE_DESC,
     theme_color: '#007c91', // primary color
     background_color: '#ffffff',
     display: 'fullscreen',
-    icons: [
-      {
-        src: 'app/icons/icon@180px.png',
-        sizes: '180x180',
-        type: 'image/png'
-      },
-      {
-        src: 'app/icons/icon@192px.png',
-        sizes: '192x192',
-        type: 'image/png'
-      },
-      {
-        src: 'app/icons/icon@512px.png',
-        sizes: '512x512',
-        type: 'image/png'
-      }
-    ]
+    orientation: 'natural' // lock direction of rotation
   },
 
   /*
