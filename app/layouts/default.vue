@@ -52,6 +52,8 @@ export default Vue.extend({
           return '利用規約'
         case '/policy/':
           return 'プライバシーポリシー'
+        case '/settings/':
+          return 'プロフィール設定'
         //
         case `/users/${params.uid}/`: {
           const uid = this.$firebase.currentUser?.uid

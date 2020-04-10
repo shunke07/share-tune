@@ -22,6 +22,7 @@ export type PageTitle =
   | '利用規約'
   | 'プライバシーポリシー'
   | 'マイページ'
+  | 'プロフィール設定'
 
 export default Vue.extend({
   props: {
