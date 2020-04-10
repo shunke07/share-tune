@@ -128,7 +128,7 @@ const config: Configuration = {
     theme_color: '#007c91', // primary color
     background_color: '#ffffff',
     display: 'fullscreen',
-    orientation: 'landscape' // lock screen vertically
+    orientation: 'natural' // lock direction of rotation
   },
 
   /*
