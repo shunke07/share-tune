@@ -68,8 +68,25 @@ const processResult = (data: Albums) => {
 
 module.exports = functions
   .region('asia-northeast1')
-  .https.onCall(async (data: RequestData) => {
-    const result = await getNewReleases(data.offset)
+  .https.onCall(async (data: RequestData, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError(
+        'failed-precondition',
+        'The function must be called ' + 'while authenticated.'
+      )
+    }
+
+    const { offset } = data
+
+    if (typeof offset !== 'number') {
+      throw new functions.https.HttpsError(
+        'invalid-argument',
+        'offset is must be a number',
+        { offset }
+      )
+    }
+
+    const result = await getNewReleases(offset)
     const response = processResult(result.data)
     return response
   })
