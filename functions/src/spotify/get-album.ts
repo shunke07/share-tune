@@ -88,8 +88,25 @@ const processResult = (data: Album): Album => {
 
 module.exports = functions
   .region('asia-northeast1')
-  .https.onCall(async (data: RequestData) => {
-    const result = await getAlbum(data.albumId)
+  .https.onCall(async (data: RequestData, context) => {
+    if (!context.auth) {
+      throw new functions.https.HttpsError(
+        'failed-precondition',
+        'The function must be called ' + 'while authenticated.'
+      )
+    }
+
+    const { albumId } = data
+
+    if (!albumId) {
+      throw new functions.https.HttpsError(
+        'invalid-argument',
+        'albumId is undefined.',
+        { albumId }
+      )
+    }
+
+    const result = await getAlbum(albumId)
     const response = processResult(result.data)
     return response
   })
