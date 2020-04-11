@@ -65,7 +65,7 @@ export default Vue.extend({
 
   methods: {
     fillOldValue() {
-      if (this.required) this.value = this.currentValue
+      if (this.required && !this.value.length) this.value = this.currentValue
     }
   }
 })

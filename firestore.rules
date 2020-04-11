@@ -11,6 +11,11 @@ service cloud.firestore {
                     && isUserValid(incomingData())
                     && isCreateUserValid(incomingData());
 
+      allow update: if isAuthenticated()
+                    && isUserAuthenticated(userID)
+                    && isUserValid(incomingData())
+                    && isUpdateUserValid(incomingData());
+
       function isUserValid(data) {
         return data.size() == 6
         && data.keys().hasAll(['displayName', 'profileText', 'siteUrl', 'image', 'createdAt', 'updatedAt'])
@@ -26,6 +31,15 @@ service cloud.firestore {
         && data.image.id == null
         && data.image.url == null
         && data.createdAt == data.updatedAt;
+      }
+
+      function isUpdateUserValid(data) {
+        return (data.profileText == null || validString(data.profileText, 1, 160))
+        && (data.siteUrl == null
+            || (validUrl(data.siteUrl) && validString(data.siteUrl, 1, 100)))
+        && data.image.id == null
+        && data.image.url == null
+        && data.createdAt != data.updatedAt;
       }
 
       match /bookmarks/{bookmarkID} {
