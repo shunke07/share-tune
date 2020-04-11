@@ -4,11 +4,14 @@
       type="text"
       class="input"
       label="ユーザーネーム"
+      :required="true"
       :max-length="20"
       :is-value-valid="true"
       :current-value="loginUser.displayName"
       @onChangeValue="displayName = $event"
     />
+    <p class="counter">{{ displayName.length }}/20</p>
+
     <BaseTextarea
       class="textarea"
       label="プロフィール"
@@ -17,6 +20,8 @@
       :current-value="loginUser.profileText"
       @onChangeValue="profileText = $event"
     />
+    <p class="counter">{{ profileText.length }}/160</p>
+
     <BaseInputText
       class="input"
       type="text"
@@ -26,6 +31,8 @@
       :current-value="loginUser.siteUrl"
       @onChangeValue="siteUrl = $event"
     />
+    <p class="counter">{{ siteUrl.length }}/100</p>
+
     <BaseButton label="保存" class="save" :disabled="true" />
   </form>
 </template>
@@ -78,6 +85,13 @@ export default Vue.extend({
 
   > .save {
     margin-top: 32px;
+  }
+
+  > .counter {
+    width: 100%;
+    text-align: right;
+    margin-top: -12px;
+    color: $gray;
   }
 }
 </style>

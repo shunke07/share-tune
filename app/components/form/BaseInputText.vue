@@ -7,6 +7,7 @@
       :type="type"
       placeholder=" "
       :maxlength="maxLength"
+      @blur="fillOldValue()"
     />
     <span class="label">{{ label }}</span>
   </label>
@@ -39,6 +40,10 @@ export default Vue.extend({
     isValueValid: {
       type: Boolean,
       required: true
+    },
+    required: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -56,6 +61,12 @@ export default Vue.extend({
 
   mounted() {
     if (this.currentValue) this.value = this.currentValue
+  },
+
+  methods: {
+    fillOldValue() {
+      if (this.required) this.value = this.currentValue
+    }
   }
 })
 </script>
