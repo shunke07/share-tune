@@ -178,7 +178,7 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .article-album {
   position: relative;
-  margin: 60px 16px 16px;
+  margin: 0px 16px 16px;
 
   > .date {
     @include caption;

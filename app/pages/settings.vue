@@ -17,7 +17,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .container {
-  margin: 56px auto 0;
+  margin: 0 auto;
   width: calc(100% - 32px);
 }
 </style>

@@ -1,6 +1,9 @@
 <template>
-  <div v-if="user" class="container">
+  <div v-if="user" class="users-page">
     <nav class="leading">
+      <button class="icon" @click="$router.back()">
+        <svg-icon name="navigation/arrow_back" title="戻る" />
+      </button>
       <button class="icon" @click="$router.push('/settings/')">
         <svg-icon name="actions/settings" title="プロフィール設定" />
       </button>
@@ -32,9 +35,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.container {
-  margin-top: 56px;
-
+.users-page {
   > .profile {
     border-bottom: 1px solid $boundaryBlack;
     margin-bottom: 16px;
@@ -42,14 +43,14 @@ export default Vue.extend({
 
   > .leading {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     position: fixed;
     top: 0;
     width: 100%;
     max-width: $maxViewWidth;
     height: 44px;
-    padding-right: 16px;
+    padding: 0 16px;
     z-index: 3;
 
     > .icon {

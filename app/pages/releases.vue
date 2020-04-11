@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="releases-page">
     <nav class="leading">
       <button class="icon" @click="pushToMyPage()">
         <img v-if="!!userImageUrl" :src="userImageUrl" alt="マイページへ" />
@@ -46,9 +46,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.container {
-  margin-top: 56px;
-
+.releases-page {
   > .leading {
     display: flex;
     align-items: center;
