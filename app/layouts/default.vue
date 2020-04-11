@@ -34,7 +34,8 @@ export default Vue.extend({
     },
 
     backIconVisible(): boolean {
-      const excludedPaths = ['/releases/']
+      const uid = this.$route.params.uid
+      const excludedPaths = ['/releases/', `/users/${uid}/`]
       return !excludedPaths.includes(this.$route.path)
     },
 
