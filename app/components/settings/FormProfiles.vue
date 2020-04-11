@@ -33,7 +33,12 @@
     />
     <p class="counter">{{ siteUrl.length }}/100</p>
 
-    <BaseButton label="保存" class="save" :disabled="!isFormValid" />
+    <BaseButton
+      label="保存"
+      class="save"
+      :disabled="!isFormValid"
+      @onClick="save()"
+    />
   </form>
 </template>
 
@@ -45,6 +50,7 @@ import BaseTextarea from '~/components/form/BaseTextarea.vue'
 import BaseButton from '~/components/form/BaseButton.vue'
 
 import { User } from '~/types/firestore'
+import { updateUser } from '~/repositories/firestore/users'
 
 export default Vue.extend({
   components: {
@@ -88,6 +94,61 @@ export default Vue.extend({
     isFormValid(): boolean {
       const { isNameValid, isProfileTextValid, isUrlValid } = this
       return isNameValid && isProfileTextValid && isUrlValid
+    }
+  },
+
+  methods: {
+    async save(): Promise<void> {
+      if (!this.isFormValid) return
+
+      const { displayName, profileText, siteUrl } = this
+      const uid = this.loginUser.uid
+      const data = {
+        uid,
+        displayName,
+        profileText,
+        siteUrl,
+        image: { id: null, url: null }
+      }
+
+      this.$store.commit('setIsLoading', true)
+
+      await updateUser(data).catch((error: Error) => {
+        this.$nuxt.error(error)
+      })
+
+      // listen updating firestore
+      await new Promise((resolve) => {
+        const now = this.$firestore.Timestamp.now()
+        const ref = this.$firestore().doc(`users/${uid}`)
+
+        const unsubscribe = ref.onSnapshot(
+          (snapshot: firebase.firestore.DocumentSnapshot) => {
+            const updatedAt = snapshot.get('updatedAt').toMillis() / 1000
+            if (now.seconds > updatedAt) return // if update not completed
+
+            const {
+              displayName,
+              profileText,
+              siteUrl,
+              image
+            } = snapshot.data() as User
+
+            const newProfile = {
+              uid,
+              displayName,
+              profileText,
+              siteUrl,
+              image
+            }
+            this.$store.commit('setLoginUser', newProfile) // update store state
+            this.$store.commit('setIsLoading', false)
+            this.$router.push(`/users/${uid}/`)
+            resolve()
+            unsubscribe()
+          }
+        )
+      })
     }
   }
 })
