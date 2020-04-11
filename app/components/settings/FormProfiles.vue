@@ -6,6 +6,7 @@
       label="ユーザーネーム"
       :max-length="20"
       :is-value-valid="true"
+      :current-value="loginUser.displayName"
       @onChangeValue="displayName = $event"
     />
     <BaseTextarea
@@ -13,6 +14,7 @@
       label="プロフィール"
       :max-length="160"
       :is-value-valid="true"
+      :current-value="loginUser.profileText"
       @onChangeValue="profileText = $event"
     />
     <BaseInputText
@@ -21,6 +23,7 @@
       label="ウェブサイト"
       :max-length="100"
       :is-value-valid="true"
+      :current-value="loginUser.siteUrl"
       @onChangeValue="siteUrl = $event"
     />
     <BaseButton label="保存" class="save" :disabled="true" />
@@ -34,6 +37,8 @@ import BaseInputText from '~/components/form/BaseInputText.vue'
 import BaseTextarea from '~/components/form/BaseTextarea.vue'
 import BaseButton from '~/components/form/BaseButton.vue'
 
+import { User } from '~/types/firestore'
+
 export default Vue.extend({
   components: {
     BaseInputText,
@@ -46,6 +51,12 @@ export default Vue.extend({
       displayName: '' as string,
       profileText: '' as string,
       siteUrl: '' as string
+    }
+  },
+
+  computed: {
+    loginUser(): User {
+      return this.$store.state.loginUser
     }
   }
 })
