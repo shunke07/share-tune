@@ -14,7 +14,8 @@ const validateLgoin: Middleware = ({ store, route, redirect }: Context) => {
   const pathsShouldLoggedIn = [
     '/releases/',
     `/albums/${albumId}/`,
-    `/users/${uid}/`
+    `/users/${uid}/`,
+    `/settings/`
   ] as const
   const pathsShouldNotLoggedIn = ['/', '/signup/', '/login/'] as const
 
