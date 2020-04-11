@@ -1,5 +1,5 @@
 <template>
-  <div v-if="user" class="container">
+  <div v-if="user" class="users-page">
     <nav class="leading">
       <button class="icon" @click="$router.push('/settings/')">
         <svg-icon name="actions/settings" title="プロフィール設定" />
@@ -32,9 +32,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.container {
-  margin-top: 56px;
-
+.users-page {
   > .profile {
     border-bottom: 1px solid $boundaryBlack;
     margin-bottom: 16px;

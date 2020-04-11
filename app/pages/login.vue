@@ -33,7 +33,7 @@ export default Vue.extend({
   flex-direction: column;
   align-items: center;
   width: calc(100% - 64px);
-  margin: 96px auto 0;
+  margin: 20px auto 0;
 
   > .signup {
     margin-top: 32px;

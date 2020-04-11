@@ -57,7 +57,7 @@ export default Vue.extend({
   flex-direction: column;
   align-items: center;
   width: calc(100% - 64px);
-  margin: 96px auto 0;
+  margin: 20px auto 0;
 
   > .complete {
     > h1 {
