@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <FormProfiles />
   </div>
 </template>
@@ -15,4 +15,9 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.container {
+  margin: 56px auto 0;
+  width: calc(100% - 32px);
+}
+</style>
