@@ -30,7 +30,7 @@ export default Vue.extend({
 
   computed: {
     imageUrl(): string {
-      const imageUrl = this.$store.state.loginUser?.imageUrl
+      const imageUrl = this.$store.state.loginUser?.image.url
       return imageUrl ?? require('~/assets/images/default-icon.png')
     }
   }
