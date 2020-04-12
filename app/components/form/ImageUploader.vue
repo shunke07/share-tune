@@ -35,7 +35,7 @@ export default Vue.extend({
   },
 
   methods: {
-    onImageSelected(e: HTMLElementEvent<HTMLInputElement>) {
+    onImageSelected(e: HTMLElementEvent<HTMLInputElement>): void {
       const file = e.target.files ? e.target.files[0] : null
       if (!file) return
 
@@ -48,6 +48,7 @@ export default Vue.extend({
         )
         return
       }
+
       // validate file size (max size is 10MB)
       if (file.size > 1024 * 1024 * 10) {
         alert(
@@ -55,6 +56,7 @@ export default Vue.extend({
         )
         return
       }
+
       // display image
       const reader = new FileReader()
       reader.readAsDataURL(file)
@@ -62,6 +64,8 @@ export default Vue.extend({
         if (!target || !target.result) return
         this.image = target.result as string
       }
+
+      this.$emit('onFileUploaded', file)
     }
   }
 })
