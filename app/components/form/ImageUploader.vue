@@ -4,7 +4,7 @@
     <input
       type="file"
       accept="image/png,image/jpeg"
-      @change="onImageSelected"
+      @change="onImageSelected()"
     />
     <div class="filter" />
     <img :src="imageUrl" alt="ユーザー画像" class="icon" />
@@ -29,7 +29,7 @@ export default Vue.extend({
     imageUrl(): string {
       if (this.image) return this.image
 
-      const imageUrl = this.$store.state.loginUser?.imageUrl
+      const imageUrl = this.$store.state.loginUser?.image.url
       return imageUrl ?? require('~/assets/images/default-icon.png')
     }
   },
