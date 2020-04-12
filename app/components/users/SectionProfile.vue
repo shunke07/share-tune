@@ -45,6 +45,9 @@ export default Vue.extend({
   > .icon {
     width: 72px;
     height: 72px;
+    object-fit: cover;
+    border: 1px solid $boundaryBlack;
+    border-radius: 50%;
   }
 
   > .site {
