@@ -1,6 +1,6 @@
 <template>
   <form class="form-profile">
-    <ImageUploader class="input" />
+    <ImageUploader class="input" @onFileUploaded="file = $event" />
 
     <BaseInputText
       type="text"
@@ -55,6 +55,17 @@ import BaseButton from '~/components/form/BaseButton.vue'
 import { User } from '~/types/firestore'
 import { updateUser } from '~/repositories/firestore/users'
 
+import { useDocumentId } from '~/utils/use-document-id'
+import { useUploadImage } from '~/utils/use-upload-image'
+
+type Profile = {
+  displayName: User['displayName']
+  profileText: User['profileText']
+  siteUrl: User['siteUrl']
+  image: User['image']
+  file: null | File
+}
+
 export default Vue.extend({
   components: {
     BaseInputText,
@@ -63,11 +74,16 @@ export default Vue.extend({
     ImageUploader
   },
 
-  data() {
+  data(): Profile {
     return {
-      displayName: '' as string,
-      profileText: '' as string,
-      siteUrl: '' as string
+      displayName: '',
+      profileText: '',
+      siteUrl: '',
+      file: null,
+      image: {
+        id: null,
+        url: null
+      }
     }
   },
 
@@ -102,17 +118,38 @@ export default Vue.extend({
   },
 
   methods: {
+    async uploadImage(): Promise<void> {
+      if (!this.file) return
+
+      const id = useDocumentId()
+      const uid = this.$firebase.currentUser?.uid
+      const storagePath = `users/${uid}/icons/${id}`
+
+      const url = await useUploadImage({
+        path: storagePath,
+        file: this.file
+      }).catch((error: Error) => this.$nuxt.error(error))
+
+      if (url) this.image = { id, url }
+    },
+
     async save(): Promise<void> {
       if (!this.isFormValid) return
 
+      if (this.file) await this.uploadImage()
+
       const { displayName, profileText, siteUrl } = this
+      const { id, url } = this.image
       const uid = this.loginUser.uid
       const data = {
         uid,
         displayName,
         profileText,
         siteUrl,
-        image: { id: null, url: null }
+        image: {
+          id,
+          url
+        }
       }
 
       this.$store.commit('setIsLoading', true)
