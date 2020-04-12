@@ -1,7 +1,7 @@
 <template>
   <div v-if="user" class="users-page">
     <nav class="leading">
-      <button class="icon" @click="$router.back()">
+      <button class="icon" @click="$router.push('/releases/')">
         <svg-icon name="navigation/arrow_back" title="戻る" />
       </button>
       <button class="icon" @click="$router.push('/settings/')">

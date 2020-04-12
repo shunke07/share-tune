@@ -30,7 +30,7 @@ export default Vue.extend({
 
   computed: {
     imageUrl(): string {
-      const imageUrl = this.$store.state.loginUser?.imageUrl
+      const imageUrl = this.$store.state.loginUser?.image.url
       return imageUrl ?? require('~/assets/images/default-icon.png')
     }
   }
@@ -45,6 +45,9 @@ export default Vue.extend({
   > .icon {
     width: 72px;
     height: 72px;
+    object-fit: cover;
+    border: 1px solid $boundaryBlack;
+    border-radius: 50%;
   }
 
   > .site {
