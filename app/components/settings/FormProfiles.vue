@@ -1,5 +1,7 @@
 <template>
   <form class="form-profile">
+    <ImageUploader class="input" />
+
     <BaseInputText
       type="text"
       class="input"
@@ -45,6 +47,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
+import ImageUploader from '~/components/form/ImageUploader.vue'
 import BaseInputText from '~/components/form/BaseInputText.vue'
 import BaseTextarea from '~/components/form/BaseTextarea.vue'
 import BaseButton from '~/components/form/BaseButton.vue'
@@ -56,7 +59,8 @@ export default Vue.extend({
   components: {
     BaseInputText,
     BaseTextarea,
-    BaseButton
+    BaseButton,
+    ImageUploader
   },
 
   data() {
@@ -159,6 +163,7 @@ export default Vue.extend({
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 12px;
 
   > .input {
     margin-bottom: 16px;

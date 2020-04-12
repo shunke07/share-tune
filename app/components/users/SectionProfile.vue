@@ -1,17 +1,6 @@
 <template>
   <section class="section-profile">
-    <img
-      v-if="user.imageUrl"
-      :src="user.imageUrl"
-      alt="ユーザー画像"
-      class="icon"
-    />
-    <img
-      v-else
-      src="~/assets/images/default-icon.png"
-      alt="ユーザー画像"
-      class="icon"
-    />
+    <img :src="imageUrl" alt="ユーザー画像" class="icon" />
     <h1 class="name">
       {{ user.displayName }}
     </h1>
@@ -36,6 +25,13 @@ export default Vue.extend({
     user: {
       type: Object as PropType<User>,
       required: true
+    }
+  },
+
+  computed: {
+    imageUrl(): string {
+      const imageUrl = this.$store.state.loginUser?.imageUrl
+      return imageUrl ?? require('~/assets/images/default-icon.png')
     }
   }
 })
