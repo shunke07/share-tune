@@ -16,6 +16,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { User } from '~/types/firestore'
+import { RootState } from '~/store'
 
 import SectionProfile from '~/components/users/SectionProfile.vue'
 import ListBookmarks from '~/components/users/ListBookmarks.vue'
@@ -27,8 +28,8 @@ export default Vue.extend({
   },
 
   computed: {
-    user(): User {
-      return this.$store.state.loginUser
+    user(): User | null {
+      return (this.$store.state as RootState).loginUser
     }
   }
 })

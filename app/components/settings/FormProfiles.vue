@@ -53,8 +53,9 @@ import BaseTextarea from '~/components/form/BaseTextarea.vue'
 import BaseButton from '~/components/form/BaseButton.vue'
 
 import { User } from '~/types/firestore'
-import { updateUser } from '~/repositories/firestore/users'
+import { RootState } from '~/store'
 
+import { updateUser } from '~/repositories/firestore/users'
 import { useDocumentId } from '~/utils/use-document-id'
 import { useUploadImage } from '~/utils/use-upload-image'
 
@@ -88,8 +89,8 @@ export default Vue.extend({
   },
 
   computed: {
-    loginUser(): User {
-      return this.$store.state.loginUser
+    loginUser(): User | null {
+      return (this.$store.state as RootState).loginUser
     },
 
     isNameValid(): boolean {
@@ -138,9 +139,11 @@ export default Vue.extend({
 
       if (this.file) await this.uploadImage()
 
-      const { displayName, profileText, siteUrl } = this
+      const { displayName, profileText, siteUrl, loginUser } = this
+      if (!loginUser) return
+
       const { id, url } = this.image
-      const uid = this.loginUser.uid
+      const uid = loginUser.uid
       const data = {
         uid,
         displayName,

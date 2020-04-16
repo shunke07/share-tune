@@ -17,6 +17,8 @@ import Vue from 'vue'
 import TheAppBar, { PageTitle } from '~/components/TheAppBar.vue'
 import TheLoading from '~/components/TheLoading.vue'
 
+import { RootState } from '~/store'
+
 export default Vue.extend({
   components: {
     TheAppBar,
@@ -25,7 +27,7 @@ export default Vue.extend({
 
   computed: {
     isLoading(): boolean {
-      return this.$store.state.isLoading
+      return (this.$store.state as RootState).isLoading
     },
 
     isAppBarVisible(): boolean {
