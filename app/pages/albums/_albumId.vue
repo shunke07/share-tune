@@ -55,16 +55,25 @@
               :class="{ '-active': isBookmarked }"
             />
           </button>
+          <button class="fab create" @click="showModal()">
+            <svg-icon name="actions/create" title="create" />
+          </button>
         </div>
       </div>
     </div>
+    <!-- full page modal form -->
+    <FormPost v-if="isFormVisible" />
   </article>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+
 import { MetaInfo } from 'vue-meta'
 import { Album } from '~/types/spotify-api.d.ts'
+
+import FormPost from '~/components/albums/FormPost.vue'
+
 import {
   createBookmark,
   deleteBookmark,
@@ -74,11 +83,16 @@ import {
 type Response = void | { data: Album }
 
 export default Vue.extend({
+  components: {
+    FormPost
+  },
+
   data() {
     return {
       album: null as Readonly<Album> | null,
       albumId: this.$route.params.albumId as string,
-      isBookmarked: false as boolean
+      isBookmarked: false as boolean,
+      isFormVisible: false as boolean
     }
   },
 
@@ -137,6 +151,10 @@ export default Vue.extend({
   },
 
   methods: {
+    showModal(): void {
+      this.isFormVisible = true
+    },
+
     bookmark(): void {
       // switch flag
       this.isBookmarked = !this.isBookmarked
@@ -262,6 +280,11 @@ export default Vue.extend({
         &.-active {
           color: $primary;
         }
+      }
+
+      &.create {
+        background: $primary;
+        color: $white;
       }
 
       &.favorite {
