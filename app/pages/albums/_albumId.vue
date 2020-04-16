@@ -62,7 +62,7 @@
       </div>
     </div>
     <!-- full page modal form -->
-    <FormPost v-if="isFormVisible" />
+    <FormPost v-show="isFormVisible" />
   </article>
 </template>
 
@@ -161,9 +161,9 @@ export default Vue.extend({
 
       const uid = this.$firebase.currentUser?.uid
       const albumId = this.albumId
-      const album = this.album as Album
+      const album = this.album
 
-      if (!uid) return
+      if (!uid || !album) return
 
       // delete firestore bookmark document
       if (!this.isBookmarked) {
