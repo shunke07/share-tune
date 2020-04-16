@@ -1,6 +1,9 @@
 <template>
-  <div v-if="user" class="container">
+  <div v-if="user" class="users-page">
     <nav class="leading">
+      <button class="icon" @click="$router.push('/releases/')">
+        <svg-icon name="navigation/arrow_back" title="戻る" />
+      </button>
       <button class="icon" @click="$router.push('/settings/')">
         <svg-icon name="actions/settings" title="プロフィール設定" />
       </button>
@@ -13,6 +16,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { User } from '~/types/firestore'
+import { RootState } from '~/store'
 
 import SectionProfile from '~/components/users/SectionProfile.vue'
 import ListBookmarks from '~/components/users/ListBookmarks.vue'
@@ -24,17 +28,15 @@ export default Vue.extend({
   },
 
   computed: {
-    user(): User {
-      return this.$store.state.loginUser
+    user(): User | null {
+      return (this.$store.state as RootState).loginUser
     }
   }
 })
 </script>
 
 <style lang="scss" scoped>
-.container {
-  margin-top: 56px;
-
+.users-page {
   > .profile {
     border-bottom: 1px solid $boundaryBlack;
     margin-bottom: 16px;
@@ -42,14 +44,14 @@ export default Vue.extend({
 
   > .leading {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     position: fixed;
     top: 0;
     width: 100%;
     max-width: $maxViewWidth;
     height: 44px;
-    padding-right: 16px;
+    padding: 0 16px;
     z-index: 3;
 
     > .icon {

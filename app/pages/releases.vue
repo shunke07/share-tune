@@ -1,9 +1,8 @@
 <template>
-  <div class="container">
+  <div class="releases-page">
     <nav class="leading">
       <button class="icon" @click="pushToMyPage()">
-        <img v-if="!!userImageUrl" :src="userImageUrl" alt="マイページへ" />
-        <img v-else src="~/assets/images/default-icon.png" alt="マイページへ" />
+        <img :src="userImageUrl" alt="マイページへ" />
       </button>
     </nav>
     <ListReleases />
@@ -13,6 +12,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { MetaInfo } from 'vue-meta'
+import { RootState } from '~/store'
 
 import ListReleases from '~/components/releases/ListReleases.vue'
 
@@ -23,17 +23,15 @@ export default Vue.extend({
 
   computed: {
     userImageUrl(): string {
-      const imageUrl: string = this.$store.state.loginUser?.image.url
-      return imageUrl
+      const imageUrl = (this.$store.state as RootState).loginUser?.image.url
+      return imageUrl ?? require('~/assets/images/default-icon.png')
     }
   },
 
   methods: {
     pushToMyPage(): void {
       const uid = this.$firebase.currentUser?.uid
-      if (!uid) return
-
-      this.$router.push(`/users/${uid}/`)
+      if (uid) this.$router.push(`/users/${uid}/`)
     }
   },
 
@@ -46,9 +44,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.container {
-  margin-top: 56px;
-
+.releases-page {
   > .leading {
     display: flex;
     align-items: center;

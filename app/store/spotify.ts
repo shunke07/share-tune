@@ -6,15 +6,15 @@ export const state = () => ({
   albums: [] as Album[]
 })
 
-export type RootState = ReturnType<typeof state>
+export type SpotifyState = ReturnType<typeof state>
 
-export const getters: GetterTree<RootState, RootState> = {
+export const getters: GetterTree<SpotifyState, SpotifyState> = {
   getAlbumById: (state) => (id: string) => {
     return state.albums.find((album) => album.id === id)
   }
 }
 
-export const mutations: MutationTree<RootState> = {
+export const mutations: MutationTree<SpotifyState> = {
   setReleases(state, payload: Albums) {
     state.releases = payload
   },

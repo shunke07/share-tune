@@ -1,6 +1,6 @@
 <template>
   <div class="only-sp-view">
-    <header>
+    <header :class="{ 'app-bar': isAppBarVisible }">
       <TheAppBar
         v-show="isAppBarVisible"
         :title="pageTitle"
@@ -17,6 +17,8 @@ import Vue from 'vue'
 import TheAppBar, { PageTitle } from '~/components/TheAppBar.vue'
 import TheLoading from '~/components/TheLoading.vue'
 
+import { RootState } from '~/store'
+
 export default Vue.extend({
   components: {
     TheAppBar,
@@ -25,7 +27,7 @@ export default Vue.extend({
 
   computed: {
     isLoading(): boolean {
-      return this.$store.state.isLoading
+      return (this.$store.state as RootState).isLoading
     },
 
     isAppBarVisible(): boolean {
@@ -34,7 +36,8 @@ export default Vue.extend({
     },
 
     backIconVisible(): boolean {
-      const excludedPaths = ['/releases/']
+      const uid = this.$route.params.uid
+      const excludedPaths = ['/releases/', `/users/${uid}/`]
       return !excludedPaths.includes(this.$route.path)
     },
 
@@ -78,5 +81,10 @@ export default Vue.extend({
   position: relative;
   overflow: hidden;
   min-height: 100vh;
+
+  > .app-bar {
+    height: 44px;
+    margin-bottom: 16px;
+  }
 }
 </style>

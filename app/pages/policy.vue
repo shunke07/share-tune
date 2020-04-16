@@ -238,7 +238,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .container {
-  margin: 72px 16px 0;
+  margin: 0 16px;
 }
 
 .updated-at {
