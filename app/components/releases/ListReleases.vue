@@ -28,6 +28,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Albums } from '~/types/spotify-api.d.ts'
+import { SpotifyState } from '~/store/spotify'
 
 type Response = void | { data: Albums }
 
@@ -40,13 +41,13 @@ export default Vue.extend({
   },
 
   computed: {
-    observerElement(): Element {
-      return this.$refs.observer as Element
+    observerElement(): HTMLDivElement {
+      return this.$refs.observer as HTMLDivElement
     }
   },
 
   async mounted() {
-    const storeReleases: Albums | [] = this.$store.state.spotify.releases
+    const storeReleases = (this.$store.state.spotify as SpotifyState).releases
     if (storeReleases.length) {
       this.releases = storeReleases
       this.observeScroll()

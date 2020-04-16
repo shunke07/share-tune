@@ -13,6 +13,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { RootState } from '~/store'
 
 interface HTMLElementEvent<T extends HTMLElement> extends Event {
   target: T
@@ -29,7 +30,7 @@ export default Vue.extend({
     imageUrl(): string {
       if (this.image) return this.image
 
-      const imageUrl = this.$store.state.loginUser?.image.url
+      const imageUrl = (this.$store.state as RootState).loginUser?.image.url
       return imageUrl ?? require('~/assets/images/default-icon.png')
     }
   },
