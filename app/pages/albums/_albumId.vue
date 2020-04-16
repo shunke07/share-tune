@@ -55,14 +55,17 @@
               :class="{ '-active': isBookmarked }"
             />
           </button>
-          <button class="fab create" @click="showModal()">
+          <button class="fab create" @click="switchModalVisible(true)">
             <svg-icon name="actions/create" title="create" />
           </button>
         </div>
       </div>
     </div>
     <!-- full page modal form -->
-    <FormPost v-show="isFormVisible" />
+    <FormPost
+      v-show="isFormVisible"
+      @onClickClose="switchModalVisible(false)"
+    />
   </article>
 </template>
 
@@ -151,8 +154,8 @@ export default Vue.extend({
   },
 
   methods: {
-    showModal(): void {
-      this.isFormVisible = true
+    switchModalVisible(bool: boolean): void {
+      this.isFormVisible = bool
     },
 
     bookmark(): void {
