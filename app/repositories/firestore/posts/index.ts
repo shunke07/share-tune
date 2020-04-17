@@ -39,6 +39,7 @@ export const createPost = async (payload: Payload): Promise<void> => {
 export const getUserPosts = async ({ uid }: { uid: string }) => {
   const query = await postsRef(uid)
     .orderBy('createdAt', 'desc')
+    .limit(10)
     .get()
   if (query.empty) return []
 
