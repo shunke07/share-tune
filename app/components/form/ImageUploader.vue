@@ -4,7 +4,7 @@
     <input
       type="file"
       accept="image/png,image/jpeg"
-      @change="onImageSelected()"
+      @change="onImageSelected"
     />
     <div class="filter" />
     <img :src="imageUrl" alt="ユーザー画像" class="icon" />
