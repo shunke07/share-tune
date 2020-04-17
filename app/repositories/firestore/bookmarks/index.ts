@@ -1,4 +1,4 @@
-import { bookmarksRef, timestamp } from '~/repositories/firestore/config.ts'
+import { bookmarksRef, timestamp } from '~/repositories/firestore/config'
 import { Bookmark } from '~/types/firestore'
 
 type Payload = {

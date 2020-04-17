@@ -40,7 +40,7 @@ import Vue from 'vue'
 
 import BaseInputText from '~/components/form/BaseInputText.vue'
 import BaseButton from '~/components/form/BaseButton.vue'
-import { createUser } from '~/repositories/firestore/users'
+import { createUser } from '~/repositories/firestore'
 
 type AuthError = Error & { code: string }
 

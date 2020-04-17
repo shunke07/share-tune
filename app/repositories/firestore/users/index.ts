@@ -1,4 +1,4 @@
-import { usersRef, timestamp } from '~/repositories/firestore/config.ts'
+import { usersRef, timestamp } from '~/repositories/firestore/config'
 import { User } from '~/types/firestore'
 
 type Payload = {

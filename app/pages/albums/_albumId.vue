@@ -55,7 +55,7 @@
               :class="{ '-active': isBookmarked }"
             />
           </button>
-          <button class="fab create" @click="switchModalVisible(true)">
+          <button class="fab create" @click="switchFormVisible(true)">
             <svg-icon name="actions/create" title="create" />
           </button>
         </div>
@@ -64,7 +64,8 @@
     <!-- full page modal form -->
     <FormPost
       v-show="isFormVisible"
-      @onClickClose="switchModalVisible(false)"
+      @onClickClose="switchFormVisible(false)"
+      @onSubmit="_createPost($event)"
     />
   </article>
 </template>
@@ -81,7 +82,7 @@ import {
   createBookmark,
   deleteBookmark,
   getIsBookmarked
-} from '~/repositories/firestore/bookmarks'
+} from '~/repositories/firestore'
 
 type Response = void | { data: Album }
 
@@ -154,7 +155,7 @@ export default Vue.extend({
   },
 
   methods: {
-    switchModalVisible(bool: boolean): void {
+    switchFormVisible(bool: boolean): void {
       this.isFormVisible = bool
     },
 
@@ -185,6 +186,10 @@ export default Vue.extend({
         }
       }
       createBookmark(data)
+    },
+
+    async _createPost(comment: string): Promise<void> {
+      await console.log(comment)
     }
   },
 
