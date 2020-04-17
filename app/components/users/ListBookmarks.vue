@@ -1,5 +1,5 @@
 <template>
-  <ul class="list-favorites">
+  <ul class="list-bookmarks">
     <li
       v-for="(bookmark, index) in bookmarks"
       :key="`bookmark-${index}`"
@@ -47,7 +47,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.list-favorites {
+.list-bookmarks {
   display: flex;
   flex-wrap: wrap;
 
