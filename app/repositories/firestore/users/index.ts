@@ -6,7 +6,7 @@ type Payload = {
   displayName: string
 }
 
-type UserData = {
+export type UserData = {
   uid: string
   displayName: User['displayName']
   profileText: User['profileText']
