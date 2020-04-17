@@ -14,10 +14,19 @@ type UserData = {
   image: User['image']
 }
 
+type UserField = {
+  displayName: User['displayName']
+  profileText: User['profileText']
+  siteUrl: User['siteUrl']
+  image: User['image']
+  createdAt: typeof timestamp
+  updatedAt: typeof timestamp
+}
+
 export const createUser = async (payload: Payload): Promise<void> => {
   const { uid, displayName } = payload
 
-  await usersRef.doc(uid).set({
+  const data: UserField = {
     displayName,
     profileText: null,
     siteUrl: null,
@@ -27,7 +36,9 @@ export const createUser = async (payload: Payload): Promise<void> => {
     },
     createdAt: timestamp,
     updatedAt: timestamp
-  })
+  }
+
+  await usersRef.doc(uid).set(data)
 }
 
 export const updateUser = async (payload: UserData) => {

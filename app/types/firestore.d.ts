@@ -20,3 +20,15 @@ export type Bookmark = {
   }
   createdAt: firebase.firestore.FieldValue
 }
+
+export type Post = {
+  album: {
+    id: string
+    imageUrl: string
+    name: string
+    artist: string
+  }
+  comment: string
+  createdAt: firebase.firestore.FieldValue
+  updatedAt: firebase.firestore.FieldValue
+}

@@ -55,16 +55,28 @@
               :class="{ '-active': isBookmarked }"
             />
           </button>
+          <button class="fab create" @click="switchModalVisible(true)">
+            <svg-icon name="actions/create" title="create" />
+          </button>
         </div>
       </div>
     </div>
+    <!-- full page modal form -->
+    <FormPost
+      v-show="isFormVisible"
+      @onClickClose="switchModalVisible(false)"
+    />
   </article>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+
 import { MetaInfo } from 'vue-meta'
 import { Album } from '~/types/spotify-api.d.ts'
+
+import FormPost from '~/components/albums/FormPost.vue'
+
 import {
   createBookmark,
   deleteBookmark,
@@ -74,11 +86,16 @@ import {
 type Response = void | { data: Album }
 
 export default Vue.extend({
+  components: {
+    FormPost
+  },
+
   data() {
     return {
       album: null as Readonly<Album> | null,
       albumId: this.$route.params.albumId as string,
-      isBookmarked: false as boolean
+      isBookmarked: false as boolean,
+      isFormVisible: false as boolean
     }
   },
 
@@ -137,15 +154,19 @@ export default Vue.extend({
   },
 
   methods: {
+    switchModalVisible(bool: boolean): void {
+      this.isFormVisible = bool
+    },
+
     bookmark(): void {
       // switch flag
       this.isBookmarked = !this.isBookmarked
 
       const uid = this.$firebase.currentUser?.uid
       const albumId = this.albumId
-      const album = this.album as Album
+      const album = this.album
 
-      if (!uid) return
+      if (!uid || !album) return
 
       // delete firestore bookmark document
       if (!this.isBookmarked) {
@@ -262,6 +283,11 @@ export default Vue.extend({
         &.-active {
           color: $primary;
         }
+      }
+
+      &.create {
+        background: $primary;
+        color: $white;
       }
 
       &.favorite {

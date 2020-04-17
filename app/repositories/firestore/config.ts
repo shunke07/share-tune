@@ -6,7 +6,7 @@ const fieldVal = firebase.firestore.FieldValue
 export const timestamp = fieldVal.serverTimestamp()
 
 type Collection = 'users'
-type UsersSubCollection = 'bookmarks'
+type UsersSubCollection = 'bookmarks' | 'posts'
 
 // reference of collection
 const ref = (ref: Collection) => db.collection(ref)
@@ -18,3 +18,4 @@ const usersSubCollection = (uid: string, ref: UsersSubCollection) =>
 
 export const bookmarksRef = (uid: string) =>
   usersSubCollection(uid, 'bookmarks')
+export const postsRef = (uid: string) => usersSubCollection(uid, 'posts')

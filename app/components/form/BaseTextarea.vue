@@ -54,6 +54,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .base-textarea {
+  display: block;
   position: relative;
   width: 100%;
   height: 120px;

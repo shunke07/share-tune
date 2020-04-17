@@ -11,11 +11,16 @@ type Query = {
   albumId: string
 }
 
+type BookmarkData = {
+  album: Bookmark['album']
+  createdAt: typeof timestamp
+}
+
 export const createBookmark = async (payload: Payload): Promise<void> => {
   const { uid, album } = payload
   const { id, imageUrl, name, artist } = album
 
-  await bookmarksRef(uid).add({
+  const data: BookmarkData = {
     album: {
       id,
       imageUrl,
@@ -23,7 +28,9 @@ export const createBookmark = async (payload: Payload): Promise<void> => {
       artist
     },
     createdAt: timestamp
-  })
+  }
+
+  await bookmarksRef(uid).add(data)
 }
 
 export const deleteBookmark = async (data: Query): Promise<void> => {
