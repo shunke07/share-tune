@@ -10,7 +10,7 @@
       <button
         class="submit"
         :disabled="!isCommentValid"
-        @click="$emit('onSubmit')"
+        @click="$emit('onSubmit', comment)"
       >
         シェア
       </button>

@@ -1,5 +1,5 @@
 import { ActionTree, MutationTree } from 'vuex'
-import { getUser } from '~/repositories/firestore/users'
+import { getUser } from '~/repositories/firestore'
 import { User } from '~/types/firestore'
 
 export const state = () => ({

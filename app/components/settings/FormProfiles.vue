@@ -55,7 +55,7 @@ import BaseButton from '~/components/form/BaseButton.vue'
 import { User } from '~/types/firestore'
 import { RootState } from '~/store'
 
-import { updateUser } from '~/repositories/firestore/users'
+import { updateUser } from '~/repositories/firestore'
 import { useDocumentId } from '~/utils/use-document-id'
 import { useUploadImage } from '~/utils/use-upload-image'
 

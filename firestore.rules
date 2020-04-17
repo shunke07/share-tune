@@ -61,6 +61,29 @@ service cloud.firestore {
           && data.createdAt is timestamp;
         }
       }
+
+      match /posts/{postID} {
+        allow list: if isAuthenticated()
+                    && isUserAuthenticated(userID);
+
+        allow create: if isAuthenticated()
+                      && isUserAuthenticated(userID)
+                      && isPostValid(incomingData());
+
+        function isPostValid(data) {
+          return data.size() == 4
+          && data.keys().hasAll(['album', 'comment', 'createdAt', 'updatedAt'])
+          && data.album is map
+          && data.album.keys().hasAll(['id', 'imageUrl', 'artist', 'name'])
+          && validUrl(data.album.imageUrl)
+          && validString(data.album.id, 0, 30)
+          && validString(data.album.artist, 0, 200)
+          && validString(data.album.name, 0, 200)
+          && validString(data.comment, 1, 800)
+          && data.createdAt is timestamp
+          && data.updatedAt is timestamp;
+        }
+      }
     }
 
     function isAuthenticated() {

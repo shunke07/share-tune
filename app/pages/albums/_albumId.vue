@@ -55,7 +55,7 @@
               :class="{ '-active': isBookmarked }"
             />
           </button>
-          <button class="fab create" @click="switchModalVisible(true)">
+          <button class="fab create" @click="switchFormVisible(true)">
             <svg-icon name="actions/create" title="create" />
           </button>
         </div>
@@ -64,7 +64,8 @@
     <!-- full page modal form -->
     <FormPost
       v-show="isFormVisible"
-      @onClickClose="switchModalVisible(false)"
+      @onClickClose="switchFormVisible(false)"
+      @onSubmit="_createPost($event)"
     />
   </article>
 </template>
@@ -80,8 +81,10 @@ import FormPost from '~/components/albums/FormPost.vue'
 import {
   createBookmark,
   deleteBookmark,
-  getIsBookmarked
-} from '~/repositories/firestore/bookmarks'
+  getIsBookmarked,
+  createPost,
+  Payload
+} from '~/repositories/firestore'
 
 type Response = void | { data: Album }
 
@@ -100,6 +103,10 @@ export default Vue.extend({
   },
 
   computed: {
+    uid(): string | undefined {
+      return this.$firebase.currentUser?.uid
+    },
+
     releaseDate(): string {
       if (this.album === null) return ''
 
@@ -116,12 +123,29 @@ export default Vue.extend({
 
     bookmarkIcon(): string {
       return this.isBookmarked ? 'bookmark' : 'bookmark_border'
+    },
+
+    queryPayload(): Payload | undefined {
+      const uid = this.$firebase.currentUser?.uid
+      const album = this.album
+
+      if (!uid || !album) return
+
+      return {
+        uid,
+        album: {
+          id: this.albumId,
+          imageUrl: album.images[1].url,
+          name: album.name,
+          artist: album.artists[0].name
+        }
+      }
     }
   },
 
   async mounted(): Promise<void> {
     const albumId = this.albumId
-    const uid = this.$firebase.currentUser?.uid
+    const uid = this.uid
 
     // query this album is bookmarked
     if (uid) {
@@ -154,7 +178,7 @@ export default Vue.extend({
   },
 
   methods: {
-    switchModalVisible(bool: boolean): void {
+    switchFormVisible(bool: boolean): void {
       this.isFormVisible = bool
     },
 
@@ -162,7 +186,7 @@ export default Vue.extend({
       // switch flag
       this.isBookmarked = !this.isBookmarked
 
-      const uid = this.$firebase.currentUser?.uid
+      const uid = this.uid
       const albumId = this.albumId
       const album = this.album
 
@@ -171,20 +195,29 @@ export default Vue.extend({
       // delete firestore bookmark document
       if (!this.isBookmarked) {
         deleteBookmark({ uid, albumId })
-        return
+      }
+      // create firestore bookmark document
+      else if (this.queryPayload) {
+        createBookmark(this.queryPayload)
+      }
+    },
+
+    async _createPost(comment: string): Promise<void> {
+      if (!this.queryPayload) return
+
+      const data = {
+        ...this.queryPayload,
+        comment
       }
 
-      // create firestore bookmark document
-      const data = {
-        uid,
-        album: {
-          id: albumId,
-          imageUrl: album.images[1].url,
-          name: album.name,
-          artist: album.artists[0].name
-        }
-      }
-      createBookmark(data)
+      // create firestore post document
+      this.$nuxt.$loading.start()
+      await createPost(data)
+      this.$nuxt.$loading.finish()
+
+      // push to user page
+      const userPage = `/users/${this.uid}`
+      this.$router.push(userPage)
     }
   },
 

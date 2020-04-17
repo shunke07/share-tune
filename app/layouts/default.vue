@@ -74,7 +74,7 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .only-sp-view {
   width: 100%;
-  max-width: 414px;
+  max-width: $maxViewWidth;
   margin: 0 auto;
   background: #fcfcfc;
   display: block;

@@ -25,7 +25,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Bookmark } from '~/types/firestore'
-import { getBookmarks } from '~/repositories/firestore/bookmarks'
+import { getBookmarks } from '~/repositories/firestore'
 
 export default Vue.extend({
   async fetch() {
