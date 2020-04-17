@@ -9,8 +9,25 @@
       </button>
     </nav>
     <SectionProfile :user="user" class="profile" />
-    <ListBookmarks />
-    <ListPosts />
+    <p class="tabs">
+      <button class="icon" @click="switchActiveTab(1)">
+        <svg-icon
+          name="message"
+          title="投稿"
+          :class="{ '-active': activeTab === 1 }"
+        />
+      </button>
+      <button class="icon" @click="switchActiveTab(2)">
+        <svg-icon
+          name="actions/bookmark"
+          title="favorite"
+          :class="{ '-active': activeTab === 2 }"
+        />
+      </button>
+      <span class="underline" :class="`-active-${activeTab}`" />
+    </p>
+    <ListBookmarks v-show="activeTab === 1" />
+    <ListPosts v-show="activeTab === 2" />
   </div>
 </template>
 
@@ -30,9 +47,21 @@ export default Vue.extend({
     ListPosts
   },
 
+  data() {
+    return {
+      activeTab: 1 as number
+    }
+  },
+
   computed: {
     user(): User | null {
       return (this.$store.state as RootState).loginUser
+    }
+  },
+
+  methods: {
+    switchActiveTab(tabNumber: number): void {
+      this.activeTab = tabNumber
     }
   }
 })
@@ -41,8 +70,11 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .users-page {
   > .profile {
-    border-bottom: 1px solid $boundaryBlack;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
+  }
+
+  > .list-bookmarks {
+    margin-top: 16px;
   }
 
   > .leading {
@@ -65,6 +97,52 @@ export default Vue.extend({
         color: $gray;
         width: 100%;
         height: 100%;
+      }
+    }
+  }
+}
+
+.tabs {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    width: 100%;
+    height: 1px;
+    background: $boundaryBlack;
+  }
+
+  > .underline {
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 50%;
+    height: 2px;
+    background: $primary;
+    transition: all 0.3s ease-in-out;
+    z-index: 2;
+
+    &.-active-2 {
+      left: 50%;
+    }
+  }
+
+  > .icon {
+    width: 24px;
+    height: 24px;
+
+    > svg {
+      width: 100%;
+      height: 100%;
+      color: $lightGray;
+
+      &.-active {
+        color: $primary;
       }
     }
   }
