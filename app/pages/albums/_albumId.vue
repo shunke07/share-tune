@@ -48,10 +48,10 @@
     <div class="fab-container">
       <div class="fabs">
         <div>
-          <button class="fab favorite" @click="bookmark()">
+          <button class="fab bookmark" @click="bookmark()">
             <svg-icon
               :name="`actions/${bookmarkIcon}`"
-              title="favorite"
+              title="bookmark"
               :class="{ '-active': isBookmarked }"
             />
           </button>
@@ -308,6 +308,24 @@ export default Vue.extend({
       height: 56px;
       border-radius: 50%;
       box-shadow: $shadowHigh;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: rgba($black, 0);
+        transition-duration: 0.1s;
+      }
+
+      &:hover::after {
+        background: rgba($black, 0.05);
+        box-shadow: $shadowVery;
+      }
 
       > svg {
         width: 24px;
@@ -323,7 +341,7 @@ export default Vue.extend({
         color: $white;
       }
 
-      &.favorite {
+      &.bookmark {
         background: $white;
         color: $gray;
         margin-bottom: 16px;
