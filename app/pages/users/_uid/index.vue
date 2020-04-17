@@ -10,6 +10,7 @@
     </nav>
     <SectionProfile :user="user" class="profile" />
     <ListBookmarks />
+    <ListPosts />
   </div>
 </template>
 
@@ -20,11 +21,13 @@ import { RootState } from '~/store'
 
 import SectionProfile from '~/components/users/SectionProfile.vue'
 import ListBookmarks from '~/components/users/ListBookmarks.vue'
+import ListPosts from '~/components/users/ListPosts.vue'
 
 export default Vue.extend({
   components: {
     SectionProfile,
-    ListBookmarks
+    ListBookmarks,
+    ListPosts
   },
 
   computed: {
