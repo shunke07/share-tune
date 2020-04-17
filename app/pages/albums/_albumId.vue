@@ -144,6 +144,8 @@ export default Vue.extend({
   },
 
   async mounted(): Promise<void> {
+    this.$store.commit('setIsLoading', true)
+
     const albumId = this.albumId
     const uid = this.uid
 
@@ -159,17 +161,15 @@ export default Vue.extend({
     ](albumId)
     if (storeAlbum) {
       this.album = storeAlbum
-      return
+      return this.$store.commit('setIsLoading', false)
     }
 
     // fetch from Spotify API
-    this.$store.commit('setIsLoading', true)
-
     const api = this.$functions.httpsCallable('spotifyGetAlbum')
     const response: Response = await api({ albumId }).catch((error: Error) =>
       this.$nuxt.error(error)
     )
-    if (!response) return
+    if (!response) return this.$store.commit('setIsLoading', false)
 
     const album = response.data
     this.album = album
