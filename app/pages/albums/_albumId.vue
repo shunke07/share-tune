@@ -51,12 +51,12 @@
           <button class="fab bookmark" @click="bookmark()">
             <svg-icon
               :name="`actions/${bookmarkIcon}`"
-              title="bookmark"
+              title="ブックマークする"
               :class="{ '-active': isBookmarked }"
             />
           </button>
           <button class="fab create" @click="switchFormVisible(true)">
-            <svg-icon name="actions/create" title="create" />
+            <svg-icon name="actions/create" title="投稿する" />
           </button>
         </div>
       </div>

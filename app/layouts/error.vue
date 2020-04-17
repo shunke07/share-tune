@@ -1,7 +1,7 @@
 <template>
   <div class="error-layout">
     <div class="error">
-      <svg-icon name="alert/error_outline" title="alert" />
+      <svg-icon name="alert/error_outline" title="エラー" />
       <p class="msg">
         {{ message }}
       </p>

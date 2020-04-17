@@ -8,7 +8,7 @@
       {{ user.profileText }}
     </p>
     <div v-if="user.siteUrl" class="site">
-      <svg-icon name="link" title="site" />
+      <svg-icon name="link" title="ウェブサイト" />
       <a :href="user.siteUrl" target="_blank" rel="noopener noreferrer">
         {{ user.siteUrl }}
       </a>

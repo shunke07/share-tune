@@ -2,7 +2,7 @@
   <section class="app-bar">
     <nav v-if="backIconVisible" class="nav leading">
       <button class="icon" @click="$router.back()">
-        <svg-icon name="navigation/arrow_back" title="back" />
+        <svg-icon name="navigation/arrow_back" title="戻る" />
       </button>
     </nav>
     <h1 class="title">

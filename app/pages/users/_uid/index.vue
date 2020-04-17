@@ -13,14 +13,14 @@
       <button class="icon" @click="switchActiveTab(1)">
         <svg-icon
           name="message"
-          title="投稿"
+          title="投稿一覧"
           :class="{ '-active': activeTab === 1 }"
         />
       </button>
       <button class="icon" @click="switchActiveTab(2)">
         <svg-icon
           name="actions/bookmark"
-          title="favorite"
+          title="ブックマーク一覧"
           :class="{ '-active': activeTab === 2 }"
         />
       </button>
