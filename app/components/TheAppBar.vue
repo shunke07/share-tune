@@ -2,7 +2,7 @@
   <section class="app-bar">
     <nav v-if="backIconVisible" class="nav leading">
       <button class="icon" @click="$router.back()">
-        <svg-icon name="navigation/arrow_back" title="back" />
+        <svg-icon name="navigation/arrow_back" title="戻る" />
       </button>
     </nav>
     <h1 class="title">
@@ -64,8 +64,8 @@ export default Vue.extend({
     position: absolute;
 
     > .icon {
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
 
       svg {
         width: 100%;

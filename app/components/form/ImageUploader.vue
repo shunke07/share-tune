@@ -1,6 +1,6 @@
 <template>
   <div class="image-uploader">
-    <svg-icon class="icon" name="actions/upload" alt="画像をアップロード" />
+    <svg-icon class="icon" name="actions/upload" title="画像をアップロード" />
     <input
       type="file"
       accept="image/png,image/jpeg"

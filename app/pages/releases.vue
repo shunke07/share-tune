@@ -55,8 +55,8 @@ export default Vue.extend({
     z-index: 3;
 
     > .icon {
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
 
       > img {
         width: 100%;

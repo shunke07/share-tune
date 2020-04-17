@@ -48,15 +48,15 @@
     <div class="fab-container">
       <div class="fabs">
         <div>
-          <button class="fab favorite" @click="bookmark()">
+          <button class="fab bookmark" @click="bookmark()">
             <svg-icon
               :name="`actions/${bookmarkIcon}`"
-              title="favorite"
+              title="ブックマークする"
               :class="{ '-active': isBookmarked }"
             />
           </button>
           <button class="fab create" @click="switchFormVisible(true)">
-            <svg-icon name="actions/create" title="create" />
+            <svg-icon name="actions/create" title="投稿する" />
           </button>
         </div>
       </div>
@@ -144,6 +144,8 @@ export default Vue.extend({
   },
 
   async mounted(): Promise<void> {
+    this.$store.commit('setIsLoading', true)
+
     const albumId = this.albumId
     const uid = this.uid
 
@@ -159,17 +161,15 @@ export default Vue.extend({
     ](albumId)
     if (storeAlbum) {
       this.album = storeAlbum
-      return
+      return this.$store.commit('setIsLoading', false)
     }
 
     // fetch from Spotify API
-    this.$store.commit('setIsLoading', true)
-
     const api = this.$functions.httpsCallable('spotifyGetAlbum')
     const response: Response = await api({ albumId }).catch((error: Error) =>
       this.$nuxt.error(error)
     )
-    if (!response) return
+    if (!response) return this.$store.commit('setIsLoading', false)
 
     const album = response.data
     this.album = album
@@ -308,6 +308,24 @@ export default Vue.extend({
       height: 56px;
       border-radius: 50%;
       box-shadow: $shadowHigh;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: rgba($black, 0);
+        transition-duration: 0.1s;
+      }
+
+      &:hover::after {
+        background: rgba($black, 0.05);
+        box-shadow: $shadowVery;
+      }
 
       > svg {
         width: 24px;
@@ -323,7 +341,7 @@ export default Vue.extend({
         color: $white;
       }
 
-      &.favorite {
+      &.bookmark {
         background: $white;
         color: $gray;
         margin-bottom: 16px;

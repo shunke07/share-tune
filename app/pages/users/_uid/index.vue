@@ -1,7 +1,7 @@
 <template>
   <div v-if="user" class="users-page">
     <nav class="leading">
-      <button class="icon" @click="$router.push('/releases/')">
+      <button class="icon back" @click="$router.push('/releases/')">
         <svg-icon name="navigation/arrow_back" title="戻る" />
       </button>
       <button class="icon" @click="$router.push('/settings/')">
@@ -13,22 +13,21 @@
       <button class="icon" @click="switchActiveTab(1)">
         <svg-icon
           name="message"
-          title="投稿"
+          title="投稿一覧"
           :class="{ '-active': activeTab === 1 }"
         />
       </button>
       <button class="icon" @click="switchActiveTab(2)">
         <svg-icon
           name="actions/bookmark"
-          title="favorite"
+          title="ブックマーク一覧"
           :class="{ '-active': activeTab === 2 }"
         />
       </button>
       <span class="underline" :class="`-active-${activeTab}`" />
     </p>
-
-    <ListBookmarks v-show="activeTab === 1" />
-    <ListPosts v-show="activeTab === 2" />
+    <ListPosts v-show="activeTab === 1" />
+    <ListBookmarks v-show="activeTab === 2" />
   </div>
 </template>
 
@@ -93,6 +92,11 @@ export default Vue.extend({
     > .icon {
       width: 24px;
       height: 24px;
+
+      &.back {
+        width: 28px;
+        height: 28px;
+      }
 
       > svg {
         color: $gray;
