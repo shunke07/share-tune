@@ -81,7 +81,9 @@ import FormPost from '~/components/albums/FormPost.vue'
 import {
   createBookmark,
   deleteBookmark,
-  getIsBookmarked
+  getIsBookmarked,
+  createPost,
+  Payload
 } from '~/repositories/firestore'
 
 type Response = void | { data: Album }
@@ -101,6 +103,10 @@ export default Vue.extend({
   },
 
   computed: {
+    uid(): string | undefined {
+      return this.$firebase.currentUser?.uid
+    },
+
     releaseDate(): string {
       if (this.album === null) return ''
 
@@ -117,12 +123,29 @@ export default Vue.extend({
 
     bookmarkIcon(): string {
       return this.isBookmarked ? 'bookmark' : 'bookmark_border'
+    },
+
+    queryPayload(): Payload | undefined {
+      const uid = this.$firebase.currentUser?.uid
+      const album = this.album
+
+      if (!uid || !album) return
+
+      return {
+        uid,
+        album: {
+          id: this.albumId,
+          imageUrl: album.images[1].url,
+          name: album.name,
+          artist: album.artists[0].name
+        }
+      }
     }
   },
 
   async mounted(): Promise<void> {
     const albumId = this.albumId
-    const uid = this.$firebase.currentUser?.uid
+    const uid = this.uid
 
     // query this album is bookmarked
     if (uid) {
@@ -163,7 +186,7 @@ export default Vue.extend({
       // switch flag
       this.isBookmarked = !this.isBookmarked
 
-      const uid = this.$firebase.currentUser?.uid
+      const uid = this.uid
       const albumId = this.albumId
       const album = this.album
 
@@ -172,24 +195,29 @@ export default Vue.extend({
       // delete firestore bookmark document
       if (!this.isBookmarked) {
         deleteBookmark({ uid, albumId })
-        return
       }
-
       // create firestore bookmark document
-      const data = {
-        uid,
-        album: {
-          id: albumId,
-          imageUrl: album.images[1].url,
-          name: album.name,
-          artist: album.artists[0].name
-        }
+      else if (this.queryPayload) {
+        createBookmark(this.queryPayload)
       }
-      createBookmark(data)
     },
 
     async _createPost(comment: string): Promise<void> {
-      await console.log(comment)
+      if (!this.queryPayload) return
+
+      const data = {
+        ...this.queryPayload,
+        comment
+      }
+
+      // create firestore post document
+      this.$nuxt.$loading.start()
+      await createPost(data)
+      this.$nuxt.$loading.finish()
+
+      // push to user page
+      const userPage = `/users/${this.uid}`
+      this.$router.push(userPage)
     }
   },
 
