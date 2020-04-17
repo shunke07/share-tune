@@ -202,7 +202,7 @@ export default Vue.extend({
       }
     },
 
-    async _createPost(comment: string): Promise<void> {
+    async _createPost({ comment }: { comment: string }): Promise<void> {
       if (!this.queryPayload) return
 
       const data = {
