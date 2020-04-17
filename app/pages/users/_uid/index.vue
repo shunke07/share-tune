@@ -26,6 +26,7 @@
       </button>
       <span class="underline" :class="`-active-${activeTab}`" />
     </p>
+
     <ListBookmarks v-show="activeTab === 1" />
     <ListPosts v-show="activeTab === 2" />
   </div>
@@ -111,7 +112,7 @@ export default Vue.extend({
   &::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: -2px;
     width: 100%;
     height: 1px;
     background: $boundaryBlack;
@@ -120,7 +121,7 @@ export default Vue.extend({
   > .underline {
     position: absolute;
     left: 0;
-    bottom: -4px;
+    bottom: -2px;
     width: 50%;
     height: 2px;
     background: $primary;
@@ -133,12 +134,12 @@ export default Vue.extend({
   }
 
   > .icon {
-    width: 24px;
-    height: 24px;
+    position: relative;
+    width: 50%;
 
     > svg {
-      width: 100%;
-      height: 100%;
+      width: 24px;
+      height: 24px;
       color: $lightGray;
 
       &.-active {
