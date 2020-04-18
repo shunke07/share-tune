@@ -70,12 +70,28 @@ export default Vue.extend({
 }
 
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 16px;
   width: 100%;
   height: 100%;
   color: $black;
+
+  &:hover::after {
+    background: rgba($black, 0.05);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba($black, 0);
+    transition-duration: 0.05s;
+  }
 
   > .header {
     display: flex;
@@ -88,7 +104,7 @@ export default Vue.extend({
     }
   }
 
-  .contents {
+  > .contents {
     display: flex;
     justify-content: space-between;
 

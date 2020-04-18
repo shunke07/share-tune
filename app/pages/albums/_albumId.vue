@@ -62,11 +62,20 @@
       </div>
     </div>
     <!-- full page modal form -->
-    <FormPost
-      v-show="isFormVisible"
-      @onClickClose="switchFormVisible(false)"
-      @onSubmit="_createPost($event)"
-    />
+    <nav v-show="isFormVisible" class="nav-bar">
+      <button class="cancel" @click="switchFormVisible(false)">
+        <svg-icon name="navigation/close" title="キャンセル" />
+      </button>
+      <h1 class="title">
+        新規投稿
+      </h1>
+      <button class="submit" :disabled="!isCommentValid" @click="_createPost()">
+        シェア
+      </button>
+    </nav>
+    <transition name="slide-up">
+      <FormPost v-show="isFormVisible" @onChangeComment="getComment($event)" />
+    </transition>
   </article>
 </template>
 
@@ -88,6 +97,11 @@ import {
 
 type Response = void | { data: Album }
 
+type Comment = {
+  comment: string
+  isCommentValid: boolean
+}
+
 export default Vue.extend({
   components: {
     FormPost
@@ -98,7 +112,9 @@ export default Vue.extend({
       album: null as Readonly<Album> | null,
       albumId: this.$route.params.albumId as string,
       isBookmarked: false as boolean,
-      isFormVisible: false as boolean
+      isFormVisible: false as boolean,
+      isCommentValid: false as boolean,
+      comment: '' as string
     }
   },
 
@@ -202,12 +218,17 @@ export default Vue.extend({
       }
     },
 
-    async _createPost({ comment }: { comment: string }): Promise<void> {
+    getComment({ comment, isCommentValid }: Comment): void {
+      this.comment = comment
+      this.isCommentValid = isCommentValid
+    },
+
+    async _createPost(): Promise<void> {
       if (!this.queryPayload) return
 
       const data = {
         ...this.queryPayload,
-        comment
+        comment: this.comment
       }
 
       // create firestore post document
@@ -348,5 +369,57 @@ export default Vue.extend({
       }
     }
   }
+}
+
+.nav-bar {
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 44px;
+  padding: 4px 16px;
+  max-width: $maxViewWidth;
+  background: $white;
+  border-bottom: 1px solid $boundaryBlack;
+  z-index: 3;
+  margin-left: -16px;
+
+  > title {
+    @include subhead;
+  }
+
+  > .cancel {
+    width: 28px;
+    height: 28px;
+
+    > svg {
+      width: 100%;
+      height: 100%;
+      color: $gray;
+    }
+  }
+
+  > .submit {
+    @include strong;
+    color: $primary;
+
+    &:disabled {
+      color: $lightGray;
+    }
+  }
+}
+
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transform: translate(0px, 0px);
+  transition: all 0.3s ease-in-out;
+}
+
+.slide-up-enter,
+.slide-up-leave-to {
+  transform: translateY(100vh) translateY(0px);
+  transition: all 0.3s ease-in-out;
 }
 </style>

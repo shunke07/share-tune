@@ -114,8 +114,13 @@ export default Vue.extend({
 .release-item {
   margin: 0 0 16px 16px;
   width: calc(50% - 24px);
+  transition-duration: 0.05s;
 
-  a {
+  &:hover {
+    opacity: 0.8;
+  }
+
+  > a {
     > .img {
       width: 100%;
       border: 1px solid $boundaryBlack;
