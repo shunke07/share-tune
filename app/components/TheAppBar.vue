@@ -49,7 +49,7 @@ export default Vue.extend({
   top: 0;
   height: 44px;
   padding: 4px 16px;
-  background: $white;
+  background: $mono4;
   border-bottom: 1px solid $boundaryBlack;
   z-index: 2;
 
@@ -70,7 +70,7 @@ export default Vue.extend({
       svg {
         width: 100%;
         height: 100%;
-        color: $gray;
+        color: $mono2;
       }
     }
 

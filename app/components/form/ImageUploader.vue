@@ -80,7 +80,7 @@ export default Vue.extend({
   align-items: center;
   width: 96px;
   height: 96px;
-  background: $lightGray;
+  background: $mono3;
   border-radius: 50%;
 
   > img {
@@ -97,7 +97,7 @@ export default Vue.extend({
     cursor: pointer;
     width: 32px;
     height: 32px;
-    color: $white;
+    color: $mono1;
     z-index: 2;
   }
 
@@ -127,7 +127,7 @@ export default Vue.extend({
       width: 100%;
       height: 100%;
       display: block;
-      background: rgba($black, 0.3);
+      background: rgba($mono1, 0.3);
       position: absolute;
       top: 0;
       left: 0;

@@ -76,10 +76,10 @@ export default Vue.extend({
   padding: 16px;
   width: 100%;
   height: 100%;
-  color: $black;
+  color: $white;
 
   &:hover::after {
-    background: rgba($black, 0.05);
+    background: rgba($white, 0.05);
   }
 
   &::after {
@@ -89,7 +89,7 @@ export default Vue.extend({
     left: 0;
     height: 100%;
     width: 100%;
-    background: rgba($black, 0);
+    background: rgba($white, 0);
     transition-duration: 0.05s;
   }
 
@@ -100,7 +100,7 @@ export default Vue.extend({
 
     > time {
       @include caption;
-      color: $gray;
+      color: $mono2;
     }
   }
 
@@ -125,7 +125,7 @@ export default Vue.extend({
 
     .artist {
       @include caption;
-      color: $gray;
+      color: $mono2;
       line-height: 1;
       margin-bottom: 12px;
     }

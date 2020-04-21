@@ -37,17 +37,17 @@ export default Vue.extend({
 
     backIconVisible(): boolean {
       const uid = this.$route.params.uid
-      const excludedPaths = ['/releases/', `/users/${uid}/`]
-      return !excludedPaths.includes(this.$route.path)
+      const excludedPaths = ['/releases/', `/users/${uid}/`, '/settings/']
+
+      return !excludedPaths.includes(
+        this.complementTrailingSlash(this.$route.path)
+      )
     },
 
     pageTitle(): PageTitle {
       const { path, params } = this.$route
-      // Complement trailing slash
-      const pathWithTrailingSlash = (path: string): string =>
-        path.slice(-1) === '/' ? path : `${path}/`
 
-      switch (pathWithTrailingSlash(path)) {
+      switch (this.complementTrailingSlash(path)) {
         case '/signup/':
           return 'ユーザー登録'
         case '/login/':
@@ -70,6 +70,12 @@ export default Vue.extend({
           return ''
       }
     }
+  },
+
+  methods: {
+    complementTrailingSlash(path: string): string {
+      return path.slice(-1) === '/' ? path : `${path}/`
+    }
   }
 })
 </script>
@@ -79,7 +85,7 @@ export default Vue.extend({
   width: 100%;
   max-width: $maxViewWidth;
   margin: 0 auto;
-  background: #fcfcfc;
+  background: $mono4;
   display: block;
   position: relative;
   overflow: hidden;

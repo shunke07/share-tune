@@ -257,7 +257,7 @@ export default Vue.extend({
 
   > .date {
     @include caption;
-    color: $gray;
+    color: $mono2;
   }
 }
 
@@ -283,7 +283,7 @@ export default Vue.extend({
     }
 
     .caption {
-      color: $gray;
+      color: $mono2;
     }
 
     > .link {
@@ -339,12 +339,12 @@ export default Vue.extend({
         width: 56px;
         height: 56px;
         border-radius: 50%;
-        background: rgba($black, 0);
+        background: rgba($white, 0);
         transition-duration: 0.1s;
       }
 
       &:hover::after {
-        background: rgba($black, 0.05);
+        background: rgba($white, 0.05);
         box-shadow: $shadowVery;
       }
 
@@ -364,7 +364,7 @@ export default Vue.extend({
 
       &.bookmark {
         background: $white;
-        color: $gray;
+        color: $mono2;
         margin-bottom: 16px;
       }
     }
@@ -381,7 +381,7 @@ export default Vue.extend({
   height: 44px;
   padding: 4px 16px;
   max-width: $maxViewWidth;
-  background: $white;
+  background: $mono4;
   border-bottom: 1px solid $boundaryBlack;
   z-index: 3;
   margin-left: -16px;
@@ -397,7 +397,7 @@ export default Vue.extend({
     > svg {
       width: 100%;
       height: 100%;
-      color: $gray;
+      color: $mono2;
     }
   }
 
@@ -406,7 +406,7 @@ export default Vue.extend({
     color: $primary;
 
     &:disabled {
-      color: $lightGray;
+      color: $mono3;
     }
   }
 }

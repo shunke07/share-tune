@@ -103,19 +103,24 @@ const config: Configuration = {
    ** Nuxt.js dev-modules
    */
   buildModules: [
-    // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
-    '@nuxt/typescript-build'
+    '@nuxt/typescript-build',
+    '@nuxtjs/color-mode',
+    '@nuxtjs/dotenv',
+    '@nuxtjs/style-resources'
   ],
   /*
    ** Nuxt.js modules
    */
-  modules: [
-    '@nuxtjs/pwa',
-    '@nuxtjs/style-resources',
-    '@nuxtjs/svg-sprite',
-    '@nuxtjs/dotenv'
-  ],
+  modules: ['@nuxtjs/pwa', '@nuxtjs/svg-sprite'],
+  //
+  colorMode: {
+    preference: 'system', // default value of $colorMode.preference
+    fallback: 'light', // fallback value if not system preference found
+    hid: 'nuxt-color-mode-script',
+    globalName: '__NUXT_COLOR_MODE__',
+    componentName: 'ColorScheme'
+  },
   //
   styleResources: {
     scss: ['~/assets/styles/_variables.scss']

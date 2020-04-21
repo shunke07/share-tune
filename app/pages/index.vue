@@ -94,7 +94,7 @@ export default Vue.extend({
     margin-top: 32px;
 
     > a {
-      color: $gray;
+      color: $mono2;
     }
 
     > span {

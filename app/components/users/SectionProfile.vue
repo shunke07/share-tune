@@ -59,7 +59,7 @@ export default Vue.extend({
     }
 
     > svg {
-      color: $gray;
+      color: $mono2;
       width: 16px;
       height: 16px;
       margin-right: 4px;

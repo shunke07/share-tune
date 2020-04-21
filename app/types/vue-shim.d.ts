@@ -8,6 +8,7 @@ declare module 'vue/types/vue' {
       currentUser: firebase.User | null
     }
     $firestore: any
+    $colorMode: any
     $functions: firebase.functions.Functions
     $auth: firebase.auth.Auth
     $dayjs(
@@ -24,6 +25,7 @@ declare module '@nuxt/types' {
       currentUser: firebase.User | null
     }
     $firestore: any
+    $colorMode: any
     $functions: firebase.functions.Functions
     $auth: firebase.auth.Auth
     $dayjs(

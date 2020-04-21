@@ -82,7 +82,7 @@ export default Vue.extend({
     width: 100%;
     height: 40px;
     caret-color: $primary;
-    border-bottom: 1px solid $lightGray;
+    border-bottom: 1px solid $mono3;
     padding-top: 12px;
 
     &.-valid {
@@ -90,7 +90,7 @@ export default Vue.extend({
     }
 
     &:hover {
-      border-bottom: 2px solid $black;
+      border-bottom: 2px solid $mono1;
     }
 
     &:focus {
@@ -114,7 +114,7 @@ export default Vue.extend({
     bottom: 4px;
     left: 0;
     position: absolute;
-    color: $gray;
+    color: $mono2;
     transform-origin: 0 0;
     transform: translate3d(0, 0, 0);
     transition: all 0.2s ease;
