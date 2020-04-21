@@ -43,8 +43,11 @@ export default Vue.extend({
 
     pageTitle(): PageTitle {
       const { path, params } = this.$route
+      // Complement trailing slash
+      const pathWithTrailingSlash = (path: string): string =>
+        path.slice(-1) === '/' ? path : `${path}/`
 
-      switch (path) {
+      switch (pathWithTrailingSlash(path)) {
         case '/signup/':
           return 'ユーザー登録'
         case '/login/':
