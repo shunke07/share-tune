@@ -13,13 +13,40 @@ $font-family: -apple-system-subset, Hiragino Sans, BlinkMacSystemFont, Roboto, '
 // Colors
 //
 // Mono
+
 $black: #1b1b1b; // Material Glay 800 Dark
-$gray: #616161; // Material Glay 700
-$lightGray: #8e8e8e; // Material Glay 700 Light
-$white: #ffffff;
+$white: #fafafa; // Material Glay 50
+
+.light-mode {
+  --color-primary: #007c91; // Material Cyan 600 Dark
+  --color-mono1: #1b1b1b;
+  --color-mono2: #616161; // Material Glay 700
+  --color-mono3: #8e8e8e; // Material Glay 700 Light
+  --color-mono4: #fafafa;
+  --color-boundary-r: 27;
+  --color-boundary-g: 27;
+  --color-boundary-b: 27;
+}
+
+.dark-mode {
+  --color-primary: #4bacb8; // Material Cyan 200 Dark
+  --color-mono1: #fafafa;
+  --color-mono2: #9e9e9e;  // Material Gray 500
+  --color-mono3: #616161;
+  --color-mono4: #1b1b1b;
+  --color-boundary-r: 250;
+  --color-boundary-g: 250;
+  --color-boundary-b: 250;
+}
+
+$mono1: var(--color-mono1);
+$mono2: var(--color-mono2);
+$mono3: var(--color-mono3);
+$mono4: var(--color-mono4);
+$boundaryRGB: var(--color-boundary-r), var(--color-boundary-g), var(--color-boundary-b);
 
 // Bland
-$primary: #007c91; // Material Cyan 600 Dark
+$primary: var(--color-primary); // Material Cyan 600 Dark
 $secondary: #d81b60; // Material Pink 600
 
 // Emphasis
@@ -27,14 +54,14 @@ $danger: #ba000d; // Material Red 500 Dark
 $warning: #fdd835; // Material Yellow 600
 
 // Boundary
-$boundaryBlack: rgba(46, 56, 54, 0.13);
+$boundaryBlack: rgba(#{$boundaryRGB}, 0.13);
 //
 // Shadows
 //
-$shadowVery: rgba(46, 56, 54, 0.2) 0px 3px 4px -3px, rgba(46, 56, 54, 0.14) 0px 4px 8px 0px, rgba(46, 56, 54, 0.12) 0px 1px 11px 0px;
-$shadowHigh: rgba(46, 56, 54, 0.2) 0px 3px 3px -2px, rgba(46, 56, 54, 0.14) 0px 3px 4px 0px, rgba(46, 56, 54, 0.12) 0px 1px 8px 0px;
-$shadowMiddle: rgba(46, 56, 54, 0.2) 0px 3px 1px -2px,rgba(46, 56, 54, 0.14) 0px 2px 2px 0px, rgba(46, 56, 54, 0.12) 0px 1px 5px 0px;
-$shadowLow: rgba(46, 56, 54, 0.2) 0px 2px 1px -1px, rgba(46, 56, 54, 0.14) 0px 1px 1px 0px, rgba(46, 56, 54, 0.12) 0px 1px 3px 0px;
+$shadowVery: rgba($black, 0.2) 0px 3px 4px -3px, rgba($black, 0.14) 0px 4px 8px 0px, rgba($black, 0.12) 0px 1px 11px 0px;
+$shadowHigh: rgba($black, 0.2) 0px 3px 3px -2px, rgba($black, 0.14) 0px 3px 4px 0px, rgba($black, 0.12) 0px 1px 8px 0px;
+$shadowMiddle: rgba($black, 0.2) 0px 3px 1px -2px,rgba($black, 0.14) 0px 2px 2px 0px, rgba($black, 0.12) 0px 1px 5px 0px;
+$shadowLow: rgba($black, 0.2) 0px 2px 1px -1px, rgba($black, 0.14) 0px 1px 1px 0px, rgba($black, 0.12) 0px 1px 3px 0px;
 //
 // Text styles
 //
@@ -45,7 +72,7 @@ $shadowLow: rgba(46, 56, 54, 0.2) 0px 2px 1px -1px, rgba(46, 56, 54, 0.14) 0px 1
   font-size: 12px;
   line-height: 155%;
   letter-spacing: 0.002em;
-  color: $black;
+  color: $mono1;
 }
 
 @mixin body {
@@ -55,7 +82,7 @@ $shadowLow: rgba(46, 56, 54, 0.2) 0px 2px 1px -1px, rgba(46, 56, 54, 0.14) 0px 1
   font-size: 14px;
   line-height: 150%;
   letter-spacing: 0.008em;
-  color: $black;
+  color: $mono1;
 }
 
 @mixin strong {
@@ -64,7 +91,7 @@ $shadowLow: rgba(46, 56, 54, 0.2) 0px 2px 1px -1px, rgba(46, 56, 54, 0.14) 0px 1
   font-weight: 700;
   font-size: 14px;
   line-height: 149%;
-  color: $black;
+  color: $mono1;
 }
 
 @mixin input {
@@ -73,7 +100,7 @@ $shadowLow: rgba(46, 56, 54, 0.2) 0px 2px 1px -1px, rgba(46, 56, 54, 0.14) 0px 1
   font-weight: normal;
   font-size: 16px;
   line-height: 145%;
-  color: $black;
+  color: $mono1;
 }
 
 @mixin subhead {
@@ -82,7 +109,7 @@ $shadowLow: rgba(46, 56, 54, 0.2) 0px 2px 1px -1px, rgba(46, 56, 54, 0.14) 0px 1
   font-weight: 700;
   font-size: 16px;
   line-height: 158%;
-  color: $black;
+  color: $mono1;
 }
 
 @mixin title-3 {
@@ -92,7 +119,7 @@ $shadowLow: rgba(46, 56, 54, 0.2) 0px 2px 1px -1px, rgba(46, 56, 54, 0.14) 0px 1
   font-size: 18px;
   line-height: 140%;
   letter-spacing: -0.01em;
-  color: $black;
+  color: $mono1;
 }
 
 @mixin title-2 {
@@ -102,7 +129,7 @@ $shadowLow: rgba(46, 56, 54, 0.2) 0px 2px 1px -1px, rgba(46, 56, 54, 0.14) 0px 1
   font-size: 20px;
   line-height: 148%;
   letter-spacing: -0.02em;
-  color: $black;
+  color: $mono1;
 }
 
 @mixin title-1 {
@@ -112,5 +139,5 @@ $shadowLow: rgba(46, 56, 54, 0.2) 0px 2px 1px -1px, rgba(46, 56, 54, 0.14) 0px 1
   font-size: 23px;
   line-height: 140%;
   letter-spacing: -0.01em;
-  color: $black;
+  color: $mono1;
 }

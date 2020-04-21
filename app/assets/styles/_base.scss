@@ -10,9 +10,11 @@ html {
   }
 }
 
+
+
 body {
   @include body;
-  background-color: $black;
+  background-color: $mono1;
 }
 
 a {
