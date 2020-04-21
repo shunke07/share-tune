@@ -1,6 +1,6 @@
 <template>
   <div v-if="user" class="users-page">
-    <nav class="leading">
+    <nav class="app-bar-icons">
       <button class="icon back" @click="$router.push('/releases/')">
         <svg-icon name="navigation/arrow_back" title="戻る" />
       </button>
@@ -77,7 +77,7 @@ export default Vue.extend({
     margin-top: 16px;
   }
 
-  > .leading {
+  > .app-bar-icons {
     display: flex;
     justify-content: space-between;
     align-items: center;
