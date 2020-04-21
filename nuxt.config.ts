@@ -103,19 +103,16 @@ const config: Configuration = {
    ** Nuxt.js dev-modules
    */
   buildModules: [
-    // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
-    '@nuxt/typescript-build'
+    '@nuxt/typescript-build',
+    '@nuxtjs/color-mode',
+    '@nuxtjs/dotenv',
+    '@nuxtjs/style-resources'
   ],
   /*
    ** Nuxt.js modules
    */
-  modules: [
-    '@nuxtjs/pwa',
-    '@nuxtjs/style-resources',
-    '@nuxtjs/svg-sprite',
-    '@nuxtjs/dotenv'
-  ],
+  modules: ['@nuxtjs/pwa', '@nuxtjs/svg-sprite'],
   //
   styleResources: {
     scss: ['~/assets/styles/_variables.scss']
