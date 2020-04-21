@@ -53,7 +53,7 @@ export default Vue.extend({
   max-width: $maxViewWidth;
   max-height: 100vh;
   margin-left: -16px;
-  background: #fcfcfc;
+  background: $mono4;
   overflow-y: scroll;
   padding: 16px 16px 0;
 }

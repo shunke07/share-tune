@@ -66,7 +66,7 @@ export default Vue.extend({
     }
 
     > p {
-      color: $gray;
+      color: $mono2;
     }
   }
 

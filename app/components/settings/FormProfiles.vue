@@ -221,7 +221,7 @@ export default Vue.extend({
     width: 100%;
     text-align: right;
     margin-top: -12px;
-    color: $gray;
+    color: $mono2;
   }
 }
 </style>

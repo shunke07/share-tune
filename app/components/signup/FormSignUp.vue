@@ -166,7 +166,7 @@ export default Vue.extend({
     width: 100%;
     max-width: $maxViewWidth;
     text-align: left;
-    color: $gray;
+    color: $mono2;
     margin-bottom: 24px;
   }
 }

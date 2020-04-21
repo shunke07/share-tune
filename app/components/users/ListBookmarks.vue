@@ -68,7 +68,7 @@ export default Vue.extend({
 
       > .artist {
         line-height: 1;
-        color: $gray;
+        color: $mono2;
       }
     }
   }

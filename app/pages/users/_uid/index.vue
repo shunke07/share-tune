@@ -99,7 +99,7 @@ export default Vue.extend({
       }
 
       > svg {
-        color: $gray;
+        color: $mono2;
         width: 100%;
         height: 100%;
       }
@@ -144,7 +144,7 @@ export default Vue.extend({
     > svg {
       width: 24px;
       height: 24px;
-      color: $lightGray;
+      color: $mono3;
 
       &.-active {
         color: $primary;

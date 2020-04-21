@@ -79,7 +79,7 @@ export default Vue.extend({
   width: 100%;
   max-width: $maxViewWidth;
   margin: 0 auto;
-  background: #fcfcfc;
+  background: $mono4;
   display: block;
   position: relative;
   overflow: hidden;

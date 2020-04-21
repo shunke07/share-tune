@@ -47,7 +47,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .error-layout {
-  background: $white;
+  background: $mono4;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -61,12 +61,12 @@ export default Vue.extend({
 
   > .error {
     max-width: $maxViewWidth;
-    color: $gray;
+    color: $mono2;
 
     > svg {
       width: 100px;
       height: 100px;
-      color: $lightGray;
+      color: $mono3;
     }
 
     > .msg {
