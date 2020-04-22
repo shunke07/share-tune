@@ -10,7 +10,7 @@
       アカウントを登録すると、ご入力いただいたメールアドレスに登録確認メールをお送りいたします。
     </p>
     <p class="caption">または</p>
-    <ButtonSocialLogin class="social" />
+    <ButtonSocialLogin class="social" text="Twitterで登録" />
     <p v-if="!doneSignUp" class="caption">
       <nuxt-link to="/terms/">利用規約</nuxt-link>
       と
