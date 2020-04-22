@@ -52,7 +52,7 @@ export default Vue.extend({
   flex-wrap: wrap;
 
   > .bookmark {
-    margin: 0 0 16px 16px;
+    margin: 0 0 24px 16px;
     width: calc(50% - 24px);
 
     > a {
@@ -63,11 +63,11 @@ export default Vue.extend({
       }
 
       > .title {
+        @include strong;
         margin-top: -4px;
       }
 
       > .artist {
-        line-height: 1;
         color: $mono2;
       }
     }

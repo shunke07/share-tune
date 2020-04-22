@@ -279,7 +279,7 @@ export default Vue.extend({
     justify-content: space-between;
 
     .title {
-      @include strong;
+      @include subhead;
     }
 
     .caption {
