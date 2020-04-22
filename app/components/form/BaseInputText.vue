@@ -4,12 +4,24 @@
       v-model="value"
       class="input"
       :class="{ '-valid': isValueValid }"
-      :type="type"
+      :type="inputType"
       placeholder=" "
       :maxlength="maxLength"
       @blur="fillOldValue()"
     />
     <span class="label">{{ label }}</span>
+    <button class="visibility" @click.prevent="switchPasswordVisiblity()">
+      <svg-icon
+        v-if="type === 'password' && isPasswordVisible"
+        name="actions/visibility"
+        title="パスワードを非表示にする"
+      />
+      <svg-icon
+        v-if="type === 'password' && !isPasswordVisible"
+        name="actions/visibility_off"
+        title="パスワードを表示する"
+      />
+    </button>
   </label>
 </template>
 
@@ -49,7 +61,15 @@ export default Vue.extend({
 
   data() {
     return {
-      value: '' as string
+      value: '' as string,
+      isPasswordVisible: false as boolean
+    }
+  },
+
+  computed: {
+    inputType(): string {
+      if (this.type !== 'password') return this.type
+      return this.isPasswordVisible ? 'text' : 'password'
     }
   },
 
@@ -66,6 +86,10 @@ export default Vue.extend({
   methods: {
     fillOldValue() {
       if (this.required && !this.value.length) this.value = this.currentValue
+    },
+
+    switchPasswordVisiblity() {
+      this.isPasswordVisible = !this.isPasswordVisible
     }
   }
 })
@@ -119,6 +143,20 @@ export default Vue.extend({
     transform: translate3d(0, 0, 0);
     transition: all 0.2s ease;
     pointer-events: none;
+  }
+
+  > .visibility {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 12px;
+    right: 12px;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+    color: $mono2;
   }
 }
 </style>
