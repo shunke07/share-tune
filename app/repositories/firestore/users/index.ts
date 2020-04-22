@@ -4,6 +4,7 @@ import { User } from '~/types/firestore'
 type Payload = {
   uid: string
   displayName: string
+  photoURL?: string | null
 }
 
 export type UserData = {
@@ -24,7 +25,8 @@ type UserField = {
 }
 
 export const createUser = async (payload: Payload): Promise<void> => {
-  const { uid, displayName } = payload
+  const { uid, displayName, photoURL } = payload
+  const imageUrl = photoURL || null
 
   const query = await usersRef.doc(uid).get()
   if (query.exists) throw new Error('already-exists')
@@ -35,7 +37,7 @@ export const createUser = async (payload: Payload): Promise<void> => {
     siteUrl: null,
     image: {
       id: null,
-      url: null
+      url: imageUrl
     },
     createdAt: timestamp,
     updatedAt: timestamp

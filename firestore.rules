@@ -21,6 +21,7 @@ service cloud.firestore {
         && data.keys().hasAll(['displayName', 'profileText', 'siteUrl', 'image', 'createdAt', 'updatedAt'])
         && validString(data.displayName, 1, 20)
         && data.image.keys().hasAll(['id', 'url'])
+        && data.image.url == null || validUrl(data.image.url)
         && data.createdAt is timestamp
         && data.updatedAt is timestamp;
       }
@@ -30,7 +31,6 @@ service cloud.firestore {
         && data.profileText == null
         && data.siteUrl == null
         && data.image.id == null
-        && data.image.url == null
         && data.createdAt == data.updatedAt;
       }
 
@@ -38,7 +38,6 @@ service cloud.firestore {
         return data.profileText == null || validString(data.profileText, 1, 160)
         && data.siteUrl == null || (validUrl(data.siteUrl) && validString(data.siteUrl, 1, 100))
         && data.image.id == null || validString(data.image.id, 20, 20)
-        && data.image.url == null || validUrl(data.image.url)
         && data.createdAt != data.updatedAt;
       }
 

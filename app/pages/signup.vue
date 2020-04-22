@@ -58,10 +58,14 @@ export default Vue.extend({
 
     this.$store.commit('setIsLoading', true)
 
-    const { uid, displayName } = result.user
+    const { uid, displayName, providerData } = result.user
+    const data = providerData[0]?.photoURL
+    const photoURL = data ? data.replace('_normal', '') : null
+
     await createUser({
       uid,
-      displayName: displayName || ''
+      displayName: displayName || '',
+      photoURL
     })
       .then(() => this.$store.dispatch('login', { uid }))
       .catch((error: Error) => {
