@@ -9,7 +9,7 @@ service cloud.firestore {
       allow create: if isAuthenticated()
                     && isUserAuthenticated(userID)
                     && isUserValid(incomingData())
-                    && isCreateUserValid(incomingData());
+                    && isCreateUserValid(incomingData(), userID);
 
       allow update: if isAuthenticated()
                     && isUserAuthenticated(userID)
@@ -25,8 +25,9 @@ service cloud.firestore {
         && data.updatedAt is timestamp;
       }
 
-      function isCreateUserValid(data) {
-        return data.profileText == null
+      function isCreateUserValid(data, userID) {
+        return !exists(userRef(userID)) // Prevent duplicate creation
+        && data.profileText == null
         && data.siteUrl == null
         && data.image.id == null
         && data.image.url == null
@@ -84,6 +85,10 @@ service cloud.firestore {
           && data.updatedAt is timestamp;
         }
       }
+    }
+
+    function userRef(uid) {
+      return /databases/$(database)/documents/users/$(uid);
     }
 
     function isAuthenticated() {

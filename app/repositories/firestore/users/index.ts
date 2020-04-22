@@ -26,6 +26,9 @@ type UserField = {
 export const createUser = async (payload: Payload): Promise<void> => {
   const { uid, displayName } = payload
 
+  const query = await usersRef.doc(uid).get()
+  if (query.exists) throw new Error('already-exists')
+
   const data: UserField = {
     displayName,
     profileText: null,
