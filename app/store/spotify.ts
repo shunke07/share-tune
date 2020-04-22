@@ -20,5 +20,9 @@ export const mutations: MutationTree<SpotifyState> = {
   },
   setAlbum(state, payload: Album) {
     state.albums = [payload, ...state.albums]
+  },
+  logout(state) {
+    state.releases = []
+    state.albums = []
   }
 }

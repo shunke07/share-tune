@@ -19,6 +19,7 @@ $white: #fafafa; // Material Glay 50
 
 .light-mode {
   --color-primary: #007c91; // Material Cyan 600 Dark
+  --color-danger: #ba000d; // Material Red 500 Dark
   --color-mono1: #1b1b1b;
   --color-mono2: #616161; // Material Glay 700
   --color-mono3: #8e8e8e; // Material Glay 700 Light
@@ -30,6 +31,7 @@ $white: #fafafa; // Material Glay 50
 
 .dark-mode {
   --color-primary: #4bacb8; // Material Cyan 200 Dark
+  --color-danger: #f44336; // Material Red 500
   --color-mono1: #fafafa;
   --color-mono2: #9e9e9e;  // Material Gray 500
   --color-mono3: #616161;
@@ -50,7 +52,7 @@ $primary: var(--color-primary); // Material Cyan 600 Dark
 $secondary: #d81b60; // Material Pink 600
 
 // Emphasis
-$danger: #ba000d; // Material Red 500 Dark
+$danger: var(--color-danger); // Material Red 500 Dark
 $warning: #fdd835; // Material Yellow 600
 
 // Social

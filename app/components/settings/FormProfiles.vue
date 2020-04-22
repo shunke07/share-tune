@@ -1,5 +1,5 @@
 <template>
-  <form class="form-profile">
+  <form v-if="loginUser" class="form-profile">
     <ImageUploader class="input" @onFileUploaded="file = $event" />
 
     <BaseInputText

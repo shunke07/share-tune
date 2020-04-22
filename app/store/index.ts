@@ -15,6 +15,9 @@ export const mutations: MutationTree<RootState> = {
   },
   setLoginUser(state, payload: any) {
     state.loginUser = payload
+  },
+  logout(state) {
+    state.loginUser = null
   }
 }
 
