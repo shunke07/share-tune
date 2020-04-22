@@ -15,6 +15,7 @@
       </button>
     </nav>
     <FormProfiles />
+    <button class="logout" @click="logout()">ログアウト</button>
   </div>
 </template>
 
@@ -31,6 +32,16 @@ export default Vue.extend({
     changeColorMode() {
       const currentMode = this.$colorMode.value
       this.$colorMode.value = currentMode === 'light' ? 'dark' : 'light'
+    },
+
+    logout(): void {
+      const canContinue = confirm('ログアウトしてよろしいですか？')
+      if (!canContinue) return
+
+      this.$store.commit('logout')
+      this.$store.commit('spotify/logout')
+      this.$auth.signOut()
+      this.$router.push('/')
     }
   }
 })
@@ -69,6 +80,12 @@ export default Vue.extend({
         height: 100%;
       }
     }
+  }
+
+  > .logout {
+    width: 100%;
+    margin-top: 80px;
+    color: $danger;
   }
 }
 </style>

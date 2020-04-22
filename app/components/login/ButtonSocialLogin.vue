@@ -1,7 +1,7 @@
 <template>
   <button class="social-login" @click="loginWithTwitter()">
     <svg-icon name="social/twitter_logo" title="Twitter ロゴ" class="logo" />
-    Twitterで登録
+    {{ text }}
   </button>
 </template>
 
@@ -11,6 +11,13 @@ import firebase from '~/plugins/firebase/init'
 import 'firebase/auth'
 
 export default Vue.extend({
+  props: {
+    text: {
+      type: String,
+      required: true
+    }
+  },
+
   methods: {
     loginWithTwitter() {
       const provider = new firebase.auth.TwitterAuthProvider()

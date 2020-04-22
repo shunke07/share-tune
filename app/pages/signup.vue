@@ -10,7 +10,7 @@
       アカウントを登録すると、ご入力いただいたメールアドレスに登録確認メールをお送りいたします。
     </p>
     <p class="caption">または</p>
-    <ButtonSocialLogin class="social" />
+    <ButtonSocialLogin class="social" text="Twitterで登録" />
     <p v-if="!doneSignUp" class="caption">
       <nuxt-link to="/terms/">利用規約</nuxt-link>
       と
@@ -58,10 +58,14 @@ export default Vue.extend({
 
     this.$store.commit('setIsLoading', true)
 
-    const { uid, displayName } = result.user
+    const { uid, displayName, providerData } = result.user
+    const data = providerData[0]?.photoURL
+    const photoURL = data ? data.replace('_normal', '') : null
+
     await createUser({
       uid,
-      displayName: displayName || ''
+      displayName: displayName || '',
+      photoURL
     })
       .then(() => this.$store.dispatch('login', { uid }))
       .catch((error: Error) => {

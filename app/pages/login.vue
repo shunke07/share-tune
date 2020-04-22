@@ -1,6 +1,8 @@
 <template>
   <div class="container">
     <FormLogin />
+    <p class="caption">または</p>
+    <ButtonSocialLogin class="social" text="Twitterでログイン" />
     <nuxt-link class="signup" to="/signup/">
       アカウント登録はこちら
     </nuxt-link>
@@ -11,11 +13,36 @@
 import { MetaInfo } from 'vue-meta'
 import Vue from 'vue'
 
+import ButtonSocialLogin from '~/components/login/ButtonSocialLogin.vue'
 import FormLogin from '~/components/login/FormLogin.vue'
 
 export default Vue.extend({
   components: {
-    FormLogin
+    FormLogin,
+    ButtonSocialLogin
+  },
+
+  async mounted() {
+    const result = await this.$auth
+      .getRedirectResult()
+      .catch((error: Error) => this.$nuxt.error(error))
+
+    if (!result || !result.user) return
+
+    this.$store.commit('setIsLoading', true)
+
+    const uid = result.user.uid
+    await this.$store.dispatch('login', { uid }).catch((error: Error) => {
+      if (error.message === 'user-not-found') {
+        alert(
+          '関連するアカウントが存在しません。\nユーザー登録を行ってください。'
+        )
+        return
+      }
+      this.$nuxt.error(error)
+    })
+
+    this.$store.commit('setIsLoading', false)
   },
 
   head(): MetaInfo {
@@ -35,8 +62,17 @@ export default Vue.extend({
   width: calc(100% - 64px);
   margin: 20px auto 0;
 
+  > .social {
+    margin-top: 16px;
+  }
+
+  > .caption {
+    @include caption;
+    margin-top: 24px;
+  }
+
   > .signup {
-    margin-top: 32px;
+    margin-top: 56px;
     color: $primary;
   }
 }
