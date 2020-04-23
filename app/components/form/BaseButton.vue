@@ -1,7 +1,7 @@
 <template>
   <button
     class="base-button"
-    :disabled="disabled"
+    :disabled="buttonDisabled"
     @click.prevent="$emit('onClick')"
   >
     {{ label }}
@@ -10,6 +10,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { RootState } from '~/store'
 
 export default Vue.extend({
   props: {
@@ -20,6 +21,12 @@ export default Vue.extend({
     disabled: {
       type: Boolean,
       required: true
+    }
+  },
+
+  computed: {
+    buttonDisabled(): boolean {
+      return this.disabled || (this.$store.state as RootState).isLoading
     }
   }
 })
