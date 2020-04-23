@@ -173,6 +173,20 @@ export default Vue.extend({
 
         const unsubscribe = ref.onSnapshot(
           (snapshot: firebase.firestore.DocumentSnapshot) => {
+            let resolved = false
+            const resolveListener = () => {
+              this.$store.commit('setIsLoading', false)
+              this.$router.push(`/users/${uid}/`)
+              resolve()
+              unsubscribe()
+              resolved = true
+            }
+
+            // handle timeout
+            setTimeout(() => {
+              if (!resolved) resolveListener()
+            }, 3000)
+
             const updatedAt = snapshot.get('updatedAt').toMillis() / 1000
             if (now.seconds > updatedAt) return // if update not completed
 
@@ -191,10 +205,7 @@ export default Vue.extend({
               image
             }
             this.$store.commit('setLoginUser', newProfile) // update store state
-            this.$store.commit('setIsLoading', false)
-            this.$router.push(`/users/${uid}/`)
-            resolve()
-            unsubscribe()
+            resolveListener()
           }
         )
       })
