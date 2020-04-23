@@ -43,7 +43,7 @@ export default Vue.extend({
     opacity: 0.5;
   }
 
-  &:hover {
+  &:hover:not(:disabled) {
     opacity: 0.95;
 
     &::after {
