@@ -76,7 +76,7 @@ export default Vue.extend({
   padding: 16px;
   width: 100%;
   height: 100%;
-  color: $white;
+  color: $mono1;
 
   &:hover::after {
     background: rgba($white, 0.05);
