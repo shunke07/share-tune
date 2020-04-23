@@ -137,12 +137,19 @@ export default Vue.extend({
     async save(): Promise<void> {
       if (!this.isFormValid) return
 
+      this.$store.commit('setIsLoading', true)
+
       if (this.file) await this.uploadImage()
 
       const { displayName, profileText, siteUrl, loginUser } = this
-      if (!loginUser) return
+
+      if (!loginUser) {
+        this.$store.commit('setIsLoading', false)
+        return
+      }
 
       const { id, url } = this.image
+      const imageUrl = url || loginUser?.image.url || null
       const uid = loginUser.uid
       const data = {
         uid,
@@ -151,11 +158,9 @@ export default Vue.extend({
         siteUrl,
         image: {
           id,
-          url
+          url: imageUrl
         }
       }
-
-      this.$store.commit('setIsLoading', true)
 
       await updateUser(data).catch((error: Error) => {
         this.$nuxt.error(error)
