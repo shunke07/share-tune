@@ -10,14 +10,18 @@
       @blur="fillOldValue()"
     />
     <span class="label">{{ label }}</span>
-    <button class="visibility" @click.prevent="switchPasswordVisiblity()">
+    <button
+      v-if="type === 'password'"
+      class="visibility"
+      @click.prevent="switchPasswordVisiblity()"
+    >
       <svg-icon
-        v-if="type === 'password' && isPasswordVisible"
+        v-if="isPasswordVisible"
         name="actions/visibility"
         title="パスワードを非表示にする"
       />
       <svg-icon
-        v-if="type === 'password' && !isPasswordVisible"
+        v-else
         name="actions/visibility_off"
         title="パスワードを表示する"
       />
