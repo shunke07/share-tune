@@ -2,11 +2,12 @@
 
 > お気に入りの音楽を見つけ、思いを共有するSNS
 
+<img width="1024" alt="ss_share-tune" src="https://user-images.githubusercontent.com/48200087/80118629-a3b6bb00-85c3-11ea-906c-d54a58c4680f.png">
+
 このプロジェクトは Nuxt.js と Firebase を利用したアプリケーションのサンプルです。
 
 
-
-## テスト
+## テストアカウント
 
 下記情報でログインできます。
 
@@ -14,7 +15,6 @@
 
 - パスワード: test123 
 
-  
 
 ## 開発
 
@@ -63,12 +63,12 @@ master ブランチに対しての push をトリガーにして CI (GitHub Acti
 
 - SFC の記述に関しては、[Vue.js スタイルガイド](https://jp.vuejs.org/v2/style-guide/index.html) に従う
 
-- SFC 内の script は `lang="ts"` として Typescript を使用する
+- SFC 内の script は `lang="ts"` として TypeScript を使用する
   - Vue.extend() のシンタックスで記述する
 
 - SFC 内の CSS の記述に関しては、Scoped SCSS を使用した上で、[RSCSS](https://github.com/rstacruz/rscss/tree/master/docs) の記法に従う
 
-- SFC 以外のロジックに関しては Typescript (.ts) を使用する
+- SFC 以外のロジックに関しては TypeScript (.ts) を使用する
 
 ## 依存ライブラリ
 
@@ -79,6 +79,7 @@ Nuxt
 - [@nuxtjs/pwa](https://github.com/nuxt-community/pwa-module)
 - [@nuxtjs/svg-sprite](https://github.com/nuxt-community/svg-sprite-module)
 - [@nuxtjs/style-resources](https://github.com/nuxt-community/style-resources-module)
+- [@nuxtjs/color-mode](https://github.com/nuxt-community/color-mode-module)
 - [dayjs](https://github.com/iamkun/dayjs)
 
 Cloud Functions
