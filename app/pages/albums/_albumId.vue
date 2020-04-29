@@ -48,7 +48,11 @@
     <div class="fab-container">
       <div class="fabs">
         <div>
-          <button class="fab bookmark" @click="bookmark()">
+          <button
+            class="fab bookmark"
+            :class="{ clicked: isBookmarked }"
+            @click="bookmark()"
+          >
             <svg-icon
               :name="`actions/${bookmarkIcon}`"
               title="ブックマークする"
@@ -366,6 +370,10 @@ export default Vue.extend({
         background: $white;
         color: $mono2;
         margin-bottom: 16px;
+
+        > .-active {
+          animation: bookmarkAnimation 500ms;
+        }
       }
     }
   }
@@ -408,6 +416,26 @@ export default Vue.extend({
     &:disabled {
       color: $mono3;
     }
+  }
+}
+
+@keyframes bookmarkAnimation {
+  0% {
+    transform: scale(0);
+    stroke-width: 0;
+  }
+  5% {
+    stroke-width: 200;
+  }
+  20% {
+    stroke-width: 300;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    stroke-width: 0;
   }
 }
 
