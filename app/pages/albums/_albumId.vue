@@ -56,7 +56,10 @@
             <svg-icon
               :name="`actions/${bookmarkIcon}`"
               title="ブックマークする"
-              :class="{ '-active': isBookmarked }"
+              :class="{
+                '-active': isBookmarked,
+                '-clicked': isBookmarkClicked
+              }"
             />
           </button>
           <button class="fab create" @click="switchFormVisible(true)">
@@ -118,7 +121,8 @@ export default Vue.extend({
       isBookmarked: false as boolean,
       isFormVisible: false as boolean,
       isCommentValid: false as boolean,
-      comment: '' as string
+      comment: '' as string,
+      isBookmarkClicked: false
     }
   },
 
@@ -205,6 +209,7 @@ export default Vue.extend({
     bookmark(): void {
       // switch flag
       this.isBookmarked = !this.isBookmarked
+      this.isBookmarkClicked = this.isBookmarked
 
       const uid = this.uid
       const albumId = this.albumId
@@ -371,7 +376,7 @@ export default Vue.extend({
         color: $mono2;
         margin-bottom: 16px;
 
-        > .-active {
+        > .-clicked {
           animation: bookmarkAnimation 500ms;
         }
       }
