@@ -1,5 +1,5 @@
 <template>
-  <ul class="list-bookmarks">
+  <ul v-if="bookmarks.length" class="list-bookmarks">
     <li
       v-for="(bookmark, index) in bookmarks"
       :key="`bookmark-${index}`"
@@ -20,6 +20,12 @@
       </nuxt-link>
     </li>
   </ul>
+  <div v-else-if="!$fetchState.pending" class="no-contents">
+    <svg-icon name="undraw/collection" title="ブックマークを追加しましょう" />
+    <p>アルバムページからブックマークを作成して</p>
+    <p>お気に入りの音楽をシェアしよう！</p>
+  </div>
+  <div v-else />
 </template>
 
 <script lang="ts">
@@ -71,6 +77,23 @@ export default Vue.extend({
         color: $mono2;
       }
     }
+  }
+}
+
+.no-contents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 56px;
+
+  > svg {
+    margin-bottom: 24px;
+  }
+
+  > p {
+    @include subhead;
   }
 }
 </style>

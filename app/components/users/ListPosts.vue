@@ -1,5 +1,5 @@
 <template>
-  <ul class="list-posts">
+  <ul v-if="posts.length" class="list-posts">
     <li v-for="(post, index) in posts" :key="`post-${index}`" class="post">
       <nuxt-link :to="`/albums/${post.album.id}/`" class="card">
         <div class="header">
@@ -26,6 +26,12 @@
       </nuxt-link>
     </li>
   </ul>
+  <div v-else-if="!$fetchState.pending" class="no-contents">
+    <svg-icon name="undraw/feedback" title="レビューを作成しましょう" />
+    <p>アルバムページからレビューを作成して</p>
+    <p>好きな音楽への想いをシェアしよう！</p>
+  </div>
+  <div v-else />
 </template>
 
 <script lang="ts">
@@ -137,6 +143,23 @@ export default Vue.extend({
       border: 1px solid $boundaryBlack;
       border-radius: 8px;
     }
+  }
+}
+
+.no-contents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 56px;
+
+  > svg {
+    margin-bottom: 24px;
+  }
+
+  > p {
+    @include subhead;
   }
 }
 </style>
