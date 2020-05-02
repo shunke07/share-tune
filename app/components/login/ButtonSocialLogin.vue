@@ -1,5 +1,5 @@
 <template>
-  <button class="social-login" @click="loginWithTwitter()">
+  <button class="social-login" :disabled="disabled" @click="loginWithTwitter()">
     <svg-icon name="social/twitter_logo" title="Twitter ロゴ" class="logo" />
     {{ text }}
   </button>
@@ -18,8 +18,17 @@ export default Vue.extend({
     }
   },
 
+  data() {
+    return {
+      disabled: false
+    }
+  },
+
   methods: {
     loginWithTwitter() {
+      this.disabled = true
+      this.$nuxt.$loading.start()
+
       const provider = new firebase.auth.TwitterAuthProvider()
       this.$auth.signInWithRedirect(provider)
     }
@@ -42,7 +51,6 @@ export default Vue.extend({
   background: $twitter;
   color: $white;
   position: relative;
-  transition-duration: 0.25s;
 
   > .logo {
     color: $white;
@@ -51,8 +59,13 @@ export default Vue.extend({
     margin-right: 8px;
   }
 
-  &:hover {
+  &:disabled {
+    opacity: 0.5;
+  }
+
+  &:hover:not(:disabled) {
     opacity: 0.95;
+    transition-duration: 0.25s;
 
     &::after {
       opacity: 1;
