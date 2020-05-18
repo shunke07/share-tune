@@ -4,7 +4,7 @@
 
 <img width="1024" alt="ss_share-tune" src="https://user-images.githubusercontent.com/48200087/80118629-a3b6bb00-85c3-11ea-906c-d54a58c4680f.png">
 
-このプロジェクトは Nuxt.js と Firebase を利用したアプリケーションのサンプルです。
+Nuxt.js と Firebase を利用した SPA です。
 
 
 ## テストアカウント
