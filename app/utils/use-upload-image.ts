@@ -12,12 +12,13 @@ export const useUploadImage = async (payload: Payload): Promise<string> => {
     .storage()
     .ref()
     .child(path)
-
+  const meta: firebase.storage.UploadMetadata = {
+    cacheControl: 'public, max-age=86400' // cahce 24 hours
+  }
   // upload image to storage
-  await ref.put(file).catch(() => {
+  await ref.put(file, meta).catch(() => {
     throw new Error('アップロードエラー')
   })
-
   // download url from storage
   const url: string = await ref.getDownloadURL().catch(() => {
     throw new Error('ダウンロードエラー')
