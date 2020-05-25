@@ -334,6 +334,7 @@ export default Vue.extend({
     .fab {
       display: flex;
       justify-content: center;
+      align-items: center;
       width: 56px;
       height: 56px;
       border-radius: 50%;
