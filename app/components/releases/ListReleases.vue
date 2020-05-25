@@ -1,6 +1,11 @@
 <template>
   <div>
-    <ul class="list-releases">
+    <ul v-if="fetching" class="list-releases">
+      <li v-for="(n, index) in 8" :key="`skeleton-${index}`" class="skeleton">
+        <!-- <div class="skeleton" /> -->
+      </li>
+    </ul>
+    <ul v-else class="list-releases">
       <li
         v-for="(release, index) in releases"
         :key="`release-${index}`"
@@ -33,20 +38,7 @@ import { SpotifyState } from '~/store/spotify'
 type Response = void | { data: Albums }
 
 export default Vue.extend({
-  data() {
-    return {
-      releases: [] as Albums,
-      observer: null as null | IntersectionObserver
-    }
-  },
-
-  computed: {
-    observerElement(): HTMLDivElement {
-      return this.$refs.observer as HTMLDivElement
-    }
-  },
-
-  async mounted() {
+  async fetch() {
     const storeReleases = (this.$store.state.spotify as SpotifyState).releases
     if (storeReleases.length) {
       this.releases = storeReleases
@@ -54,11 +46,24 @@ export default Vue.extend({
       return
     }
 
-    this.$store.commit('setIsLoading', true)
+    this.fetching = true
     await this.fetchReleases({ offset: 0 })
-    this.$store.commit('setIsLoading', false)
-
+    this.fetching = false
     this.observeScroll()
+  },
+
+  data() {
+    return {
+      releases: [] as Albums,
+      observer: null as null | IntersectionObserver,
+      fetching: false as boolean
+    }
+  },
+
+  computed: {
+    observerElement(): HTMLDivElement {
+      return this.$refs.observer as HTMLDivElement
+    }
   },
 
   beforeDestroy() {
@@ -106,9 +111,41 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+@keyframes loading {
+  0% {
+    background-position-x: 0px;
+  }
+  80% {
+    background-position-x: 200px;
+  }
+  100% {
+    background-position-x: 200px;
+  }
+}
+
 .list-releases {
   display: flex;
   flex-wrap: wrap;
+}
+
+.skeleton {
+  margin: 0 0 24px 16px;
+  width: calc(50% - 24px);
+  position: relative;
+  background: linear-gradient(
+    90deg,
+    lightgray 60%,
+    gainsboro 80%,
+    lightgray 100%
+  );
+  animation: loading 1s ease-out infinite;
+  border-radius: 8px;
+
+  &:before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+  }
 }
 
 .release-item {
