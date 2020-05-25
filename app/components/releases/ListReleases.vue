@@ -17,7 +17,6 @@
         class="release-item"
       >
         <nuxt-link :to="`/albums/${release.id}/`">
-          <div v-if="!isImageLoaded[index]" class="image-placeholder" />
           <img
             loading="lazy"
             class="img"
@@ -130,12 +129,6 @@ export default Vue.extend({
   100% {
     background-position-x: 200px;
   }
-}
-
-.image-placeholder {
-  width: 100%;
-  height: calc(50vw - 24px);
-  max-height: calc(212px - 24px);
 }
 
 .list-releases {
