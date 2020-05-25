@@ -168,8 +168,6 @@ export default Vue.extend({
   },
 
   async mounted(): Promise<void> {
-    this.$store.commit('setIsLoading', true)
-
     const albumId = this.albumId
     const uid = this.uid
 
@@ -178,6 +176,8 @@ export default Vue.extend({
       const isBookmarked = await getIsBookmarked({ uid, albumId })
       this.isBookmarked = isBookmarked
     }
+
+    this.$store.commit('setIsLoading', true)
 
     // if store state exists merge state
     const storeAlbum: Album | undefined = this.$store.getters[
