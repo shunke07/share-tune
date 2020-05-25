@@ -1,8 +1,13 @@
 <template>
   <div>
     <ul v-if="fetching" class="list-releases">
-      <li v-for="(n, index) in 8" :key="`skeleton-${index}`" class="skeleton">
-        <!-- <div class="skeleton" /> -->
+      <li
+        v-for="(n, index) in 8"
+        :key="`skeleton-${index}`"
+        class="skeleton-wrapper"
+      >
+        <div class="image-skeleton" />
+        <div class="text-skeleton" />
       </li>
     </ul>
     <ul v-else class="list-releases">
@@ -12,10 +17,13 @@
         class="release-item"
       >
         <nuxt-link :to="`/albums/${release.id}/`">
+          <div v-if="!isImageLoaded[index]" class="image-placeholder" />
           <img
+            loading="lazy"
             class="img"
             :src="release.images[1].url"
             :alt="`${release.name}の画像`"
+            @load="isImageLoaded.push(true)"
           />
           <p class="title">
             {{ release.name }}
@@ -56,7 +64,8 @@ export default Vue.extend({
     return {
       releases: [] as Albums,
       observer: null as null | IntersectionObserver,
-      fetching: false as boolean
+      fetching: false as boolean,
+      isImageLoaded: [] as boolean[]
     }
   },
 
@@ -123,28 +132,58 @@ export default Vue.extend({
   }
 }
 
+.image-placeholder {
+  width: 100%;
+  height: calc(50vw - 24px);
+  max-height: calc(212px - 24px);
+}
+
 .list-releases {
   display: flex;
   flex-wrap: wrap;
 }
 
-.skeleton {
-  margin: 0 0 24px 16px;
+.skeleton-wrapper {
+  margin: 0 0 68px 16px;
   width: calc(50% - 24px);
   position: relative;
-  background: linear-gradient(
-    90deg,
-    lightgray 60%,
-    gainsboro 80%,
-    lightgray 100%
-  );
-  animation: loading 1s ease-out infinite;
-  border-radius: 8px;
 
   &:before {
     content: '';
     display: block;
     padding-top: 100%;
+  }
+
+  > .image-skeleton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(
+      90deg,
+      lightgray 60%,
+      gainsboro 80%,
+      lightgray 100%
+    );
+    animation: loading 1s ease-out infinite;
+    border-radius: 8px;
+  }
+
+  > .text-skeleton {
+    position: absolute;
+    height: 40px;
+    margin: 8px 2px 0;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: linear-gradient(
+      90deg,
+      lightgray 60%,
+      gainsboro 80%,
+      lightgray 100%
+    );
+    animation: loading 1s ease-out infinite;
   }
 }
 
