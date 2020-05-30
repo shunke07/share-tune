@@ -1,5 +1,9 @@
 <template>
-  <article v-if="album" class="article-album">
+  <article
+    v-if="album"
+    class="article-album"
+    :class="{ 'form-mode': isFormVisible }"
+  >
     <div class="top-contents">
       <img
         class="img"
@@ -276,6 +280,19 @@ export default Vue.extend({
   > .date {
     @include caption;
     color: $mono2;
+  }
+
+  &.form-mode::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    margin-left: -16px;
+    display: block;
+    width: 100vw;
+    max-width: $maxViewWidth;
+    height: 100vh;
+    z-index: 3;
+    background: $boundaryBlack;
   }
 }
 

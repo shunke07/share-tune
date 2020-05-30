@@ -11,7 +11,7 @@ Nuxt.js と Firebase を利用した SPA です。
 
 下記情報でログインできます。
 
-- メールアドレス: sharetune.app@gmail.com
+- メールアドレス: sharetune.app(@)gmail.com
 
 - パスワード: test123 
 
