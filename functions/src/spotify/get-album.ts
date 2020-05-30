@@ -88,6 +88,7 @@ const processResult = (data: Album): Album => {
 
 module.exports = functions
   .region('asia-northeast1')
+  .runWith({ memory: '512MB' })
   .https.onCall(async (data: RequestData, context) => {
     if (!context.auth) {
       throw new functions.https.HttpsError(
