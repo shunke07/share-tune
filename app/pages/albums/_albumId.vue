@@ -91,6 +91,7 @@ import Vue from 'vue'
 
 import { MetaInfo } from 'vue-meta'
 import { Album } from '~/types/spotify-api.d.ts'
+import { StoreAlbum } from '~/store/spotify'
 
 import FormPost from '~/components/albums/FormPost.vue'
 
@@ -170,22 +171,29 @@ export default Vue.extend({
   async mounted(): Promise<void> {
     const albumId = this.albumId
     const uid = this.uid
+    let isBookmarked: null | boolean = null
 
-    // query this album is bookmarked
-    if (uid) {
-      const isBookmarked = await getIsBookmarked({ uid, albumId })
-      this.isBookmarked = isBookmarked
+    // if store state exists merge state
+    const storeAlbum: StoreAlbum | undefined = this.$store.getters[
+      'spotify/getAlbumById'
+    ](albumId)
+
+    if (storeAlbum) {
+      this.album = storeAlbum
+
+      if (storeAlbum.isBookmarked !== null) {
+        this.isBookmarked = storeAlbum.isBookmarked
+      } //
+      return
     }
 
     this.$store.commit('setIsLoading', true)
 
-    // if store state exists merge state
-    const storeAlbum: Album | undefined = this.$store.getters[
-      'spotify/getAlbumById'
-    ](albumId)
-    if (storeAlbum) {
-      this.album = storeAlbum
-      return this.$store.commit('setIsLoading', false)
+    if (uid) {
+      // query is bookmarked
+      const _isBookmarked = await getIsBookmarked({ uid, albumId })
+      this.isBookmarked = _isBookmarked
+      isBookmarked = _isBookmarked
     }
 
     // fetch from Spotify API
@@ -197,7 +205,8 @@ export default Vue.extend({
 
     const album = response.data
     this.album = album
-    this.$store.commit('spotify/setAlbum', album)
+
+    this.$store.commit('spotify/setAlbum', { ...album, isBookmarked })
     this.$store.commit('setIsLoading', false)
   },
 
