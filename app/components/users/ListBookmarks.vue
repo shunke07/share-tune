@@ -75,6 +75,7 @@ export default Vue.extend({
     > a {
       > .img {
         width: 100%;
+        height: auto;
         border: 1px solid $boundaryBlack;
         border-radius: 8px;
       }
