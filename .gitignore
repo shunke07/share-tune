@@ -21,3 +21,5 @@ sw.*
 
 # macOS
 .DS_Store
+
+.firebase
