@@ -193,19 +193,26 @@ export default Vue.extend({
 
     this.$store.commit('setIsLoading', true)
 
-    if (uid) {
-      // query is bookmarked
-      const _isBookmarked = await getIsBookmarked({ uid, albumId })
-      this.isBookmarked = _isBookmarked
-      isBookmarked = _isBookmarked
-    }
+    if (!uid) return
 
-    // fetch from Spotify API
-    const api = this.$functions.httpsCallable('spotifyGetAlbum')
-    const response: Response = await api({ albumId }).catch((error: Error) =>
-      this.$nuxt.error(error)
-    )
-    if (!response) return this.$store.commit('setIsLoading', false)
+    const queryBookmark = async () => await getIsBookmarked({ uid, albumId })
+    const queryAlbum = async (): Promise<Response> => {
+      const api = this.$functions.httpsCallable('spotifyGetAlbum')
+
+      return await api({ albumId }).catch((error: Error) => {
+        this.$nuxt.error(error)
+        this.$store.commit('setIsLoading', false)
+      })
+    }
+    const [_isBookmarked, response] = await Promise.all([
+      queryBookmark(),
+      queryAlbum()
+    ])
+
+    this.isBookmarked = _isBookmarked
+    isBookmarked = _isBookmarked
+
+    if (!response) return
 
     const album = response.data
     this.album = album
