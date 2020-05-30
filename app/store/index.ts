@@ -4,7 +4,8 @@ import { User } from '~/types/firestore'
 
 export const state = () => ({
   isLoading: false as boolean,
-  loginUser: null as null | Readonly<User>
+  loginUser: null as null | Readonly<User>,
+  activeTab: null as null | 1 | 2
 })
 
 export type RootState = ReturnType<typeof state>
@@ -13,8 +14,11 @@ export const mutations: MutationTree<RootState> = {
   setIsLoading(state, payload: boolean) {
     state.isLoading = payload
   },
-  setLoginUser(state, payload: any) {
+  setLoginUser(state, payload: User) {
     state.loginUser = payload
+  },
+  setActiveTab(state, payload: 1 | 2) {
+    state.activeTab = payload
   },
   logout(state) {
     state.loginUser = null

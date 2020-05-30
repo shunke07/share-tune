@@ -47,6 +47,11 @@ export default Vue.extend({
     ListPosts
   },
 
+  asyncData({ store }) {
+    const storeActiveTab = (store.state as RootState).activeTab
+    if (storeActiveTab !== null) return { activeTab: storeActiveTab }
+  },
+
   data() {
     return {
       activeTab: 1 as number
@@ -62,6 +67,7 @@ export default Vue.extend({
   methods: {
     switchActiveTab(tabNumber: number): void {
       this.activeTab = tabNumber
+      this.$store.commit('setActiveTab', tabNumber)
     }
   }
 })
