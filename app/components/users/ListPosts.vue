@@ -37,14 +37,29 @@
 <script lang="ts">
 import Vue from 'vue'
 import { getUserPosts, PostData } from '~/repositories/firestore'
+import { UserState } from '~/store/users'
 
 export default Vue.extend({
   async fetch() {
+    const storePosts = (this.$store.state.users as UserState).posts
+    // if store state exists, use state
+    if (storePosts.length) {
+      this.posts = storePosts
+      return
+    }
+    // if store state empty, query API
     const uid = this.$firebase.currentUser?.uid
     if (!uid) return
 
+    this.$store.commit('setIsLoading', true)
+
     const posts = await getUserPosts({ uid })
-    if (posts) this.posts = posts
+    if (!posts) return
+
+    this.$store.commit('setIsLoading', false)
+
+    this.posts = posts
+    this.$store.commit('users/setPosts', posts)
   },
 
   data() {

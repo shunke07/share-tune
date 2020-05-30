@@ -177,6 +177,7 @@ export default Vue.extend({
       lightgray 100%
     );
     animation: loading 1s ease-out infinite;
+    border-radius: 8px;
   }
 }
 

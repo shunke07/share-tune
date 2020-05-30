@@ -32,16 +32,27 @@
 import Vue from 'vue'
 import { Bookmark } from '~/types/firestore'
 import { getBookmarks } from '~/repositories/firestore'
+import { UserState } from '~/store/users'
 
 export default Vue.extend({
   async fetch() {
+    const storeBookmarks = (this.$store.state.users as UserState).bookmarks
+    // if store state exists, use state
+    if (storeBookmarks.length) {
+      this.bookmarks = storeBookmarks
+      return
+    }
+    // if store state empty, query API
     this.$store.commit('setIsLoading', true)
 
     const uid = this.$route.params.uid
     const bookmarks = await getBookmarks(uid)
 
     this.$store.commit('setIsLoading', false)
-    if (bookmarks) this.bookmarks = bookmarks
+    if (!bookmarks) return
+
+    this.bookmarks = bookmarks
+    this.$store.commit('users/setBookmarks', bookmarks)
   },
 
   data() {
