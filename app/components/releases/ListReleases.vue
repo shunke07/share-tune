@@ -20,6 +20,8 @@
           <img
             loading="lazy"
             class="img"
+            width="180"
+            height="180"
             :src="release.images[1].url"
             :alt="`${release.name}の画像`"
             @load="isImageLoaded.push(true)"

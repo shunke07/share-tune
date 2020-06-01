@@ -8,6 +8,8 @@
       <nuxt-link :to="`/albums/${bookmark.album.id}/`">
         <img
           class="img"
+          width="180"
+          height="180"
           :src="bookmark.album.imageUrl"
           :alt="`${bookmark.album.name}の画像`"
         />
